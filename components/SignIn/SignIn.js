@@ -22,10 +22,8 @@ const SignIn = () => {
   }, [router, session]);
 
   return (
-    <div className={styles.googleAuthContainer}>
-      <div className={styles.googleAuth}>
-        <button onClick={handleGoogleAuth}>Sign In with Google</button>
-      </div>
+    <div className={styles.googleAuth}>
+      <button onClick={handleGoogleAuth}>Sign In with Google</button>
     </div>
   );
 };
