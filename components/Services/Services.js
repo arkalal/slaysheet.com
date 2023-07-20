@@ -1,17 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Services.module.scss";
 import { useSession, signOut } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Services = () => {
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      redirect("/signIn?callbackUrl=/services");
-    },
-  });
+  const { data: session, status } = useSession();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/signIn");
+    }
+  }, [router, session, status]);
 
   return (
     <div>
