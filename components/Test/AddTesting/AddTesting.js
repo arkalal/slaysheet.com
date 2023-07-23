@@ -29,6 +29,7 @@ const AddTesting = () => {
 
       if (res.status === 201) {
         router.push("/testing");
+        router.refresh();
       } else {
         throw new Error("Failed to create topic");
       }
