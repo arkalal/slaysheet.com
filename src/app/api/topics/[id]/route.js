@@ -4,9 +4,9 @@ import connectMondoDB from "../../../../../utils/mongoDB";
 
 export async function PUT(req, { params }) {
   const { id } = params;
-  const { title, description } = await req.json();
+  const { title, description, userId } = await req.json();
   await connectMondoDB();
-  await Topic.findByIdAndUpdate(id, { title, description });
+  await Topic.findByIdAndUpdate(id, { title, description, userId });
   return NextResponse.json({ message: "Topic Updated" }, { status: 200 });
 }
 

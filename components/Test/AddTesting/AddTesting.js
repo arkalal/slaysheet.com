@@ -3,12 +3,15 @@
 import React, { useState } from "react";
 import axios from "../../../axios/getApi";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const AddTesting = () => {
   const [Description, setDescription] = useState("");
   const [Title, setTitle] = useState("");
 
   const router = useRouter();
+  const { data: session } = useSession();
+  console.log(session.user.email);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +19,7 @@ const AddTesting = () => {
     const data = {
       title: Title,
       description: Description,
+      userId: session.user.email,
     };
 
     if (!Title || !Description) {

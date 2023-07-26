@@ -39,19 +39,24 @@ const Test = ({ apiData }) => {
       </button>{" "}
       {apiData.topics.map((item, index) => {
         return (
-          <div style={{ marginBottom: "80px" }} key={index}>
-            <h2> {item.title} </h2>
-            <p> {item.description} </p>
+          <div key={index}>
+            {" "}
+            {item.userId === session?.user.email && (
+              <div style={{ marginBottom: "80px" }}>
+                <h2> {item.title} </h2>
+                <p> {item.description} </p>
 
-            <button onClick={() => deleteTopic(item._id)}>Delete</button>
-            <button>
-              <Link
-                style={{ textDecoration: "none", color: "black" }}
-                href={`/editTest/${item._id}`}
-              >
-                UpdateTopic
-              </Link>
-            </button>
+                <button onClick={() => deleteTopic(item._id)}>Delete</button>
+                <button>
+                  <Link
+                    style={{ textDecoration: "none", color: "black" }}
+                    href={`/editTest/${item._id}`}
+                  >
+                    UpdateTopic
+                  </Link>
+                </button>
+              </div>
+            )}{" "}
           </div>
         );
       })}{" "}

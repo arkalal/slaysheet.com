@@ -3,9 +3,9 @@ import Topic from "../../../../models/topic";
 import connectMondoDB from "../../../../utils/mongoDB";
 
 export async function POST(request) {
-  const { title, description } = await request.json();
+  const { title, description, userId } = await request.json();
   await connectMondoDB();
-  await Topic.create({ title, description });
+  await Topic.create({ title, description, userId });
   return NextResponse.json({ message: "Topic Created" }, { status: 201 });
 }
 
