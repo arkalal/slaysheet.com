@@ -16,8 +16,6 @@ const Test = ({ apiData }) => {
     }
   }, [router, session, status]);
 
-  console.log(apiData);
-
   const deleteTopic = async (id) => {
     const res = await axios.delete(`topics?id=${id}`);
 
