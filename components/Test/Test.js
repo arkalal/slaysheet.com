@@ -14,6 +14,10 @@ const Test = ({ apiData }) => {
     if (status === "unauthenticated") {
       router.push("/signIn");
     }
+
+    if (session) {
+      router.push("/services");
+    }
   }, [router, session, status]);
 
   const deleteTopic = async (id) => {

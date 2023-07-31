@@ -2,6 +2,8 @@
 
 import React from "react";
 import styles from "./PricingCard.module.scss";
+import axios from "../../axios/getApi";
+import { useRouter } from "next/navigation";
 
 const PricingCard = ({ data }) => {
   const dynamicPricingCardData = (name) => {
@@ -15,12 +17,30 @@ const PricingCard = ({ data }) => {
     }
   };
 
+  const router = useRouter();
+
+  const handleSubscription = async (e) => {
+    e.preventDefault();
+
+    const postData = {
+      priceId: data.id,
+    };
+
+    try {
+      const res = await axios.post("checkout", postData);
+      router.push(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <h3> {data.nickname} </h3>
       <div>{dynamicPricingCardData(data.nickname)}</div>
 
       <br />
+
       <h2>
         {" "}
         {(data.unit_amount / 100).toLocaleString("en-US", {
@@ -28,7 +48,7 @@ const PricingCard = ({ data }) => {
           currency: "INR",
         })}{" "}
       </h2>
-      <button>Buy Now</button>
+      <button onClick={handleSubscription}>Buy Now</button>
     </div>
   );
 };
