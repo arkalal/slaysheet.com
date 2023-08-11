@@ -48,6 +48,7 @@ const PricingCard = ({ data }) => {
           currency: "INR",
         })}{" "}
       </h2>
+
       <button onClick={handleSubscription}>Buy Now</button>
     </div>
   );
