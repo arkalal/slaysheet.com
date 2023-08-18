@@ -12,6 +12,7 @@ const PricingCard = ({ data }) => {
         <>
           <p> ✓ Get Good Features!!!</p>
           <p> ✓ Free access to all the AI Models</p>
+          <p>lets see</p>
         </>
       );
     }
