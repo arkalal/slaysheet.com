@@ -25,6 +25,7 @@ export async function POST(req) {
         quantity: 1,
       },
     ],
+    customer_email: userSession.user.email,
     mode: "subscription",
     success_url: appUrl,
     cancel_url: appUrl,
