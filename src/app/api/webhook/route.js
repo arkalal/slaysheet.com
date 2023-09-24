@@ -71,3 +71,9 @@ export async function POST(req) {
     console.log(error);
   }
 }
+
+export async function GET() {
+  await connectMongoDB();
+  const subscription = await UserSubscription.find();
+  return NextResponse.json({ subscription }, { status: 200 });
+}
