@@ -16,8 +16,6 @@ const Subscription = ({ priceData }) => {
     }
   }, [router, session, status]);
 
-  console.log(priceData);
-
   return (
     <div>
       {priceData.map((item, index) => {

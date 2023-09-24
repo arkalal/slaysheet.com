@@ -1,7 +1,7 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "../../../../../axios/getApi";
-import connectMondoDB from "../../../../../utils/mongoDB";
+import connectMongoDB from "../../../../../utils/mongoDB";
 import Users from "../../../../../models/users";
 
 export const authOptions = {
@@ -37,7 +37,7 @@ export const authOptions = {
         };
 
         try {
-          await connectMondoDB();
+          await connectMongoDB();
           const userExists = await Users.findOne({ email });
 
           if (!userExists) {
