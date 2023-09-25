@@ -9,7 +9,7 @@ const userSubscriptionSchema = new Schema({
   productItem: [
     {
       product: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true,
         ref: "Product",
       },

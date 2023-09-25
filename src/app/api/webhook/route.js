@@ -11,9 +11,6 @@ const getPriceItem = async (line_items) => {
     const product = await stripe.products.retrieve(item.price.product);
     const productId = product.id;
 
-    console.log("product", product);
-    console.log("price", item.price);
-
     return {
       product: productId,
       name: product.name,
@@ -47,7 +44,7 @@ export async function POST(req) {
       const line_items = await stripe.checkout.sessions.listLineItems(
         event.data.object.id
       );
-      const orderSubscription = await getPriceItem(line_items);
+      const productItem = await getPriceItem(line_items);
       const userId = session.metadata.userId;
       const amountPaid = session.amount_total / 100;
 
@@ -60,7 +57,7 @@ export async function POST(req) {
       const orderData = {
         user: userId,
         paymentInfo,
-        orderSubscription,
+        productItem,
       };
 
       await connectMongoDB();
