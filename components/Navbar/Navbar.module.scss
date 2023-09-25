@@ -1,0 +1,14 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .signIn {
+    button {
+      .signInLink {
+        text-decoration: none;
+        color: black;
+      }
+    }
+  }
+}
