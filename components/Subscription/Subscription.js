@@ -18,13 +18,14 @@ const Subscription = ({ priceData }) => {
 
   return (
     <div>
-      {priceData.map((item, index) => {
-        return (
-          <div key={index}>
-            <PricingCard data={item}></PricingCard>
-          </div>
-        );
-      })}
+      {priceData &&
+        priceData.map((item, index) => {
+          return (
+            <div key={index}>
+              <PricingCard data={item}></PricingCard>
+            </div>
+          );
+        })}
     </div>
   );
 };
