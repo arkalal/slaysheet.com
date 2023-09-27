@@ -1,8 +1,11 @@
 import Provider from "../../components/Provider/Provider";
 import "./globals.scss";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Roboto({
+  subsets: ["latin"],
+  weight: ["300", "400", "700", "100", "900", "500"],
+});
 
 export const metadata = {
   title: "Create Next App",
