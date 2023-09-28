@@ -90,3 +90,10 @@ export async function GET() {
   const subscription = await UserSubscription.find();
   return NextResponse.json({ subscription }, { status: 200 });
 }
+
+export async function DELETE(req) {
+  const id = req.nextUrl.searchParams.get("id");
+  await connectMongoDB();
+  await UserSubscription.findByIdAndDelete(id);
+  return NextResponse.json({ message: "webhook deleted" }, { status: 200 });
+}

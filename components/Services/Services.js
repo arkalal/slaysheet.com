@@ -6,15 +6,14 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from "../../axios/openAiApi";
 
-const Services = ({ stripeWebhookData }) => {
+const Services = ({ isSubscribed, subscribedId }) => {
   const [messages, setMessages] = useState([]);
   const [Content, setContent] = useState("");
 
-  console.log("stripeWebhookData", stripeWebhookData);
-
   const { data: session, status } = useSession();
 
-  console.log(session?.user.email);
+  console.log("subscribedId", subscribedId);
+  console.log("isSubscribed", isSubscribed);
 
   const router = useRouter();
 
@@ -50,9 +49,30 @@ const Services = ({ stripeWebhookData }) => {
     }
   };
 
+  const handleCancelSubscription = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.delete(`webhook?id=${subscribedId}`);
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <h5>Hello {session?.user.name} </h5>
+      {isSubscribed ? (
+        <>
+          {" "}
+          <h3>Welcome to Premium Content!!</h3>{" "}
+        </>
+      ) : (
+        <>
+          {" "}
+          <h3>Please pay us to access premium features</h3>{" "}
+        </>
+      )}
 
       <form onSubmit={handleSubmit} action="">
         <input onChange={(e) => setContent(e.target.value)} type="text" />
@@ -72,6 +92,13 @@ const Services = ({ stripeWebhookData }) => {
       </div>
 
       <br />
+      {isSubscribed && (
+        <>
+          <button onClick={handleCancelSubscription}>
+            Cancel Subscription
+          </button>
+        </>
+      )}
       <button onClick={() => signOut()}>Log Out</button>
     </div>
   );

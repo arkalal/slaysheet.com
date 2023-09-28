@@ -1,24 +1,22 @@
 import React from "react";
 import Services from "../../../components/Services/Services";
-import axios from "../../../axios/getApi";
-
-const getStripeWebhook = async () => {
-  try {
-    const res = await axios.get("webhook");
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import UserSubscription from "../../../models/userSubscription";
 
 const Service = async () => {
-  const stripeWebhookData = await getStripeWebhook();
+  const userSession = await getServerSession(authOptions);
 
-  console.log("stripeWebhookData", stripeWebhookData);
+  const subscribedData = await UserSubscription.findOne({
+    user: userSession.user.email,
+  });
 
   return (
     <div>
-      <Services stripeWebhookData={stripeWebhookData}></Services>
+      <Services
+        subscribedId={subscribedData?._id}
+        isSubscribed={subscribedData ? true : false}
+      ></Services>
     </div>
   );
 };
