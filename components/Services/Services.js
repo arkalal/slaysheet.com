@@ -6,11 +6,15 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from "../../axios/openAiApi";
 
-const Services = () => {
+const Services = ({ stripeWebhookData }) => {
   const [messages, setMessages] = useState([]);
   const [Content, setContent] = useState("");
 
+  console.log("stripeWebhookData", stripeWebhookData);
+
   const { data: session, status } = useSession();
+
+  console.log(session?.user.email);
 
   const router = useRouter();
 
