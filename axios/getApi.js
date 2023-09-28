@@ -1,8 +1,8 @@
 import axios from "axios";
-import { baseUrlTest } from "./baseUrl";
+import { baseUrlStaging } from "./baseUrl";
 
 const instance = axios.create({
-  baseURL: `${baseUrlTest}/api/`,
+  baseURL: `${baseUrlStaging}/api/`,
   headers: {
     "Content-Type": "application/json",
   },
