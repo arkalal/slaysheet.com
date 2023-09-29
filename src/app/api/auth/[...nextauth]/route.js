@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import axios from "../../../../../axios/getApi";
 import connectMongoDB from "../../../../../utils/mongoDB";
 import Users from "../../../../../models/users";
+import { baseUrlStaging } from "../../../../../axios/baseUrl";
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -10,7 +11,7 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      profileUrl: "http://localhost:3000/api/auth/callback/google",
+      profileUrl: `${baseUrlStaging}/api/auth/callback/google`,
     }),
   ],
   pages: {
