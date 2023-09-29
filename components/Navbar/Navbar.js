@@ -9,12 +9,7 @@ const Navbar = () => {
       <div className={styles.menu}></div>
       <div className={styles.signIn}>
         <button>
-          <Link
-            as="font"
-            rel="preload"
-            className={styles.signInLink}
-            href="/signIn"
-          >
+          <Link className={styles.signInLink} href="/signIn">
             SignIn
           </Link>
         </button>
