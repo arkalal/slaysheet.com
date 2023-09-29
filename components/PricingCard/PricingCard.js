@@ -36,12 +36,6 @@ const PricingCard = ({ data }) => {
     }
   };
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/signIn");
-    }
-  }, [router, session, status]);
-
   return (
     <div>
       <h3> {data.nickname} </h3>
