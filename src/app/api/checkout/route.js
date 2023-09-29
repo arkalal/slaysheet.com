@@ -2,7 +2,11 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { baseUrlStaging, baseUrlTest } from "../../../../axios/baseUrl";
+import {
+  baseUrlProd,
+  baseUrlStaging,
+  baseUrlTest,
+} from "../../../../axios/baseUrl";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
@@ -27,8 +31,8 @@ export async function POST(req) {
     ],
     customer_email: userSession.user.email,
     mode: "subscription",
-    success_url: `${baseUrlStaging}/services`,
-    cancel_url: `${baseUrlStaging}/services`,
+    success_url: `${baseUrlProd}/services`,
+    cancel_url: `${baseUrlProd}/services`,
     billing_address_collection: "auto",
     metadata: {
       userId: userSession.user.email,
