@@ -11,7 +11,6 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      profileUrl: `${baseUrlStaging}/api/auth/callback/google`,
     }),
   ],
   pages: {
