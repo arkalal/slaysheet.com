@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Subscription.module.scss";
 import PricingCard from "../PricingCard/PricingCard";
 import { useRouter } from "next/navigation";
