@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./PricingCard.module.scss";
 import axios from "../../axios/getApi";
 import { useRouter } from "next/navigation";
