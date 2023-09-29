@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import styles from "./PricingCard.module.scss";
 import axios from "../../axios/getApi";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 const PricingCard = ({ data }) => {
   const dynamicPricingCardData = (name) => {
@@ -19,7 +18,6 @@ const PricingCard = ({ data }) => {
   };
 
   const router = useRouter();
-  const { data: session, status } = useSession();
 
   const handleSubscription = async (e) => {
     e.preventDefault();
