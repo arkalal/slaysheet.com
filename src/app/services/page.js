@@ -8,7 +8,7 @@ const Service = async () => {
   const userSession = await getServerSession(authOptions);
 
   const subscribedData = await UserSubscription.findOne({
-    user: userSession.user.email,
+    user: userSession?.user.email,
   });
 
   return (
