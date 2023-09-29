@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { baseUrlStaging } from "../../../../axios/baseUrl";
+import { baseUrlStaging, baseUrlTest } from "../../../../axios/baseUrl";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
