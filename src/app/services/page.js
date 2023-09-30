@@ -5,15 +5,11 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import UserSubscription from "../../../models/userSubscription";
 
 const Service = async () => {
-  try {
-    const userSession = await getServerSession(authOptions);
+  const userSession = await getServerSession(authOptions);
 
-    const subscribedData = await UserSubscription.findOne({
-      user: userSession?.user.email,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  const subscribedData = await UserSubscription.findOne({
+    user: userSession?.user.email,
+  });
 
   return (
     <div>
