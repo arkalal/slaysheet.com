@@ -10,6 +10,8 @@ const Subscription = ({ priceData }) => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  console.log("priceData", priceData);
+
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/signIn");
