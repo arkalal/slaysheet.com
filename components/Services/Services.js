@@ -12,9 +12,6 @@ const Services = ({ isSubscribed, subscribedId }) => {
 
   const { data: session, status } = useSession();
 
-  console.log("subscribedId", subscribedId);
-  console.log("isSubscribed", isSubscribed);
-
   const router = useRouter();
 
   useEffect(() => {

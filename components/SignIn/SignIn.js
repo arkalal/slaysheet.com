@@ -13,6 +13,8 @@ const SignIn = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
+  console.log("router", router);
+
   useEffect(() => {
     if (session) {
       router.push("/services");
