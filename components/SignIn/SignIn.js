@@ -14,6 +14,7 @@ const SignIn = () => {
   const { data: session } = useSession();
 
   console.log("router", router);
+  console.log("session", session);
 
   useEffect(() => {
     if (session) {
