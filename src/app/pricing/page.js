@@ -1,24 +1,24 @@
-import React from "react";
-import Subscription from "../../../components/Subscription/Subscription";
-import axios from "../../../axios/getApi";
+// import React from "react";
+// import Subscription from "../../../components/Subscription/Subscription";
+// import axios from "../../../axios/getApi";
 
-const getPricing = async () => {
-  try {
-    const res = await axios.get("checkout");
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+// const getPricing = async () => {
+//   try {
+//     const res = await axios.get("checkout");
+//     return res.data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-const Pricing = async () => {
-  const priceData = await getPricing();
+// const Pricing = async () => {
+//   const priceData = await getPricing();
 
-  return (
-    <div>
-      <Subscription priceData={priceData}></Subscription>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <Subscription priceData={priceData}></Subscription>
+//     </div>
+//   );
+// };
 
-export default Pricing;
+// export default Pricing;
