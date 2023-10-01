@@ -11,10 +11,6 @@ const SignIn = () => {
 
   const handleGoogleAuth = () => {
     signIn("google");
-
-    if (status === "authenticated") {
-      router.push("/services");
-    }
   };
 
   console.log("router", router);
