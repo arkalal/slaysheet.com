@@ -14,7 +14,6 @@ const Service = async () => {
         subscribedId={subscribedData?._id}
         isSubscribed={subscribedData ? true : false}
       ></Services>
-      {/* <p>services</p> */}
     </div>
   );
 };
