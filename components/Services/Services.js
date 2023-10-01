@@ -6,7 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from "../../axios/openAiApi";
 
-const Services = ({ isSubscribed, subscribedId }) => {
+const Services = () => {
   const [messages, setMessages] = useState([]);
   const [Content, setContent] = useState("");
 
@@ -46,20 +46,20 @@ const Services = ({ isSubscribed, subscribedId }) => {
     }
   };
 
-  const handleCancelSubscription = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.delete(`webhook?id=${subscribedId}`);
-      router.refresh();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleCancelSubscription = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await axios.delete(`webhook?id=${subscribedId}`);
+  //     router.refresh();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div>
       <h5>Hello {session?.user.name} </h5>
-      {isSubscribed ? (
+      {/* {isSubscribed ? (
         <>
           {" "}
           <h3>Welcome to Premium Content!!</h3>{" "}
@@ -69,7 +69,7 @@ const Services = ({ isSubscribed, subscribedId }) => {
           {" "}
           <h3>Please pay us to access premium features</h3>{" "}
         </>
-      )}
+      )} */}
 
       <form onSubmit={handleSubmit} action="">
         <input onChange={(e) => setContent(e.target.value)} type="text" />
@@ -89,13 +89,13 @@ const Services = ({ isSubscribed, subscribedId }) => {
       </div>
 
       <br />
-      {isSubscribed && (
+      {/* {isSubscribed && (
         <>
           <button onClick={handleCancelSubscription}>
             Cancel Subscription
           </button>
         </>
-      )}
+      )} */}
       <button onClick={() => signOut()}>Log Out</button>
     </div>
   );
