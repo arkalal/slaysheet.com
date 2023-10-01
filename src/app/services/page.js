@@ -1,15 +1,10 @@
 import React from "react";
 import Services from "../../../components/Services/Services";
-import { getServerSession } from "next-auth";
-import UserSubscription from "../../../models/userSubscription";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import subscribedData from "../../../utils/subscribedData";
 
 const Service = async () => {
-  const userSession = await getServerSession(authOptions);
-
-  const subscribedData = await UserSubscription.findOne({
-    user: userSession?.user.email,
-  });
+  const subscribedData = await subscribedData();
+  console.log(subscribedData);
 
   return (
     <div>
