@@ -6,6 +6,9 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const SignIn = () => {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
   const handleGoogleAuth = () => {
     signIn("google");
 
@@ -13,9 +16,6 @@ const SignIn = () => {
       router.push("/services");
     }
   };
-
-  const router = useRouter();
-  const { data: session, status } = useSession();
 
   console.log("router", router);
   console.log("session", session);
