@@ -8,6 +8,10 @@ import { useRouter } from "next/navigation";
 const SignIn = () => {
   const handleGoogleAuth = () => {
     signIn("google");
+
+    if (status === "authenticated") {
+      router.push("/services");
+    }
   };
 
   const router = useRouter();
