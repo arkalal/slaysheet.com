@@ -22,6 +22,8 @@ const SignIn = () => {
     }
   }, [router, status]);
 
+  console.log("status", status);
+
   return (
     <div className={styles.googleAuth}>
       <button onClick={handleGoogleAuth}>Sign In with Google</button>
