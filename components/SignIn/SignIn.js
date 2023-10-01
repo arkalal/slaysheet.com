@@ -11,16 +11,16 @@ const SignIn = () => {
   };
 
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   console.log("router", router);
   console.log("session", session);
 
   useEffect(() => {
-    if (session) {
+    if (status === "authenticated") {
       router.push("/services");
     }
-  }, [router, session]);
+  }, [router, status]);
 
   return (
     <div className={styles.googleAuth}>

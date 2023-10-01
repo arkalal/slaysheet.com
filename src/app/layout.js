@@ -1,4 +1,4 @@
-import Provider from "../../components/Provider/Provider";
+import { NextAuthProvider } from "./Providers";
 import "./globals.scss";
 import { Roboto } from "next/font/google";
 
@@ -16,9 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider>
+        <NextAuthProvider>
           <main>{children}</main>
-        </Provider>
+        </NextAuthProvider>
       </body>
     </html>
   );
