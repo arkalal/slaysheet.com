@@ -5,16 +5,16 @@ import connectMongoDB from "../../../../../utils/mongoDB";
 import Users from "../../../../../models/users";
 
 export const authOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
+  // secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  pages: {
-    services: "/services",
-  },
+  // pages: {
+  //   services: "/services",
+  // },
   callbacks: {
     async jwt({ token, account }) {
       // Persist the OAuth access_token to the token right after signin
