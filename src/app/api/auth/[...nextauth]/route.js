@@ -15,46 +15,46 @@ export const authOptions = {
   // pages: {
   //   services: "/services",
   // },
-  callbacks: {
-    async jwt({ token, account }) {
-      // Persist the OAuth access_token to the token right after signin
-      if (account) {
-        token.accessToken = account.access_token;
-      }
-      return token;
-    },
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token from a provider.
-      session.accessToken = token.accessToken;
-      return session;
-    },
-    async signIn({ user, account }) {
-      if (account.provider === "google") {
-        const { name, email } = user;
-        const userData = {
-          name,
-          email,
-        };
+  // callbacks: {
+  //   async jwt({ token, account }) {
+  //     // Persist the OAuth access_token to the token right after signin
+  //     if (account) {
+  //       token.accessToken = account.access_token;
+  //     }
+  //     return token;
+  //   },
+  //   async session({ session, token, user }) {
+  //     // Send properties to the client, like an access_token from a provider.
+  //     session.accessToken = token.accessToken;
+  //     return session;
+  //   },
+  //   async signIn({ user, account }) {
+  //     if (account.provider === "google") {
+  //       const { name, email } = user;
+  //       const userData = {
+  //         name,
+  //         email,
+  //       };
 
-        try {
-          await connectMongoDB();
-          const userExists = await Users.findOne({ email });
+  //       try {
+  //         await connectMongoDB();
+  //         const userExists = await Users.findOne({ email });
 
-          if (!userExists) {
-            const res = await axios.post("user", userData);
+  //         if (!userExists) {
+  //           const res = await axios.post("user", userData);
 
-            if (res.status === 201) {
-              return user;
-            }
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
+  //           if (res.status === 201) {
+  //             return user;
+  //           }
+  //         }
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
 
-      return user;
-    },
-  },
+  //     return user;
+  //   },
+  // },
 };
 
 const handler = NextAuth(authOptions);
