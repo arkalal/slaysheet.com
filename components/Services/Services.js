@@ -2,23 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "./Services.module.scss";
-import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from "../../axios/openAiApi";
+import { UserButton, useUser } from "@clerk/nextjs";
 
 const Services = ({ subscribedId, isSubscribed }) => {
   const [messages, setMessages] = useState([]);
   const [Content, setContent] = useState("");
 
-  const { data: session, status } = useSession();
-
   const router = useRouter();
+  const { user } = useUser();
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/signIn");
-    }
-  }, [router, session, status]);
+  console.log("user", user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +53,7 @@ const Services = ({ subscribedId, isSubscribed }) => {
 
   return (
     <div>
-      <h5>Hello {session?.user.name} </h5>
+      <h5>Hello </h5>
       {/* {isSubscribed ? (
         <>
           {" "}
@@ -96,7 +91,7 @@ const Services = ({ subscribedId, isSubscribed }) => {
           </button>
         </>
       )} */}
-      <button onClick={() => signOut()}>Log Out</button>
+      <UserButton afterSignOutUrl="/" />
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import { NextAuthProvider } from "./Providers";
 import "./globals.scss";
 import { Roboto } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Roboto({
   subsets: ["latin"],
@@ -14,12 +14,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <NextAuthProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
           <main>{children}</main>
-        </NextAuthProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
