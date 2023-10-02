@@ -3,8 +3,6 @@ import Stripe from "stripe";
 import { headers } from "next/headers";
 import UserSubscription from "../../../../models/userSubscription";
 import connectMongoDB from "../../../../utils/mongoDB";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
@@ -61,20 +59,6 @@ export async function POST(req) {
         paymentInfo,
         productItem,
       };
-
-      const userSession = await getServerSession(authOptions);
-
-      const userEmail = session.customer_email;
-      // const sessionEmail = userSession.user.email;
-
-      // if (userEmail === sessionEmail) {
-      //   const subscribed = await UserSubscription.findOne({ user: userEmail });
-
-      //   console.log("subscribed", subscribed);
-      // }
-
-      console.log("userEmail", userEmail);
-      console.log("userSession", userSession);
 
       await connectMongoDB();
       await UserSubscription.create(orderData);

@@ -1,12 +1,15 @@
 import React from "react";
 import Services from "../../../../../components/Services/Services";
+import subscribedData from "../../../../../utils/subscribedData";
 
-const Service = () => {
+const Service = async () => {
+  const data = await subscribedData();
+
   return (
     <div>
       <Services
-      // subscribedId={newSubscribe?._id}
-      // isSubscribed={newSubscribe ? true : false}
+        subscribedId={data?._id}
+        isSubscribed={data ? true : false}
       ></Services>
     </div>
   );

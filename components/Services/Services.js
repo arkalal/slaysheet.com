@@ -5,6 +5,7 @@ import styles from "./Services.module.scss";
 import { useRouter } from "next/navigation";
 import axios from "../../axios/openAiApi";
 import { UserButton, useAuth } from "@clerk/nextjs";
+
 const Services = ({ subscribedId, isSubscribed }) => {
   const [messages, setMessages] = useState([]);
   const [Content, setContent] = useState("");
@@ -49,20 +50,20 @@ const Services = ({ subscribedId, isSubscribed }) => {
     }
   };
 
-  // const handleCancelSubscription = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await axios.delete(`webhook?id=${subscribedId}`);
-  //     router.refresh();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const handleCancelSubscription = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.delete(`webhook?id=${subscribedId}`);
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
       <h5>Hello </h5>
-      {/* {isSubscribed ? (
+      {isSubscribed ? (
         <>
           {" "}
           <h3>Welcome to Premium Content!!</h3>{" "}
@@ -72,7 +73,7 @@ const Services = ({ subscribedId, isSubscribed }) => {
           {" "}
           <h3>Please pay us to access premium features</h3>{" "}
         </>
-      )} */}
+      )}
 
       <form onSubmit={handleSubmit} action="">
         <input onChange={(e) => setContent(e.target.value)} type="text" />
@@ -92,13 +93,13 @@ const Services = ({ subscribedId, isSubscribed }) => {
       </div>
 
       <br />
-      {/* {isSubscribed && (
+      {isSubscribed && (
         <>
           <button onClick={handleCancelSubscription}>
             Cancel Subscription
           </button>
         </>
-      )} */}
+      )}
       <UserButton afterSignOutUrl="/" />
     </div>
   );
