@@ -4,16 +4,24 @@ import React, { useEffect, useState } from "react";
 import styles from "./Services.module.scss";
 import { useRouter } from "next/navigation";
 import axios from "../../axios/openAiApi";
-import { UserButton, useUser } from "@clerk/nextjs";
-
+import { UserButton, useAuth } from "@clerk/nextjs";
 const Services = ({ subscribedId, isSubscribed }) => {
   const [messages, setMessages] = useState([]);
   const [Content, setContent] = useState("");
 
   const router = useRouter();
-  const { user } = useUser();
+  const { isLoaded, userId } = useAuth();
 
-  console.log("user", user);
+  useEffect(() => {
+    const userLogic = () => {
+      // In case the user signs out while on the page.
+      if (!isLoaded || !userId) {
+        return null;
+      }
+    };
+
+    userLogic();
+  }, [isLoaded, router, userId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
