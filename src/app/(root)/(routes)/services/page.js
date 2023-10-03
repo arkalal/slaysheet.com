@@ -8,8 +8,8 @@ const Service = async () => {
   return (
     <div>
       <Services
-        subscribedId={data?._id}
-        isSubscribed={data ? true : false}
+        subscribedId={data && data?._id}
+        isSubscribed={data && data ? true : false}
       ></Services>
     </div>
   );
