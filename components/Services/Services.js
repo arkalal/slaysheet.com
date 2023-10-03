@@ -17,7 +17,7 @@ const Services = ({ subscribedId, isSubscribed }) => {
     const userLogic = () => {
       // In case the user signs out while on the page.
       if (!isLoaded || !userId) {
-        return null;
+        return router.push("/");
       }
     };
 
