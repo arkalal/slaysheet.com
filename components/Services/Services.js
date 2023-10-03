@@ -11,7 +11,7 @@ const Services = ({ subscribedId, isSubscribed }) => {
   const [Content, setContent] = useState("");
 
   const router = useRouter();
-  const { isLoaded, isSignedIn, user } = useUser();
+  const { isLoaded, isSignedIn } = useUser();
 
   useEffect(() => {
     const userLogic = () => {
@@ -22,7 +22,7 @@ const Services = ({ subscribedId, isSubscribed }) => {
     };
 
     userLogic();
-  }, [isLoaded, isSignedIn, router, user]);
+  }, [isLoaded, isSignedIn, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
