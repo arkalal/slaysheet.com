@@ -38,16 +38,6 @@ const Services = ({ subscribedId, isSubscribed }) => {
     }
   };
 
-  // const handleCancelSubscription = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await axios.delete(`webhook?id=${subscribedId}`);
-  //     router.refresh();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   return (
     <div>
       <h5>Hello </h5>
@@ -80,14 +70,12 @@ const Services = ({ subscribedId, isSubscribed }) => {
         })}{" "}
       </div>
 
-      {/* <br />
+      <br />
       {isSubscribed && (
         <>
-          <button onClick={handleCancelSubscription}>
-            Cancel Subscription
-          </button>
+          <button onClick={""}>Manage Subscription</button>
         </>
-      )} */}
+      )}
       <UserButton afterSignOutUrl="/" />
     </div>
   );
