@@ -3,13 +3,13 @@ import Services from "../../../../../components/Services/Services";
 import subscribedData from "../../../../../utils/subscribedData";
 
 const Service = async () => {
-  const data = await subscribedData();
+  // const data = await subscribedData();
 
   return (
     <div>
       <Services
-        subscribedId={data && data?._id}
-        isSubscribed={data && data ? true : false}
+      // subscribedId={data && data?._id}
+      // isSubscribed={data && data ? true : false}
       ></Services>
     </div>
   );
