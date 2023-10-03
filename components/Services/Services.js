@@ -13,19 +13,21 @@ const Services = ({ subscribedId, isSubscribed }) => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
 
-  useEffect(() => {
-    const userLogic = () => {
-      // In case the user signs out while on the page.
-      if (!isLoaded || !isSignedIn) {
-        return router.push("/");
-      }
-      if (user) {
-        return router.push("/services");
-      }
-    };
+  // useEffect(() => {
+  //   const userLogic = () => {
+  //     // In case the user signs out while on the page.
+  //     // if (!isLoaded || !isSignedIn) {
+  //     //   return router.push("/");
+  //     // }
+  //     if (user) {
+  //       return router.push("/services");
+  //     } else {
+  //       return router.push("/");
+  //     }
+  //   };
 
-    userLogic();
-  }, [isLoaded, isSignedIn, router, user]);
+  //   userLogic();
+  // }, [isLoaded, isSignedIn, router, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
