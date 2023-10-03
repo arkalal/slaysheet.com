@@ -11,7 +11,7 @@ import { NextResponse } from "next/server";
 // });
 
 export default authMiddleware({
-  publicRoutes: ["/"],
+  publicRoutes: ["/", "/api/webhook", "/api/checkout"],
 });
 
 export const config = {
