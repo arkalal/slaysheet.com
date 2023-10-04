@@ -41,6 +41,17 @@ export async function POST(req) {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
 
+      const subscription = await stripe.subscriptions.retrieve(
+        session.subscription
+      );
+
+      if (!session?.metadata?.userId) {
+        return NextResponse.json(
+          { message: "User id is required" },
+          { status: 400 }
+        );
+      }
+
       const line_items = await stripe.checkout.sessions.listLineItems(
         event.data.object.id
       );
@@ -56,6 +67,12 @@ export async function POST(req) {
 
       const orderData = {
         user: userId,
+        stripeCustomerId: subscription.customer,
+        stripeSubscriptionId: subscription.id,
+        stripePriceId: subscription.items.data[0].price.id,
+        stripeCurrentPeriodEnd: new Date(
+          subscription.current_period_end * 1000
+        ),
         paymentInfo,
         productItem,
       };
@@ -63,7 +80,29 @@ export async function POST(req) {
       await connectMongoDB();
       await UserSubscription.create(orderData);
     }
-    return new NextResponse("processed webhook", { status: 200 });
+
+    if (event.type === "invoice.payment_succeeded") {
+      const session = event.data.object;
+
+      const subscription = await stripe.subscriptions.retrieve(
+        session.subscription
+      );
+
+      await connectMongoDB();
+      await UserSubscription.updateMany(
+        {
+          stripeSubscriptionId: subscription.id,
+        },
+        {
+          stripePriceId: subscription.items.data[0].price.id,
+          stripeCurrentPeriodEnd: new Date(
+            subscription.current_period_end * 1000
+          ),
+        }
+      );
+    }
+
+    return NextResponse.json({ message: "processed webhook" }, { status: 200 });
   } catch (error) {
     console.log(error);
   }

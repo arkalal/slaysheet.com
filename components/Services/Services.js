@@ -38,6 +38,17 @@ const Services = ({ subscribedId, isSubscribed }) => {
     }
   };
 
+  const manageSubscription = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.get("stripe");
+      router.push(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <h5>Hello </h5>
@@ -73,7 +84,7 @@ const Services = ({ subscribedId, isSubscribed }) => {
       <br />
       {isSubscribed && (
         <>
-          <button onClick={""}>Manage Subscription</button>
+          <button onClick={manageSubscription}>Manage Subscription</button>
         </>
       )}
       <UserButton afterSignOutUrl="/" />

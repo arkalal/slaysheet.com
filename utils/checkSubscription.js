@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 import axios from "../axios/getApi";
 
 const getWebhook = async () => {
@@ -7,11 +7,11 @@ const getWebhook = async () => {
 };
 
 const checkSubscription = async () => {
-  const user = await currentUser();
   const webhook = await getWebhook();
+  const { userId } = auth();
 
   const isSubscribed = Array.from(webhook.subscription).some(
-    (item) => item.user === user.emailAddresses[0].emailAddress
+    (item) => item.user === userId
   );
 
   if (isSubscribed) {

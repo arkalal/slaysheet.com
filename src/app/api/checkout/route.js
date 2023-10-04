@@ -6,6 +6,7 @@ import {
   baseUrlTest,
 } from "../../../../axios/baseUrl";
 import { currentUser } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
@@ -20,6 +21,7 @@ export async function GET(req) {
 export async function POST(req) {
   const { priceId } = await req.json();
   const user = await currentUser();
+  const { userId } = auth();
 
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -30,11 +32,11 @@ export async function POST(req) {
     ],
     customer_email: user.emailAddresses[0].emailAddress,
     mode: "subscription",
-    success_url: `${baseUrlStaging}/services`,
-    cancel_url: `${baseUrlStaging}/services`,
+    success_url: `${baseUrlTest}/services`,
+    cancel_url: `${baseUrlTest}/services`,
     billing_address_collection: "auto",
     metadata: {
-      userId: user.emailAddresses[0].emailAddress,
+      userId: userId,
     },
   });
 

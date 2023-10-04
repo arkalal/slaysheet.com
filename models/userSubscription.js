@@ -6,6 +6,18 @@ const userSubscriptionSchema = new Schema({
     required: true,
     ref: "User",
   },
+  stripeCustomerId: {
+    type: String,
+  },
+  stripeSubscriptionId: {
+    type: String,
+  },
+  stripePriceId: {
+    type: String,
+  },
+  stripeCurrentPeriodEnd: {
+    type: Date,
+  },
   productItem: [
     {
       product: {
@@ -30,7 +42,6 @@ const userSubscriptionSchema = new Schema({
   paymentInfo: {
     id: {
       type: String,
-      // required: true,
     },
     status: {
       type: String,
