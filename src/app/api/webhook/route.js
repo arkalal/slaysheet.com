@@ -89,7 +89,7 @@ export async function POST(req) {
       );
 
       await connectMongoDB();
-      await UserSubscription.updateMany(
+      await UserSubscription.updateOne(
         {
           stripeSubscriptionId: subscription.id,
         },
