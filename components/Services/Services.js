@@ -5,6 +5,7 @@ import styles from "./Services.module.scss";
 import { useRouter } from "next/navigation";
 import axios from "../../axios/openAiApi";
 import { UserButton } from "@clerk/nextjs";
+import normalAxios from "../../axios/getApi";
 
 const Services = ({ subscribedId, isSubscribed }) => {
   const [messages, setMessages] = useState([]);
@@ -42,7 +43,7 @@ const Services = ({ subscribedId, isSubscribed }) => {
     e.preventDefault();
 
     try {
-      const res = await axios.get("stripe");
+      const res = await normalAxios.get("stripe");
       router.push(res.data);
     } catch (error) {
       console.log(error);
