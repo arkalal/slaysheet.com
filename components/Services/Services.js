@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 import axios from "../../axios/openAiApi";
 import { UserButton } from "@clerk/nextjs";
 import normalAxios from "../../axios/getApi";
+import EmptyChat from "../EmptyChat/EmptyChat";
 
-const Services = ({ subscribedId, isSubscribed }) => {
+const Services = ({ isSubscribed }) => {
   const [messages, setMessages] = useState([]);
   const [Content, setContent] = useState("");
 
@@ -24,12 +25,10 @@ const Services = ({ subscribedId, isSubscribed }) => {
 
       const newMessages = [...messages, userMessage];
 
-      if (session.user) {
-        const response = await axios.post("conversation", {
-          messages: newMessages,
-        });
-        setMessages((prev) => [...prev, userMessage, response.data]);
-      }
+      const response = await axios.post("conversation", {
+        messages: newMessages,
+      });
+      setMessages((prev) => [...prev, userMessage, response.data]);
 
       form.reset();
     } catch (error) {
@@ -73,6 +72,12 @@ const Services = ({ subscribedId, isSubscribed }) => {
 
       <div>
         {" "}
+        {messages.length === 0 && (
+          <>
+            {" "}
+            <EmptyChat />{" "}
+          </>
+        )}
         {messages.map((item, index) => {
           return (
             <div key={index}>
