@@ -32,8 +32,8 @@ export async function POST(req) {
     ],
     customer_email: user.emailAddresses[0].emailAddress,
     mode: "subscription",
-    success_url: `${baseUrlStaging}/services`,
-    cancel_url: `${baseUrlStaging}/services`,
+    success_url: `${baseUrlTest}/services`,
+    cancel_url: `${baseUrlTest}/services`,
     billing_address_collection: "auto",
     metadata: {
       userId: userId,
