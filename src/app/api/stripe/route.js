@@ -16,7 +16,7 @@ export async function GET(req) {
   if (userSubscription && userSubscription.stripeCustomerId) {
     const stripeSession = await stripe.billingPortal.sessions.create({
       customer: userSubscription.stripeCustomerId,
-      return_url: `${baseUrlTest}/services`,
+      return_url: `${baseUrlStaging}/services`,
     });
 
     return NextResponse.json(stripeSession.url);
