@@ -3,7 +3,11 @@ import stripe from "../../../../utils/stripe";
 import { NextResponse } from "next/server";
 import UserSubscription from "../../../../models/userSubscription";
 import connectMongoDB from "../../../../utils/mongoDB";
-import { baseUrlStaging, baseUrlTest } from "../../../../axios/baseUrl";
+import {
+  baseUrlProd,
+  baseUrlStaging,
+  baseUrlTest,
+} from "../../../../axios/baseUrl";
 
 export async function GET(req) {
   const { userId } = auth();
@@ -16,7 +20,7 @@ export async function GET(req) {
   if (userSubscription && userSubscription.stripeCustomerId) {
     const stripeSession = await stripe.billingPortal.sessions.create({
       customer: userSubscription.stripeCustomerId,
-      return_url: `${baseUrlStaging}/studio`,
+      return_url: `${baseUrlProd}/studio`,
     });
 
     return NextResponse.json(stripeSession.url);
