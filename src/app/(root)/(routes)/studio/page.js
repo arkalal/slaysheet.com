@@ -1,5 +1,5 @@
 import React from "react";
-import Services from "../../../../../components/Services/Services";
+import Services from "../../../../../components/Screens/StudioScreen/Services/Services";
 import checkSubscription from "../../../../../utils/checkSubscription";
 
 const Studio = async () => {

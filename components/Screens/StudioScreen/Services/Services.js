@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Services.module.scss";
 import { useRouter } from "next/navigation";
-import axios from "../../axios/openAiApi";
+import axios from "../../../../axios/openAiApi";
 import { UserButton } from "@clerk/nextjs";
-import normalAxios from "../../axios/getApi";
-import EmptyChat from "../EmptyChat/EmptyChat";
+import normalAxios from "../../../../axios/getApi";
+import EmptyChat from "../../../Reusable/EmptyChat/EmptyChat";
 
 const Services = ({ isSubscribed }) => {
   const [messages, setMessages] = useState([]);
