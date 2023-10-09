@@ -2,7 +2,7 @@
 
 import React from "react";
 import styles from "./PricingCard.module.scss";
-import axios from "../../axios/getApi";
+import axios from "../../../../axios/getApi";
 import { useRouter } from "next/navigation";
 
 const PricingCard = ({ data }) => {
