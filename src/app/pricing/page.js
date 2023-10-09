@@ -1,5 +1,5 @@
 import React from "react";
-import Subscription from "../../../components/Subscription/Subscription";
+import Subscription from "../../../components/Screens/PricingScreen/Subscription/Subscription";
 import axios from "../../../axios/getApi";
 
 const getPricing = async () => {
