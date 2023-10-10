@@ -23,6 +23,10 @@ export async function POST(req) {
   const user = await currentUser();
   const { userId } = auth();
 
+  if (!userId) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 400 });
+  }
+
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
