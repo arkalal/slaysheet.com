@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Navbar.module.scss";
 import Link from "next/link";
+import BlueButton from "../../../Reusable/BlueButton/BlueButton";
 
 const Navbar = () => {
   return (
@@ -13,11 +14,7 @@ const Navbar = () => {
       <div className={styles.menu}></div>
 
       <div className={styles.signIn}>
-        <button>
-          <Link className={styles.signInLink} href="/signIn">
-            Sign In
-          </Link>
-        </button>
+        <BlueButton signInLink={true} />
       </div>
     </div>
   );

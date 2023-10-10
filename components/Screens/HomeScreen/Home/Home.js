@@ -5,7 +5,7 @@ import Banner from "../Banner/Banner";
 
 const Home = () => {
   return (
-    <div>
+    <div className={styles.home}>
       <Navbar />
       <Banner />
     </div>

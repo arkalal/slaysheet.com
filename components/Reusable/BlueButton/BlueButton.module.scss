@@ -1,0 +1,30 @@
+.blueButton {
+  button {
+    background: linear-gradient(to right, #019eff, #02bfff);
+    border: none;
+    outline: none;
+    font-size: 20px;
+    padding: 8px 18px;
+    border-radius: 15px;
+    font-weight: 500;
+    box-shadow: 0px 0px 10px 0px rgba(1, 169, 255, 1);
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+
+    &:hover {
+      background: #000;
+    }
+
+    .signInLink {
+      text-decoration: none;
+      color: white;
+    }
+  }
+}
+
+.blueButtonWhite {
+  button {
+    color: white;
+    font-weight: bold;
+  }
+}
