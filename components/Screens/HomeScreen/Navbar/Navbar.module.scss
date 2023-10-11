@@ -17,7 +17,10 @@
     }
 
     .dot {
-      color: #ff8700;
+      background-image: linear-gradient(to right, #0287d9, #02bfff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
   }
 }

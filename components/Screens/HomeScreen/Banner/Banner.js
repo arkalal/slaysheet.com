@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Banner.module.scss";
 import AiChatbox from "../../../Reusable/AiChatbox/AiChatbox";
+import TypingText from "../../../Reusable/TypingText/TypingText";
 
 const Banner = () => {
   return (
@@ -13,7 +14,7 @@ const Banner = () => {
 
       <div className={styles.bannerIntro}>
         <div className={styles.bannerTitle}>
-          <h1>Lorem ipsum dolor sit.</h1>
+          <TypingText />
         </div>
 
         <div className={styles.bannerDesc}>
