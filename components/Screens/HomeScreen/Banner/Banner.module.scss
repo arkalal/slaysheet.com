@@ -15,6 +15,13 @@
 
     button {
       font-size: 22px;
+      border: none;
+      outline: none;
+      background-color: black;
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+      padding: 8px;
     }
   }
 
@@ -26,22 +33,49 @@
     gap: 45px;
     margin-top: 60px;
 
-    .bannerDesc {
-      text-align: center;
-      width: 50%;
-
-      p {
-        font-size: 21.5px;
-        line-height: 34px;
-      }
-    }
-
     .bannerTitle {
       width: 60%;
+      height: 250px;
     }
 
     .bannerAiChatbox {
       width: 50%;
+      margin-bottom: 30px;
+    }
+
+    .bannerCard {
+      display: flex;
+      margin-top: 40px;
+      width: 80%;
+      gap: 180px;
+
+      .bannerCards {
+        .smallBannerCards {
+          margin-bottom: 60px;
+
+          &:nth-child(2) {
+            margin-left: 150px;
+          }
+        }
+      }
+
+      .bannerServices {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .serviceTopics {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 10px;
+          margin-bottom: 60px;
+
+          p {
+            color: gray;
+          }
+        }
+      }
     }
   }
 }

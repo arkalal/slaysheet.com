@@ -15,13 +15,13 @@ const TypingText = () => {
               "Productivity through AI",
               "Creative Images with AI",
               "Auto Generated Emails",
-              "Slaysheet Platform",
               "Emails Sending Automation",
               "AI Note Creations",
               "PDF Summarization",
               "Multi Language AI Communication",
+              "Seamless PDF Communication",
             ]}
-            loop={20}
+            loop={10}
             cursor
             cursorStyle="|"
             typeSpeed={70}

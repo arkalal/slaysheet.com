@@ -3,7 +3,6 @@ import Stripe from "stripe";
 import { headers } from "next/headers";
 import UserSubscription from "../../../../models/userSubscription";
 import connectMongoDB from "../../../../utils/mongoDB";
-import { auth } from "@clerk/nextjs";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
@@ -66,10 +65,6 @@ export async function POST(req) {
         amountPaid,
       };
 
-      if (!userId) {
-        return NextResponse.json({ message: "Unauthorized" }, { status: 400 });
-      }
-
       const orderData = {
         user: userId,
         stripeCustomerId: subscription.customer,
@@ -114,24 +109,12 @@ export async function POST(req) {
 }
 
 export async function GET() {
-  const { userId } = auth();
-
-  if (!userId) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 400 });
-  }
-
   await connectMongoDB();
   const subscription = await UserSubscription.find();
   return NextResponse.json({ subscription }, { status: 200 });
 }
 
 export async function DELETE(req) {
-  const { userId } = auth();
-
-  if (!userId) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 400 });
-  }
-
   const id = req.nextUrl.searchParams.get("id");
   await connectMongoDB();
   await UserSubscription.findByIdAndDelete(id);
