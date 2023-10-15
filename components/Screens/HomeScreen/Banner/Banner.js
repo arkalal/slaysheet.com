@@ -8,6 +8,9 @@ import animeData1 from "../../../../LottieAnimation/animation_lnq7m5rs.json";
 import animeData2 from "../../../../LottieAnimation/animation_lnq7rp42.json";
 import SmallAnime from "../../../Reusable/SmallAnime/SmallAnime";
 import scanPdfAnime from "../../../../LottieAnimation/scanPdf.json";
+import chatAIAnime from "../../../../LottieAnimation/talk AI.json";
+import generateImageAnime from "../../../../LottieAnimation/AI Images.json";
+import AIEmailsAnime from "../../../../LottieAnimation/Email AI.json";
 
 const Banner = () => {
   return (
@@ -43,14 +46,17 @@ const Banner = () => {
               <SmallAnime data={scanPdfAnime} />
               <h1>Chat with PDF</h1>
               <p>
-                Imporove your productivity by Lorem ipsum, dolor sit amet
-                consectetur adipisicing elit. Neque, quas.
+                Improve your productivity on your research by the AI ability of
+                chatting with your own pdf. Upload your own pdf on our platform
+                and ask any questions. Our AI tool will do the research and
+                answer all your questions regarding your document within a
+                second!
               </p>
             </div>
 
             <div className={styles.serviceTopics}>
-              <div>Icon</div>
-              <h1>Lorem ipsum dolor sit.</h1>
+              <SmallAnime data={AIEmailsAnime} />
+              <h1>Help AI write your Emails</h1>
               <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. At
                 odit nulla aliquam corporis eligendi sint.
@@ -58,8 +64,17 @@ const Banner = () => {
             </div>
 
             <div className={styles.serviceTopics}>
-              <div>Icon</div>
-              <h1>Lorem ipsum dolor sit.</h1>
+              <SmallAnime data={generateImageAnime} />
+              <h1>Generate Creative Images</h1>
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. At
+                odit nulla aliquam corporis eligendi sint.
+              </p>
+            </div>
+
+            <div className={styles.serviceTopics}>
+              <SmallAnime data={chatAIAnime} />
+              <h1>Advanced Communication with AI</h1>
               <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. At
                 odit nulla aliquam corporis eligendi sint.

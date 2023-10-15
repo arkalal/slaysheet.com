@@ -50,6 +50,9 @@
       gap: 180px;
 
       .bannerCards {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         .smallBannerCards {
           margin-bottom: 60px;
 
@@ -71,8 +74,17 @@
           gap: 10px;
           margin-bottom: 60px;
 
+          h1 {
+            background-image: linear-gradient(to right, #0287d9, #02bfff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+          }
+
           p {
             color: gray;
+            line-height: 30px;
+            font-size: 20px;
           }
         }
       }
