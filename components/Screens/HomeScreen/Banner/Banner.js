@@ -58,8 +58,9 @@ const Banner = () => {
               <SmallAnime data={AIEmailsAnime} />
               <h1>Help AI write your Emails</h1>
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. At
-                odit nulla aliquam corporis eligendi sint.
+                Just say what kind of emails you need your AI to write for you
+                and get your advnaced personal or professional email exactly the
+                way you want within a second.
               </p>
             </div>
 
@@ -67,8 +68,9 @@ const Banner = () => {
               <SmallAnime data={generateImageAnime} />
               <h1>Generate Creative Images</h1>
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. At
-                odit nulla aliquam corporis eligendi sint.
+                Bring your creative imaginations to life without being an
+                artist. Just instruct the AI to generate creative graphical
+                images for you based on your text.
               </p>
             </div>
 
@@ -76,8 +78,9 @@ const Banner = () => {
               <SmallAnime data={chatAIAnime} />
               <h1>Advanced Communication with AI</h1>
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. At
-                odit nulla aliquam corporis eligendi sint.
+                Talk to your own AI chatbot just like a human. Upload any
+                screenshot or images it will help to solve your problems like a
+                real guide.
               </p>
             </div>
           </div>
