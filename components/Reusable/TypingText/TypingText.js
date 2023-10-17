@@ -13,6 +13,7 @@ const TypingText = () => {
           <Typewriter
             words={[
               "Productivity through AI",
+              "Speed of Work with Generative AI",
               "Creative Images with AI",
               "Auto Generated Emails",
               "Emails Sending Automation",
