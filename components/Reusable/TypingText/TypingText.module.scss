@@ -1,13 +1,12 @@
+@import "../../../styleReuse/mixins.module.scss";
+
 .TypingText {
   h1 {
     font-size: 80px;
     text-align: center;
 
     span {
-      background-image: linear-gradient(to right, #0287d9, #02bfff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      @include gradientText;
     }
   }
 }

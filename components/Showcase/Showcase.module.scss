@@ -1,0 +1,16 @@
+@import "../../styleReuse/mixins.module.scss";
+
+.Showcase {
+  margin-top: 140px;
+  margin-left: 20%;
+  margin-bottom: 40px;
+
+  h1 {
+    width: 80%;
+    font-size: 70px;
+
+    span {
+      @include gradientText;
+    }
+  }
+}

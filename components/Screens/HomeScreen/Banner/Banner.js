@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Banner.module.scss";
-import AiChatbox from "../../../Reusable/AiChatbox/AiChatbox";
 import TypingText from "../../../Reusable/TypingText/TypingText";
 import BannerCard from "../../../Reusable/BannerCard/BannerCard";
 import SmallAnime from "../../../Reusable/SmallAnime/SmallAnime";

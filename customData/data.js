@@ -9,7 +9,6 @@ import chatAIAnime from "../LottieAnimation/talk AI.json";
 export const bannerCardData = [
   { bannerAnime: animeData },
   { bannerAnime: animeData1 },
-  { bannerAnime: animeData2 },
 ];
 
 export const serviceTopicsData = [

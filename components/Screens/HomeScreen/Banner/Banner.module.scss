@@ -1,3 +1,5 @@
+@import "../../../../styleReuse/mixins.module.scss";
+
 .banner {
   margin-top: 80px;
 
@@ -49,11 +51,11 @@
         flex-direction: column;
         justify-content: center;
         .smallBannerCards {
-          margin-bottom: 60px;
+          margin-bottom: 100px;
 
-          &:nth-child(2) {
-            margin-left: 150px;
-          }
+          // &:nth-child(2) {
+          //   margin-left: 150px;
+          // }
         }
       }
 
@@ -70,10 +72,7 @@
           margin-bottom: 60px;
 
           h1 {
-            background-image: linear-gradient(to right, #0287d9, #02bfff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            @include gradientText;
           }
 
           p {
