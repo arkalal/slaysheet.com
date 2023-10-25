@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
+import { connect } from "react-redux";
 
-const ShowBox = () => {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const selectedButtonId = localStorage.getItem("buttonId");
-      console.log("selectedButtonId", selectedButtonId);
-    }
-  }, []);
-
+const ShowBox = ({ getButtonId }) => {
+  console.log("getButtonId", getButtonId);
   return <div>ShowBox</div>;
 };
 
-export default ShowBox;
+const mapStateToProps = ({ slay }) => {
+  return {
+    getButtonId: slay.getButtonId,
+  };
+};
+
+export default connect(mapStateToProps, null)(ShowBox);

@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Showcase.module.scss";
 import ButtonSwitch from "../ButtonSwitch/ButtonSwitch";
+import ReduxProvider from "../../redux/ReduxProvider";
 
 const Showcase = () => {
   const buttons = [
@@ -20,7 +21,9 @@ const Showcase = () => {
         <span>Explore our Services.</span>{" "}
       </h1>
 
-      <ButtonSwitch buttons={buttons} />
+      <ReduxProvider>
+        <ButtonSwitch buttons={buttons} />
+      </ReduxProvider>
 
       <p className={styles.showcaseDesc}>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, fugit

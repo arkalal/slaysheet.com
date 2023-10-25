@@ -2,10 +2,12 @@
 
 import React from "react";
 import styles from "./ButtonSwitch.module.scss";
+import * as dispatcher from "../../redux/store/dispatchers";
+import { connect } from "react-redux";
 
-const ButtonSwitch = ({ buttons }) => {
+const ButtonSwitch = ({ buttons, dispatchButtonId }) => {
   const handleButtonClick = (id) => {
-    window.localStorage.setItem("buttonId", id);
+    dispatchButtonId(id);
   };
 
   return (
@@ -24,4 +26,4 @@ const ButtonSwitch = ({ buttons }) => {
   );
 };
 
-export default ButtonSwitch;
+export default connect(null, dispatcher)(ButtonSwitch);
