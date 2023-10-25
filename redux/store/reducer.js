@@ -1,7 +1,7 @@
 const { default: Actions } = require("./actions");
 
 const defaultState = {
-  getButtonId: null,
+  getButtonId: 1,
 };
 
 const slayReducer = (state = defaultState, action) => {

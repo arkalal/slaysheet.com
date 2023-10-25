@@ -5,7 +5,7 @@ import styles from "./ButtonSwitch.module.scss";
 import * as dispatcher from "../../redux/store/dispatchers";
 import { connect } from "react-redux";
 
-const ButtonSwitch = ({ buttons, dispatchButtonId }) => {
+const ButtonSwitch = ({ buttons, dispatchButtonId, getButtonId }) => {
   const handleButtonClick = (id) => {
     dispatchButtonId(id);
   };
@@ -15,7 +15,12 @@ const ButtonSwitch = ({ buttons, dispatchButtonId }) => {
       {buttons.map((item, index) => {
         return (
           <div key={index}>
-            <button onClick={() => handleButtonClick(item.id)}>
+            <button
+              className={
+                getButtonId === item.id ? `${styles.buttonActive}` : ""
+              }
+              onClick={() => handleButtonClick(item.id)}
+            >
               {" "}
               {item.label}{" "}
             </button>
@@ -26,4 +31,10 @@ const ButtonSwitch = ({ buttons, dispatchButtonId }) => {
   );
 };
 
-export default connect(null, dispatcher)(ButtonSwitch);
+const mapStateToProps = ({ slay }) => {
+  return {
+    getButtonId: slay.getButtonId,
+  };
+};
+
+export default connect(mapStateToProps, dispatcher)(ButtonSwitch);

@@ -9,6 +9,14 @@
   border-radius: 10px;
   padding: 5px;
 
+  .buttonActive {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    cursor: pointer;
+    color: black;
+  }
+
   button {
     border: none;
     outline: none;
