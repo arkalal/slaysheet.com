@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 const ShowScreens = ({ getButtonId, showScreenComp }) => {
   console.log("getButtonId", getButtonId);
 
-  return <div>{showScreenComp[getButtonId] || null}</div>;
+  return <div key={getButtonId}>{showScreenComp[getButtonId] || null}</div>;
 };
 
 const mapStateToProps = ({ slay }) => {

@@ -1,26 +1,36 @@
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px;
+  position: sticky;
+  top: 0px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 1;
 
-  .logo {
-    font-size: 20px;
-    font-weight: bold;
-    border: 1px dotted #019eff;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 6px;
+  .navBarWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20px 20px 20px;
+    padding: 20px 0;
 
-    .slayWord {
-      color: #000;
-    }
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      border: 1px dotted #019eff;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 6px;
 
-    .dot {
-      background-image: linear-gradient(to right, #0287d9, #02bfff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      .slayWord {
+        color: #000;
+      }
+
+      .dot {
+        background-image: linear-gradient(to right, #0287d9, #02bfff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
     }
   }
 }
