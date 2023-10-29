@@ -6,12 +6,26 @@
   }
 
   .AiChats {
-    padding-top: 30px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
     width: 80%;
-    margin: auto;
+    margin: 40px auto 0 auto;
+    height: 520px;
+    overflow-y: scroll;
+    padding: 20px;
+
+    .loaderAI {
+      object-fit: contain;
+      width: 140px;
+      margin: 0 auto;
+    }
+
+    .chatConverseAnime {
+      object-fit: contain;
+      width: 300px;
+      margin: auto;
+    }
 
     .AiConverseUser {
       background-color: lightgray;
@@ -19,17 +33,20 @@
       border-radius: 10px;
       border: none;
       outline: none;
-      display: inline-block;
-      white-space: nowrap;
       line-height: 35px;
+      width: fit-content;
+      -webkit-box-shadow: 5px 5px 18px #b2b8c9, -5px -5px 18px #f0f8ff;
+      box-shadow: 5px 5px 18px #b2b8c9, -5px -5px 18px #f0f8ff;
     }
 
     .AiConverseMachine {
       background-color: white;
-      border: 1px solid black;
       border-radius: 10px;
       padding: 10px;
       line-height: 30px;
+      width: fit-content;
+      -webkit-box-shadow: 5px 5px 18px #b2b8c9, -5px -5px 18px #f0f8ff;
+      box-shadow: 5px 5px 18px #b2b8c9, -5px -5px 18px #f0f8ff;
     }
   }
 }

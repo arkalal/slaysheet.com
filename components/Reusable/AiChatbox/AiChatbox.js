@@ -4,12 +4,22 @@ import React from "react";
 import styles from "./AiChatbox.module.scss";
 import BlueButton from "../BlueButton/BlueButton";
 import axios from "../../../axios/openAiApi";
+import Lottie from "lottie-react";
+import chatBoxAnime from "../../../LottieAnimation/chatboxAnime.json";
 
-const AiChatbox = ({ setMessages, Content, setContent, messages }) => {
+const AiChatbox = ({
+  setMessages,
+  Content,
+  setContent,
+  messages,
+  setLoading,
+}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
+
       const userMessage = {
         role: "user",
         content: Content,
@@ -20,12 +30,14 @@ const AiChatbox = ({ setMessages, Content, setContent, messages }) => {
       const response = await axios.post("conversation", {
         messages: newMessages,
       });
-      setMessages((prev) => [...prev, userMessage, response.data]);
+      setMessages((prev) => [userMessage, response.data, ...prev]);
       setContent("");
 
       form.reset();
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -38,7 +50,9 @@ const AiChatbox = ({ setMessages, Content, setContent, messages }) => {
   return (
     <div className={styles.aiChatbox}>
       <div className={styles.aiChatboxInterior}>
-        <div className={styles.chatBoxIcon}>Icon</div>
+        <div className={styles.chatBoxIcon}>
+          <Lottie animationData={chatBoxAnime} />
+        </div>
 
         <div className={styles.chatboxInput}>
           <input
