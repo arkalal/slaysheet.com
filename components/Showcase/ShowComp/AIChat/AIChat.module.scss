@@ -1,5 +1,35 @@
 .AIChat {
-  width: 60%;
-  margin: auto;
-  padding-top: 2%;
+  .chatBox {
+    width: 60%;
+    margin: auto;
+    padding-top: 2%;
+  }
+
+  .AiChats {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 80%;
+    margin: auto;
+
+    .AiConverseUser {
+      background-color: lightgray;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      display: inline-block;
+      white-space: nowrap;
+      line-height: 35px;
+    }
+
+    .AiConverseMachine {
+      background-color: white;
+      border: 1px solid black;
+      border-radius: 10px;
+      padding: 10px;
+      line-height: 30px;
+    }
+  }
 }

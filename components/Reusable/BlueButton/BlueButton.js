@@ -1,8 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import styles from "./BlueButton.module.scss";
 
-const BlueButton = ({ signInLink, text, color }) => {
+const BlueButton = ({ signInLink, text, color, onClick }) => {
   return (
     <div
       className={
@@ -11,7 +13,7 @@ const BlueButton = ({ signInLink, text, color }) => {
           : `${styles.blueButton}`
       }
     >
-      <button>
+      <button onClick={onClick}>
         {signInLink && (
           <>
             <Link className={styles.signInLink} href="/signIn">
