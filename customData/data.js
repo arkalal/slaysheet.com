@@ -1,6 +1,5 @@
 import animeData from "../LottieAnimation/animation_lnptl8eo.json";
 import animeData1 from "../LottieAnimation/animation_lnq7m5rs.json";
-import animeData2 from "../LottieAnimation/animation_lnq7rp42.json";
 import scanPdfAnime from "../LottieAnimation/scanPdf.json";
 import AIEmailsAnime from "../LottieAnimation/Email AI.json";
 import generateImageAnime from "../LottieAnimation/AI Images.json";

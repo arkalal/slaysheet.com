@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import AiChatbox from "../../../Reusable/AiChatbox/AiChatbox";
 import styles from "./AIChat.module.scss";
 import Lottie from "lottie-react";
-import AILoadAnime from "../../../../LottieAnimation/AIAskAnime.json";
+import AILoadAnime from "../../../../LottieAnimation/talk AI.json";
 import chattingAnime from "../../../../LottieAnimation/chatting.json";
 
 const AIChat = () => {

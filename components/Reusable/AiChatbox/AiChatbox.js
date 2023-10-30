@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "./AiChatbox.module.scss";
 import BlueButton from "../BlueButton/BlueButton";
 import axios from "../../../axios/openAiApi";
 import Lottie from "lottie-react";
-import chatBoxAnime from "../../../LottieAnimation/chatboxAnime.json";
+import chatBoxAnime from "../../../LottieAnimation/animation_lnq7m5rs.json";
+import { Typewriter } from "react-simple-typewriter";
 
 const AiChatbox = ({
   setMessages,
@@ -14,6 +15,8 @@ const AiChatbox = ({
   messages,
   setLoading,
 }) => {
+  const [IsTypeWriter, setIsTypeWriter] = useState(true);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -55,13 +58,39 @@ const AiChatbox = ({
         </div>
 
         <div className={styles.chatboxInput}>
-          <input
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Ask Me Anything..."
-            type="text"
-            value={Content}
-            onKeyPress={handleKeyPress}
-          />
+          {IsTypeWriter ? (
+            <div
+              onClick={() => setIsTypeWriter(false)}
+              className={styles.typewritePlaceHolder}
+            >
+              <Typewriter
+                words={[
+                  "How Can I help you Today?",
+                  "Ask Me Anything..",
+                  "Chat with your AI",
+                  "Do Productive Research",
+                  "Share your Thoughts...",
+                ]}
+                loop={10}
+                cursor
+                cursorStyle="_"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={2000}
+              />
+            </div>
+          ) : (
+            <>
+              <input
+                onChange={(e) => setContent(e.target.value)}
+                type="text"
+                placeholder="Start Chatting..."
+                autoFocus={!IsTypeWriter}
+                value={Content}
+                onKeyPress={handleKeyPress}
+              />
+            </>
+          )}
         </div>
 
         <div className={styles.chatboxButton}>
