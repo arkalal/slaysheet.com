@@ -3,17 +3,38 @@
 import React, { useState } from "react";
 import styles from "./AiChatbox.module.scss";
 import BlueButton from "../BlueButton/BlueButton";
-import axios from "../../../axios/openAiApi";
 import Lottie from "lottie-react";
 import chatBoxAnime from "../../../LottieAnimation/animation_lnq7m5rs.json";
 import { Typewriter } from "react-simple-typewriter";
+import { useClerk } from "@clerk/nextjs";
 
-const AiChatbox = ({ input, handleSubmit, handleInputChange }) => {
+const AiChatbox = ({
+  input,
+  handleSubmit,
+  handleInputChange,
+  setIsSigninPopup,
+}) => {
   const [IsTypeWriter, setIsTypeWriter] = useState(true);
+
+  const { user } = useClerk();
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      handleSubmit(event);
+      if (!user) {
+        setIsSigninPopup(true);
+      } else {
+        setIsSigninPopup(false);
+        handleSubmit(event);
+      }
+    }
+  };
+
+  const handleClick = () => {
+    if (!user) {
+      setIsSigninPopup(true);
+    } else {
+      setIsSigninPopup(false);
+      handleSubmit();
     }
   };
 
@@ -62,7 +83,7 @@ const AiChatbox = ({ input, handleSubmit, handleInputChange }) => {
 
         <div className={styles.chatboxButton}>
           <BlueButton
-            onClick={handleSubmit}
+            onClick={handleClick}
             color={"white"}
             text={"Chat With AI"}
           />
