@@ -6,7 +6,7 @@ export default authMiddleware({
     "/api/webhook",
     "/api/checkout",
     "/api/stripe",
-    "/api/conversation",
+    "/api/chat",
   ],
 });
 

@@ -1,8 +1,8 @@
 .AIChat {
+  padding-top: 10px;
   .chatBox {
     width: 60%;
-    margin: auto;
-    padding-top: 2%;
+    margin: 20px auto 0 auto;
   }
 
   .AiChats {
@@ -45,6 +45,7 @@
       padding: 10px;
       line-height: 30px;
       width: fit-content;
+      text-align: left;
       -webkit-box-shadow: 5px 5px 18px #b2b8c9, -5px -5px 18px #f0f8ff;
       box-shadow: 5px 5px 18px #b2b8c9, -5px -5px 18px #f0f8ff;
     }

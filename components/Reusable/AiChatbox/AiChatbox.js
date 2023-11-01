@@ -8,41 +8,8 @@ import Lottie from "lottie-react";
 import chatBoxAnime from "../../../LottieAnimation/animation_lnq7m5rs.json";
 import { Typewriter } from "react-simple-typewriter";
 
-const AiChatbox = ({
-  setMessages,
-  Content,
-  setContent,
-  messages,
-  setLoading,
-}) => {
+const AiChatbox = ({ input, handleSubmit, handleInputChange }) => {
   const [IsTypeWriter, setIsTypeWriter] = useState(true);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      setLoading(true);
-
-      const userMessage = {
-        role: "user",
-        content: Content,
-      };
-
-      const newMessages = [...messages, userMessage];
-
-      const response = await axios.post("conversation", {
-        messages: newMessages,
-      });
-      setMessages((prev) => [userMessage, response.data, ...prev]);
-      setContent("");
-
-      form.reset();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -82,11 +49,11 @@ const AiChatbox = ({
           ) : (
             <>
               <input
-                onChange={(e) => setContent(e.target.value)}
+                onChange={handleInputChange}
                 type="text"
                 placeholder="Start Chatting..."
                 autoFocus={!IsTypeWriter}
-                value={Content}
+                value={input}
                 onKeyPress={handleKeyPress}
               />
             </>
