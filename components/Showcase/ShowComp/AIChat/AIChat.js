@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import AiChatbox from "../../../Reusable/AiChatbox/AiChatbox";
 import styles from "./AIChat.module.scss";
 import Lottie from "lottie-react";
 import chattingAnime from "../../../../LottieAnimation/chatting.json";
 import { useChat } from "ai/react";
+import { useClerk } from "@clerk/nextjs";
+import SigninPopup from "../../../Reusable/popups/SigninPopup/SigninPopup";
 
 const AIChat = () => {
   const { input, handleSubmit, isLoading, handleInputChange, messages } =
@@ -18,8 +20,16 @@ const AIChat = () => {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }, [messages]);
 
+  const { user } = useClerk();
+
   return (
     <div className={styles.AIChat}>
+      {!user && (
+        <>
+          {" "}
+          <SigninPopup />{" "}
+        </>
+      )}
       <div ref={chatContainerRef} className={styles.AiChats}>
         {!isLoading && messages.length === 0 && (
           <div className={styles.chatConverseAnime}>
