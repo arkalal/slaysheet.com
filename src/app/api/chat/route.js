@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi } from "openai-edge";
+import { OpenAIStream, StreamingTextResponse } from "ai";
+
+export const runtime = "edge";
 
 const configuration = new Configuration({
   apiKey: process.env.OPEN_AI_API_KEY,
@@ -18,15 +21,16 @@ export async function POST(req) {
 
     const response = await openAi.createChatCompletion({
       model: "gpt-3.5-turbo",
-      temperature: 0.89,
-      max_tokens: 149,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
+      stream: true,
+      temperature: 1,
       messages: messages,
     });
 
-    return NextResponse.json(response.data.choices[0].message);
+    const stream = OpenAIStream(response);
+
+    return new StreamingTextResponse(stream);
+
+    // return NextResponse.json(response.data.choices[0].message);
   } catch (error) {
     console.log(error);
   }
