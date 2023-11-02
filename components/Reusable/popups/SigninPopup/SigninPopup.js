@@ -1,17 +1,39 @@
+"use client";
+
 import React from "react";
 import styles from "./SigninPopup.module.scss";
-import SignInButton from "../../SignInButton/SignInButton";
+import Lottie from "lottie-react";
+import googleAnime from "../../../../LottieAnimation/googleAnime.json";
+import googleIconAnime from "../../../../LottieAnimation/googleIconAnime.json";
+import closeIcon from "../../../../LottieAnimation/closeIcon.json";
 
-const SigninPopup = () => {
+const SigninPopup = ({ setIsSigninPopup }) => {
   return (
     <div className={styles.SigninPopup}>
       <div className={styles.SigninPopupContent}>
-        <div className={styles.SigninPopupTitle}>
-          <h2>Sign In as a User</h2>
-        </div>
-
         <div className={styles.SigninPopupInteract}>
-          <SignInButton />
+          <div
+            onClick={() => setIsSigninPopup(false)}
+            className={styles.signInPopupClose}
+          >
+            <Lottie animationData={closeIcon} />
+          </div>
+
+          <div className={styles.googleAnime}>
+            <Lottie animationData={googleAnime} />
+          </div>
+
+          <div className={styles.signInPopupBtn}>
+            <button>
+              <div className={styles.SignInButtonText}>
+                <div className={styles.googleIconAnime}>
+                  <Lottie animationData={googleIconAnime} />
+                </div>
+
+                <p>Sign In with Google</p>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>

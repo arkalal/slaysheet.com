@@ -26,7 +26,7 @@ const AIChat = () => {
       {IsSigninPopup && (
         <>
           {" "}
-          <SigninPopup />{" "}
+          <SigninPopup setIsSigninPopup={setIsSigninPopup} />{" "}
         </>
       )}
       <div ref={chatContainerRef} className={styles.AiChats}>

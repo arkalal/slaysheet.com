@@ -3,8 +3,13 @@
 import Link from "next/link";
 import React from "react";
 import styles from "./BlueButton.module.scss";
+import Lottie from "lottie-react";
+import googleIconAnime from "../../../LottieAnimation/googleIconAnime.json";
+import { useClerk } from "@clerk/nextjs";
 
 const BlueButton = ({ signInLink, text, color, onClick }) => {
+  const { user } = useClerk();
+
   return (
     <div
       className={
@@ -15,11 +20,22 @@ const BlueButton = ({ signInLink, text, color, onClick }) => {
     >
       <button onClick={onClick}>
         {signInLink && (
-          <>
-            <Link className={styles.signInLink} href="/signIn">
-              Sign In
+          <div className={styles.navSignInButtonText}>
+            {!user && (
+              <>
+                <div className={styles.googleIconAnime}>
+                  <Lottie animationData={googleIconAnime} />
+                </div>
+              </>
+            )}
+
+            <Link
+              className={styles.signInLink}
+              href={user ? "/studio" : "/signIn"}
+            >
+              {user ? "Go Studio" : "Sign In with Google"}
             </Link>
-          </>
+          </div>
         )}
         {text && text}
       </button>
