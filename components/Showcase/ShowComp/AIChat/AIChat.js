@@ -7,8 +7,15 @@ import Lottie from "lottie-react";
 import chattingAnime from "../../../../LottieAnimation/chatting.json";
 import aiAvatar from "../../../../LottieAnimation/AiAvatar.json";
 import { useChat } from "ai/react";
-import SigninPopup from "../../../Reusable/popups/SigninPopup/SigninPopup";
 import { UserButton } from "@clerk/nextjs";
+import dynamic from "next/dynamic";
+
+const SigninPopup = dynamic(
+  () => import("../../../Reusable/popups/SigninPopup/SigninPopup"),
+  {
+    ssr: false,
+  }
+);
 
 const AIChat = () => {
   const [IsSigninPopup, setIsSigninPopup] = useState(false);
