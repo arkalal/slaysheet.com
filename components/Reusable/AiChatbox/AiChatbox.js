@@ -6,7 +6,7 @@ import BlueButton from "../BlueButton/BlueButton";
 import Lottie from "lottie-react";
 import chatBoxAnime from "../../../LottieAnimation/animation_lnq7m5rs.json";
 import { Typewriter } from "react-simple-typewriter";
-import { useClerk } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 
 const AiChatbox = ({
   input,
@@ -16,11 +16,11 @@ const AiChatbox = ({
 }) => {
   const [IsTypeWriter, setIsTypeWriter] = useState(true);
 
-  const { user } = useClerk();
+  const { userId } = useAuth();
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      if (!user) {
+      if (!userId) {
         setIsSigninPopup(true);
       } else {
         setIsSigninPopup(false);
@@ -30,7 +30,7 @@ const AiChatbox = ({
   };
 
   const handleClick = () => {
-    if (!user) {
+    if (!userId) {
       setIsSigninPopup(true);
     } else {
       setIsSigninPopup(false);

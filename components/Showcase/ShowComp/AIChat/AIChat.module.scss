@@ -15,6 +15,19 @@
     overflow-y: scroll;
     padding: 20px;
 
+    .AiMessage {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+
+      .AiAvatar {
+        .aiAv {
+          object-fit: contain;
+          width: 100px;
+        }
+      }
+    }
+
     .loaderAI {
       object-fit: contain;
       width: 250px;

@@ -1,14 +1,23 @@
 "use client";
 
-import Link from "next/link";
 import React from "react";
 import styles from "./BlueButton.module.scss";
 import Lottie from "lottie-react";
 import googleIconAnime from "../../../LottieAnimation/googleIconAnime.json";
-import { useClerk } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const BlueButton = ({ signInLink, text, color, onClick }) => {
-  const { user } = useClerk();
+  const { userId } = useAuth();
+  const router = useRouter();
+
+  const signInPush = () => {
+    if (userId) {
+      router.push("/studio");
+    } else {
+      router.push("/signIn");
+    }
+  };
 
   return (
     <div
@@ -18,10 +27,10 @@ const BlueButton = ({ signInLink, text, color, onClick }) => {
           : `${styles.blueButton}`
       }
     >
-      <button onClick={onClick}>
+      <button onClick={signInLink ? signInPush : onClick}>
         {signInLink && (
           <div className={styles.navSignInButtonText}>
-            {!user && (
+            {!userId && (
               <>
                 <div className={styles.googleIconAnime}>
                   <Lottie animationData={googleIconAnime} />
@@ -29,12 +38,7 @@ const BlueButton = ({ signInLink, text, color, onClick }) => {
               </>
             )}
 
-            <Link
-              className={styles.signInLink}
-              href={user ? "/studio" : "/signIn"}
-            >
-              {user ? "Go Studio" : "Sign In with Google"}
-            </Link>
+            {userId ? "Go Studio" : "Sign In with Google"}
           </div>
         )}
         {text && text}
