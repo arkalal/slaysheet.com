@@ -5,8 +5,10 @@ import AiChatbox from "../../../Reusable/AiChatbox/AiChatbox";
 import styles from "./AIChat.module.scss";
 import Lottie from "lottie-react";
 import chattingAnime from "../../../../LottieAnimation/chatting.json";
+import aiAvatar from "../../../../LottieAnimation/AiAvatar.json";
 import { useChat } from "ai/react";
 import SigninPopup from "../../../Reusable/popups/SigninPopup/SigninPopup";
+import { UserButton } from "@clerk/nextjs";
 
 const AIChat = () => {
   const [IsSigninPopup, setIsSigninPopup] = useState(false);
@@ -40,15 +42,29 @@ const AIChat = () => {
         {messages &&
           messages.map((item, index) => {
             return (
-              <div
-                className={
-                  item.role === "user"
-                    ? `${styles.AiConverseUser}`
-                    : `${styles.AiConverseMachine}`
-                }
-                key={index}
-              >
-                {item.content}
+              <div key={index} className={styles.AiMessage}>
+                <div className={styles.AiAvatar}>
+                  {item.role === "user" ? (
+                    <>
+                      {" "}
+                      <UserButton afterSignOutUrl="/" />{" "}
+                    </>
+                  ) : (
+                    <div className={styles.aiAv}>
+                      <Lottie animationData={aiAvatar} />
+                    </div>
+                  )}
+                </div>
+                <div
+                  className={
+                    item.role === "user"
+                      ? `${styles.AiConverseUser}`
+                      : `${styles.AiConverseMachine}`
+                  }
+                  key={index}
+                >
+                  {item.content}
+                </div>
               </div>
             );
           })}

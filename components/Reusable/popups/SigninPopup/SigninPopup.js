@@ -6,8 +6,11 @@ import Lottie from "lottie-react";
 import googleAnime from "../../../../LottieAnimation/googleAnime.json";
 import googleIconAnime from "../../../../LottieAnimation/googleIconAnime.json";
 import closeIcon from "../../../../LottieAnimation/closeIcon.json";
+import { useRouter } from "next/navigation";
 
 const SigninPopup = ({ setIsSigninPopup }) => {
+  const router = useRouter();
+
   return (
     <div className={styles.SigninPopup}>
       <div className={styles.SigninPopupContent}>
@@ -24,13 +27,13 @@ const SigninPopup = ({ setIsSigninPopup }) => {
           </div>
 
           <div className={styles.signInPopupBtn}>
-            <button>
+            <button onClick={() => router.push("/signIn")}>
               <div className={styles.SignInButtonText}>
                 <div className={styles.googleIconAnime}>
                   <Lottie animationData={googleIconAnime} />
                 </div>
 
-                <p>Sign In with Google</p>
+                <p> Sign In with Google</p>
               </div>
             </button>
           </div>

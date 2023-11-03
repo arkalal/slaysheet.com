@@ -32,3 +32,19 @@ export const serviceTopicsData = [
     desc: "Talk to your own AI chatbot just like a human. Upload any screenshot or images it will help to solve your problems like a real guide.",
   },
 ];
+
+export const showDesc = {
+  1: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, fugit dolorem? Recusandae ab soluta aut fugiat, labore a. In, quam. Lorem ipsum dolor sit amet consectetur adipisicing elit. cht with pdf.",
+
+  2: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, fugit dolorem? Recusandae ab soluta aut fugiat, labore a. In, quam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, omnis Emails automation.",
+
+  3: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, fugit dolorem? Recusandae ab soluta aut fugiat, labore a. In, quam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, chat with AI.",
+
+  4: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, fugit dolorem? Recusandae ab soluta aut fugiat, labore a. In, quam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, omnis Generate Images.",
+
+  5: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, fugit dolorem? Recusandae ab soluta aut fugiat, labore a. In, quam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, omnis Create Notes.",
+
+  6: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, fugit dolorem? Recusandae ab soluta aut fugiat, labore a. In, quam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, omnis Generate Music.",
+
+  7: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, fugit dolorem? Recusandae ab soluta aut fugiat, labore a. In, quam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, omnis nostrum? My notes.",
+};
