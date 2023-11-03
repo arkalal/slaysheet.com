@@ -12,15 +12,15 @@ const TypingText = () => {
         <span>
           <Typewriter
             words={[
-              "Productivity through AI",
               "Speed of Work with Generative AI",
               "Creative Images with AI",
               "Auto Generated Emails",
               "Emails Sending Automation",
               "AI Note Creations",
               "PDF Summarization",
-              "Multi Language AI Communication",
               "Seamless PDF Communication",
+              "Multi Language AI Communication",
+              "Productivity through AI",
             ]}
             loop={10}
             cursor
