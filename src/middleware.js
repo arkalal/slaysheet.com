@@ -7,6 +7,7 @@ export default authMiddleware({
     "/api/checkout",
     "/api/stripe",
     "/api/chat",
+    "https://www.slaysheet.com/",
   ],
 });
 
