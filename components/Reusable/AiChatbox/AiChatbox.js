@@ -29,12 +29,12 @@ const AiChatbox = ({
     }
   };
 
-  const handleClick = () => {
+  const handleClick = (event) => {
     if (!userId) {
       setIsSigninPopup(true);
     } else {
       setIsSigninPopup(false);
-      handleSubmit();
+      handleSubmit(event);
     }
   };
 
