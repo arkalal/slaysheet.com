@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./Navbar.module.scss";
 import BlueButton from "../../../Reusable/BlueButton/BlueButton";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, auth } from "@clerk/nextjs";
 
 const Navbar = () => {
+  const { userId } = auth();
+
   return (
     <div className={`${styles.navbar}`}>
       <div className={styles.navBarWrapper}>
@@ -16,7 +18,11 @@ const Navbar = () => {
 
         <div className={styles.signIn}>
           <BlueButton signInLink={true} />
-          <UserButton afterSignOutUrl="/" />
+          {userId && (
+            <>
+              <UserButton afterSignOutUrl="/" />
+            </>
+          )}
         </div>
       </div>
     </div>

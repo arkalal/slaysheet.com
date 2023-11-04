@@ -1,9 +1,19 @@
 import React from "react";
-import Services from "../../../../../components/Screens/StudioScreen/Services/Services";
 import checkSubscription from "../../../../../utils/checkSubscription";
+import dynamic from "next/dynamic";
 
 const Studio = async () => {
   const isPro = await checkSubscription();
+
+  const Services = dynamic(
+    () =>
+      import(
+        "../../../../../components/Screens/StudioScreen/Services/Services"
+      ),
+    {
+      ssr: false,
+    }
+  );
 
   return (
     <div>
