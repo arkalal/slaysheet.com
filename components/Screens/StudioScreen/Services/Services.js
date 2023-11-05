@@ -1,12 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import styles from "./Services.module.scss";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "../../../../axios/openAiApi";
 import { UserButton } from "@clerk/nextjs";
 import normalAxios from "../../../../axios/getApi";
-import EmptyChat from "../../../Reusable/EmptyChat/EmptyChat";
 
 const Services = ({ isSubscribed }) => {
   const [messages, setMessages] = useState([]);
@@ -72,12 +70,6 @@ const Services = ({ isSubscribed }) => {
 
       <div>
         {" "}
-        {messages.length === 0 && (
-          <>
-            {" "}
-            <EmptyChat />{" "}
-          </>
-        )}
         {messages.map((item, index) => {
           return (
             <div key={index}>
