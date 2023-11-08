@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./BlueButton.module.scss";
 import Lottie from "lottie-react";
 import googleIconAnime from "../../../LottieAnimation/googleIconAnime.json";
@@ -18,6 +18,12 @@ const BlueButton = ({ signInLink, text, color, onClick }) => {
       router.push("/signIn");
     }
   };
+
+  useEffect(() => {
+    if (userId) {
+      router.push("/home");
+    }
+  }, [router, userId]);
 
   return (
     <div
