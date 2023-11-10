@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import axios from "../../../axios/getApi";
 import { useRouter } from "next/navigation";
 
-const RegisterForm = () => {
+const RegisterForm = ({ isLogin }) => {
   const [FullName, setFullName] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
@@ -53,7 +53,7 @@ const RegisterForm = () => {
       if (res.status === 200) {
         const form = e.target;
         form.reset();
-        // router.push("/");
+        router.push("/login");
       } else {
         console.log("User Registration failed");
       }
