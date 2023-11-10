@@ -24,7 +24,21 @@ const RegisterForm = () => {
 
     try {
       const user = await axios.get("register");
-      console.log("user", user.data);
+      console.log("user", user);
+
+      const userExists = (email) => {
+        return user.data.user.some((user) => user.email === email);
+      };
+
+      const isUser = userExists(Email);
+      console.log(isUser);
+
+      if (isUser) {
+        setError("User already exists");
+        return;
+      } else {
+        setError("");
+      }
 
       const hashedPassword = await bcrypt.hash(Password, 10);
 
@@ -66,6 +80,12 @@ const RegisterForm = () => {
           type="text"
           placeholder="Password..."
         />
+
+        {Error && (
+          <>
+            <div> {Error} </div>
+          </>
+        )}
 
         <button type="submit">Register</button>
       </form>
