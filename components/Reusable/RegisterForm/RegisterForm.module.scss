@@ -3,4 +3,19 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border: 1px solid black;
+  padding: 20px;
+
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+    input {
+      font-size: 20px;
+      padding: 5px 10px;
+    }
+  }
 }
