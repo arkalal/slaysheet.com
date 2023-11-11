@@ -5,6 +5,7 @@ import styles from "./RegisterForm.module.scss";
 import bcrypt from "bcryptjs";
 import axios from "../../../axios/getApi";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const RegisterForm = ({ isLogin }) => {
   const [FullName, setFullName] = useState("");
@@ -17,45 +18,67 @@ const RegisterForm = ({ isLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!Email || !FullName || !Password) {
-      setError("All fields are required");
-      return;
+    if (isLogin) {
+      if (!Email || !Password) {
+        setError("All fields are required");
+        return;
+      }
+    } else {
+      if (!Email || !FullName || !Password) {
+        setError("All fields are required");
+        return;
+      }
     }
 
     try {
-      const user = await axios.get("register");
-      console.log("user", user);
+      if (isLogin) {
+        const res = await signIn("credentials", {
+          name: FullName,
+          email: Email,
+          password: Password,
+          redirect: false,
+        });
 
-      const userExists = (email) => {
-        return user.data.user.some((user) => user.email === email);
-      };
+        if (res.error) {
+          setError("Invalid Credentials");
+          return;
+        }
 
-      const isUser = userExists(Email);
-      console.log(isUser);
-
-      if (isUser) {
-        setError("User already exists");
-        return;
+        router.push("/");
       } else {
-        setError("");
-      }
+        const user = await axios.get("register");
 
-      const hashedPassword = await bcrypt.hash(Password, 10);
+        const userExists = (email) => {
+          return user.data.user.some((user) => user.email === email);
+        };
 
-      const data = {
-        fullName: FullName,
-        email: Email,
-        password: hashedPassword,
-      };
+        const isUser = userExists(Email);
+        console.log(isUser);
 
-      const res = await axios.post("register", data);
+        if (isUser) {
+          setError("User already exists");
+          return;
+        } else {
+          setError("");
+        }
 
-      if (res.status === 200) {
-        const form = e.target;
-        form.reset();
-        router.push("/login");
-      } else {
-        console.log("User Registration failed");
+        const hashedPassword = await bcrypt.hash(Password, 10);
+
+        const data = {
+          fullName: FullName,
+          email: Email,
+          password: hashedPassword,
+        };
+
+        const res = await axios.post("register", data);
+
+        if (res.status === 200) {
+          const form = e.target;
+          form.reset();
+          router.push("/login");
+        } else {
+          console.log("User Registration failed");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -65,11 +88,15 @@ const RegisterForm = ({ isLogin }) => {
   return (
     <div className={styles.RegisterForm}>
       <form onSubmit={handleSubmit} action="">
-        <input
-          onChange={(e) => setFullName(e.target.value)}
-          type="text"
-          placeholder="Full Name"
-        />
+        {!isLogin && (
+          <>
+            <input
+              onChange={(e) => setFullName(e.target.value)}
+              type="text"
+              placeholder="Full Name"
+            />
+          </>
+        )}
         <input
           onChange={(e) => setEmail(e.target.value)}
           type="text"
@@ -87,7 +114,7 @@ const RegisterForm = ({ isLogin }) => {
           </>
         )}
 
-        <button type="submit">Register</button>
+        <button type="submit"> {isLogin ? "Login" : "Register"} </button>
       </form>
     </div>
   );

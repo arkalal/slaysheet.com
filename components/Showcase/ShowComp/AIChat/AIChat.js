@@ -7,8 +7,8 @@ import Lottie from "lottie-react";
 import chattingAnime from "../../../../LottieAnimation/chatting.json";
 import aiAvatar from "../../../../LottieAnimation/AiAvatar.json";
 import { useChat } from "ai/react";
-import { UserButton } from "@clerk/nextjs";
 import dynamic from "next/dynamic";
+import userAnime from "../../../../LottieAnimation/userAnime.json";
 
 const SigninPopup = dynamic(
   () => import("../../../Reusable/popups/SigninPopup/SigninPopup"),
@@ -53,8 +53,9 @@ const AIChat = () => {
                 <div className={styles.AiAvatar}>
                   {item.role === "user" ? (
                     <>
-                      {" "}
-                      <UserButton afterSignOutUrl="/" />{" "}
+                      <div className={styles.aiAv}>
+                        <Lottie animationData={userAnime} />
+                      </div>
                     </>
                   ) : (
                     <div className={styles.aiAv}>

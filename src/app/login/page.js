@@ -1,7 +1,12 @@
 import React from "react";
+import RegisterForm from "../../../components/Reusable/RegisterForm/RegisterForm";
 
 const Login = () => {
-  return <div>login</div>;
+  return (
+    <div>
+      <RegisterForm isLogin={true} />
+    </div>
+  );
 };
 
 export default Login;

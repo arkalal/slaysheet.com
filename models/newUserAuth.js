@@ -21,6 +21,7 @@ const newUserAuthSchema = new Schema(
 );
 
 const NewUserAuth =
-  mongoose.models.Topic || mongoose.model("NewUserAuth", newUserAuthSchema);
+  mongoose.models.NewUserAuth ||
+  mongoose.model("NewUserAuth", newUserAuthSchema);
 
 export default NewUserAuth;

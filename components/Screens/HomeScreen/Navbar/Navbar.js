@@ -1,9 +1,12 @@
 import React from "react";
 import styles from "./Navbar.module.scss";
 import BlueButton from "../../../Reusable/BlueButton/BlueButton";
-import { UserButton } from "@clerk/nextjs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import LogoutButton from "../../../Reusable/LogoutButton/LogoutButton";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await getServerSession(authOptions);
   return (
     <div className={`${styles.navbar}`}>
       <div className={styles.navBarWrapper}>
@@ -16,7 +19,12 @@ const Navbar = () => {
 
         <div className={styles.signIn}>
           <BlueButton signInLink={true} />
-          <UserButton afterSignOutUrl="/" />
+          {session && (
+            <>
+              {" "}
+              <LogoutButton />{" "}
+            </>
+          )}
         </div>
       </div>
     </div>
