@@ -1,29 +1,21 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./BlueButton.module.scss";
-import Lottie from "lottie-react";
-import googleIconAnime from "../../../LottieAnimation/googleIconAnime.json";
-import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const BlueButton = ({ signInLink, text, color, onClick }) => {
-  const { userId } = useAuth();
+  const { data: session } = useSession();
   const router = useRouter();
 
   const signInPush = () => {
-    if (userId) {
+    if (session) {
       router.push("/studio");
     } else {
-      router.push("/signIn");
+      router.push("/login");
     }
   };
-
-  useEffect(() => {
-    if (userId) {
-      router.push("/home");
-    }
-  }, [router, userId]);
 
   return (
     <div
@@ -36,15 +28,7 @@ const BlueButton = ({ signInLink, text, color, onClick }) => {
       <button onClick={signInLink ? signInPush : onClick}>
         {signInLink && (
           <div className={styles.navSignInButtonText}>
-            {!userId && (
-              <>
-                <div className={styles.googleIconAnime}>
-                  <Lottie animationData={googleIconAnime} />
-                </div>
-              </>
-            )}
-
-            {userId ? "Go Studio" : "Sign In with Google"}
+            {session ? "Go Studio" : "Sign In"}
           </div>
         )}
         {text && text}

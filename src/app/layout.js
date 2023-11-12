@@ -1,6 +1,6 @@
+import { Provider } from "../../Providers";
 import "./globals.scss";
 import { Roboto } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Roboto({
   subsets: ["latin"],
@@ -16,17 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {ClerkProvider ? (
-          <>
-            <ClerkProvider>
-              <main>{children}</main>
-            </ClerkProvider>
-          </>
-        ) : (
-          <>
-            <main>{children}</main>
-          </>
-        )}
+        <main>
+          <Provider>{children}</Provider>
+        </main>
       </body>
     </html>
   );
