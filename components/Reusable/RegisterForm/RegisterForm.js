@@ -87,6 +87,7 @@ const RegisterForm = ({ isLogin }) => {
 
   return (
     <div className={styles.RegisterForm}>
+      <h2>Development in Progress... Users can register/login. 😇</h2>
       <form onSubmit={handleSubmit} action="">
         {!isLogin && (
           <>
@@ -111,6 +112,22 @@ const RegisterForm = ({ isLogin }) => {
         {Error && (
           <>
             <div> {Error} </div>
+          </>
+        )}
+
+        {isLogin ? (
+          <>
+            <p>
+              Not have an account ?{" "}
+              <button onClick={() => router.push("/register")}>Register</button>{" "}
+            </p>
+          </>
+        ) : (
+          <>
+            <p>
+              Already have an account ?{" "}
+              <button onClick={() => router.push("/login")}>Login</button>{" "}
+            </p>
           </>
         )}
 

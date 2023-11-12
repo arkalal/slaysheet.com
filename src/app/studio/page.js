@@ -9,7 +9,7 @@ const Studio = async () => {
     <div>
       {/* <Services isSubscribed={isPro}></Services> */}
 
-      <h1>This is STudio!!</h1>
+      <h1>Under Development. Coming Soon... 🚀🧑🏻‍💻🤟</h1>
     </div>
   );
 };
