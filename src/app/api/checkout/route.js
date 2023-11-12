@@ -5,8 +5,8 @@ import {
   baseUrlStaging,
   baseUrlTest,
 } from "../../../../axios/baseUrl";
-import { currentUser } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
@@ -20,10 +20,9 @@ export async function GET(req) {
 
 export async function POST(req) {
   const { priceId } = await req.json();
-  const user = await currentUser();
-  const { userId } = auth();
+  const userSession = await getServerSession(authOptions);
 
-  if (!userId) {
+  if (!userSession) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 400 });
   }
 
@@ -34,13 +33,13 @@ export async function POST(req) {
         quantity: 1,
       },
     ],
-    customer_email: user.emailAddresses[0].emailAddress,
+    customer_email: userSession.user.email,
     mode: "subscription",
     success_url: `${baseUrlProd}/studio`,
     cancel_url: `${baseUrlProd}/studio`,
     billing_address_collection: "auto",
     metadata: {
-      userId: userId,
+      userId: userSession.user.email,
     },
   });
 

@@ -1,4 +1,3 @@
-import { auth } from "@clerk/nextjs";
 import stripe from "../../../../utils/stripe";
 import { NextResponse } from "next/server";
 import UserSubscription from "../../../../models/userSubscription";
@@ -8,17 +7,19 @@ import {
   baseUrlStaging,
   baseUrlTest,
 } from "../../../../axios/baseUrl";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function GET(req) {
-  const { userId } = auth();
+  const userSession = await getServerSession(authOptions);
 
-  if (!userId) {
+  if (!userSession) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 400 });
   }
 
   await connectMongoDB();
   const userSubscription = await UserSubscription.findOne({
-    user: userId,
+    user: userSession.user.email,
   });
 
   if (userSubscription && userSubscription.stripeCustomerId) {
