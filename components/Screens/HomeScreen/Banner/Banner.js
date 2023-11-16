@@ -21,15 +21,16 @@ const Banner = () => {
 
         <div className={styles.bannerCard}>
           <div className={styles.bannerCards}>
-            {bannerCardData.map((item, index) => {
-              return (
-                <>
-                  <div key={index} className={styles.smallBannerCards}>
-                    <BannerCard data={item.bannerAnime} />
-                  </div>
-                </>
-              );
-            })}
+            {bannerCardData.length > 0 &&
+              bannerCardData.map((item, index) => {
+                return (
+                  <>
+                    <div key={index} className={styles.smallBannerCards}>
+                      <BannerCard data={item.bannerAnime} />
+                    </div>
+                  </>
+                );
+              })}
           </div>
 
           <div className={styles.bannerServices}>

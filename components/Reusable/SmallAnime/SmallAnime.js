@@ -2,12 +2,12 @@
 
 import React from "react";
 import styles from "./SmallAnime.module.scss";
-import Lottie from "lottie-react";
+import Image from "next/image";
 
 const SmallAnime = ({ data }) => {
   return (
     <div className={styles.SmallAnime}>
-      <Lottie animationData={data} />
+      <Image src={data} alt="serviceTopic" width={160}></Image>
     </div>
   );
 };

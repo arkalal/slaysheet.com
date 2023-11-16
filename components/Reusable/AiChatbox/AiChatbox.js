@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import styles from "./AiChatbox.module.scss";
 import BlueButton from "../BlueButton/BlueButton";
-import Lottie from "lottie-react";
-import chatBoxAnime from "../../../LottieAnimation/animation_lnq7m5rs.json";
+import chatBoxAnime from "../../../LottieAnimation/animeData1.gif";
 import { Typewriter } from "react-simple-typewriter";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const AiChatbox = ({
   input,
@@ -42,7 +42,7 @@ const AiChatbox = ({
     <div className={styles.aiChatbox}>
       <div className={styles.aiChatboxInterior}>
         <div className={styles.chatBoxIcon}>
-          <Lottie animationData={chatBoxAnime} />
+          <Image src={chatBoxAnime} alt="chatBoxAnime" width={40}></Image>
         </div>
 
         <div className={styles.chatboxInput}>

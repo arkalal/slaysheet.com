@@ -3,12 +3,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import AiChatbox from "../../../Reusable/AiChatbox/AiChatbox";
 import styles from "./AIChat.module.scss";
-import Lottie from "lottie-react";
-import chattingAnime from "../../../../LottieAnimation/chatting.json";
-import aiAvatar from "../../../../LottieAnimation/AiAvatar.json";
+import chattingAnime from "../../../../LottieAnimation/chattingAnime.gif";
+import aiAvatar from "../../../../LottieAnimation/aiAvatar.gif";
 import { useChat } from "ai/react";
 import dynamic from "next/dynamic";
-import userAnime from "../../../../LottieAnimation/userAnime.json";
+import userAnime from "../../../../LottieAnimation/userAnime.gif";
+import Image from "next/image";
 
 const SigninPopup = dynamic(
   () => import("../../../Reusable/popups/SigninPopup/SigninPopup"),
@@ -41,7 +41,7 @@ const AIChat = () => {
       <div ref={chatContainerRef} className={styles.AiChats}>
         {!isLoading && messages.length === 0 && (
           <div className={styles.chatConverseAnime}>
-            <Lottie animationData={chattingAnime} />
+            <Image src={chattingAnime} alt="chattingAnime" width={180}></Image>
             <p>No Conversation Found</p>
           </div>
         )}
@@ -54,12 +54,16 @@ const AIChat = () => {
                   {item.role === "user" ? (
                     <>
                       <div className={styles.aiAv}>
-                        <Lottie animationData={userAnime} />
+                        <Image
+                          src={userAnime}
+                          alt="userAnime"
+                          width={80}
+                        ></Image>
                       </div>
                     </>
                   ) : (
                     <div className={styles.aiAv}>
-                      <Lottie animationData={aiAvatar} />
+                      <Image src={aiAvatar} alt="aiAvatar" width={80}></Image>
                     </div>
                   )}
                 </div>

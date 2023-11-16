@@ -2,10 +2,10 @@
 
 import React from "react";
 import styles from "./SigninPopup.module.scss";
-import Lottie from "lottie-react";
-import userSignIn from "../../../../LottieAnimation/userSignIn.json";
-import closeIcon from "../../../../LottieAnimation/closeIcon.json";
+import userSignIn from "../../../../LottieAnimation/userSignIn.gif";
+import closeIcon from "../../../../LottieAnimation/closeIcon.gif";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const SigninPopup = ({ setIsSigninPopup }) => {
   const router = useRouter();
@@ -18,11 +18,16 @@ const SigninPopup = ({ setIsSigninPopup }) => {
             onClick={() => setIsSigninPopup(false)}
             className={styles.signInPopupClose}
           >
-            <Lottie animationData={closeIcon} />
+            <Image src={closeIcon} alt="closeIcon" width={40}></Image>
           </div>
 
           <div className={styles.userSignIn}>
-            <Lottie animationData={userSignIn} />
+            <Image
+              src={userSignIn}
+              alt="closeIcon"
+              width={120}
+              height={120}
+            ></Image>
           </div>
 
           <div className={styles.signInPopupBtn}>
