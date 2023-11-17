@@ -3,11 +3,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import AiChatbox from "../../../Reusable/AiChatbox/AiChatbox";
 import styles from "./AIChat.module.scss";
-import chattingAnime from "../../../../LottieAnimation/chattingAnime.gif";
-import aiAvatar from "../../../../LottieAnimation/aiAvatar.gif";
+import chattingAnime from "../../../../assets/icons/converseAI.png";
+import aiAvatar from "../../../../assets/icons/chatboxIco.png";
 import { useChat } from "ai/react";
 import dynamic from "next/dynamic";
-import userAnime from "../../../../LottieAnimation/userAnime.gif";
+import userAnime from "../../../../assets/icons/userAvatar.png";
 import Image from "next/image";
 
 const SigninPopup = dynamic(
@@ -57,13 +57,13 @@ const AIChat = () => {
                         <Image
                           src={userAnime}
                           alt="userAnime"
-                          width={80}
+                          width={40}
                         ></Image>
                       </div>
                     </>
                   ) : (
                     <div className={styles.aiAv}>
-                      <Image src={aiAvatar} alt="aiAvatar" width={80}></Image>
+                      <Image src={aiAvatar} alt="aiAvatar" width={40}></Image>
                     </div>
                   )}
                 </div>

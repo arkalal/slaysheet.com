@@ -1,9 +1,9 @@
-import animeData from "../LottieAnimation/animeData.gif";
-import animeData1 from "../LottieAnimation/animeData1.gif";
-import scanPdfAnime from "../LottieAnimation/scanPdfAnime.gif";
-import AIEmailsAnime from "../LottieAnimation/AIEmailsAnime.gif";
-import generateImageAnime from "../LottieAnimation/generateImageAnime.gif";
-import chatAIAnime from "../LottieAnimation/chatAIAnime.gif";
+import animeData from "../assets/images/ai icon Image.jpg";
+import animeData1 from "../assets/images/AiCHat1.jpg";
+import scanPdfAnime from "../assets/icons/pdf_10435045.png";
+import AIEmailsAnime from "../assets/icons/writeEmails.png";
+import generateImageAnime from "../assets/icons/genImage.png";
+import chatAIAnime from "../assets/icons/aiChat.png";
 
 export const bannerCardData = [
   { bannerAnime: animeData },
