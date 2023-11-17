@@ -2,8 +2,8 @@
 
 import React from "react";
 import styles from "./SigninPopup.module.scss";
-import userSignIn from "../../../../LottieAnimation/userSignIn.gif";
-import closeIcon from "../../../../LottieAnimation/closeIcon.gif";
+import userSignIn from "../../../../assets/icons/userLogin.png";
+import closeIcon from "../../../../assets/icons/closeIcon.png";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -18,16 +18,11 @@ const SigninPopup = ({ setIsSigninPopup }) => {
             onClick={() => setIsSigninPopup(false)}
             className={styles.signInPopupClose}
           >
-            <Image src={closeIcon} alt="closeIcon" width={40}></Image>
+            <Image src={closeIcon} alt="closeIcon" width={20}></Image>
           </div>
 
           <div className={styles.userSignIn}>
-            <Image
-              src={userSignIn}
-              alt="closeIcon"
-              width={120}
-              height={120}
-            ></Image>
+            <Image src={userSignIn} alt="userSignIn" width={150}></Image>
           </div>
 
           <div className={styles.signInPopupBtn}>
