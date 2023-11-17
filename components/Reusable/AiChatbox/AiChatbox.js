@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styles from "./AiChatbox.module.scss";
 import BlueButton from "../BlueButton/BlueButton";
-import chatBoxAnime from "../../../LottieAnimation/animeData1.gif";
+import chatBoxAnime from "../../../assets/icons/chatboxIco.png";
 import { Typewriter } from "react-simple-typewriter";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
