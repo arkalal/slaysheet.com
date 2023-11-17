@@ -7,7 +7,18 @@ This is my Ai Saas product that I am buiding from scratch 🚀🤟
 1. NextJS
 2. Stripe Payment
 3. MongoDB Database - Mongoose Schema
-4. Vercel Deployment.
+4. Backend - NextJS API
+5. Vercel Deployment.
+
+Fully Optimising the code for Fastest loading and 100% SEO Optimisation 🚀
+
+As they say...
+
+Building apps is not enough we should consider about the fastest and optimized user experience with Highly Efficient SEO.
+
+Check the results below... 👇🏻
+
+![SPEEDOPTIMISE](/assets/screenshots/slaysheetSpeed.png)
 
 Note: Product Release and more coming Soon..
 
