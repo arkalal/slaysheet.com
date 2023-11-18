@@ -3,7 +3,11 @@ import styles from "./Banner.module.scss";
 import TypingText from "../../../Reusable/TypingText/TypingText";
 import BannerCard from "../../../Reusable/BannerCard/BannerCard";
 import SmallAnime from "../../../Reusable/SmallAnime/SmallAnime";
-import { bannerCardData, serviceTopicsData } from "../../../../customData/data";
+import {
+  bannerCardData,
+  serviceTopicsData,
+  titleTypewriterText,
+} from "../../../../customData/data";
 
 const Banner = () => {
   return (
@@ -16,7 +20,7 @@ const Banner = () => {
 
       <div className={styles.bannerIntro}>
         <div className={styles.bannerTitle}>
-          <TypingText />
+          <TypingText isBannerTitle={true} typingData={titleTypewriterText} />
         </div>
 
         <div className={styles.bannerCard}>
