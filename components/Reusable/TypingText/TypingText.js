@@ -4,33 +4,39 @@ import React from "react";
 import { Typewriter } from "react-simple-typewriter";
 import styles from "./TypingText.module.scss";
 
-const TypingText = () => {
+const TypingText = ({ typingData, isBannerTitle }) => {
   return (
     <div className={styles.TypingText}>
-      <h1>
-        Discover Your{" "}
-        <span>
+      {isBannerTitle ? (
+        <>
+          <h1>
+            Discover Your{" "}
+            <span>
+              <Typewriter
+                words={typingData}
+                loop={10}
+                cursor
+                cursorStyle="|"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={2000}
+              />
+            </span>
+          </h1>
+        </>
+      ) : (
+        <>
           <Typewriter
-            words={[
-              "Speed of Work with Generative AI",
-              "Creative Images with AI",
-              "Auto Generated Emails",
-              "Emails Sending Automation",
-              "AI Note Creations",
-              "PDF Summarization",
-              "Seamless PDF Communication",
-              "Multi Language AI Communication",
-              "Productivity through AI",
-            ]}
+            words={typingData}
             loop={10}
             cursor
-            cursorStyle="|"
+            cursorStyle="_"
             typeSpeed={70}
             deleteSpeed={50}
             delaySpeed={2000}
           />
-        </span>
-      </h1>
+        </>
+      )}
     </div>
   );
 };

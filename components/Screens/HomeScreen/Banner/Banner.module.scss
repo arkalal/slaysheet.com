@@ -50,12 +50,9 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        width: 50%;
         .smallBannerCards {
           margin-bottom: 100px;
-
-          // &:nth-child(2) {
-          //   margin-left: 150px;
-          // }
         }
       }
 
@@ -63,6 +60,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 50%;
 
         .serviceTopics {
           display: flex;
@@ -73,12 +71,20 @@
 
           h1 {
             @include gradientText;
+
+            @media (max-width: 1300px) {
+              font-size: 27px;
+            }
           }
 
           p {
             color: gray;
             line-height: 30px;
             font-size: 20px;
+
+            @media (max-width: 1300px) {
+              font-size: 18px;
+            }
           }
         }
       }
