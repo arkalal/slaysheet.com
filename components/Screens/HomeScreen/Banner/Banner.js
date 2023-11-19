@@ -15,7 +15,7 @@ const Banner = () => {
       <div className={styles.bannerStatement}>
         <span>Hello Users 🚀</span>
         <span>Welcome to your new AI Platform!</span>
-        <button>Start Tour 🤖</button>
+        <button>Early Access 🧑🏻‍💻</button>
       </div>
 
       <div className={styles.bannerIntro}>

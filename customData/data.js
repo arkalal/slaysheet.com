@@ -38,7 +38,7 @@ export const showDesc = {
 
   2: "Experience email simplicity with our AI bot. Provide easy instructions on recipients, content, and word count, and watch as the bot crafts personalized emails effortlessly, making communication a breeze for everyone.",
 
-  3: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, fugit dolorem? Recusandae ab soluta aut fugiat, labore a. In, quam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, chat with AI.",
+  3: "Experience natural conversations with our AI chatbot – your virtual friend. Engage in human-like dialogue, ask questions, and receive friendly assistance. It's more than a chat; it's a digital companionship.",
 
   4: "Introducing our cutting-edge DALL-E 3 image generator. Effortlessly create hyper-realistic logos, UI designs, and custom images for professional projects. Upload your image to generate unique avatars. Unleash boundless creativity with ease.",
 
@@ -114,5 +114,14 @@ export const genMusicTypewriterText = [
   "Train your AI DJ: Generate personalized tunes or have it chat like a human in audio.",
   "Powerful with the Advanced GPT-4 Turbo Model Release!",
   "Your music, your rules: GPT-4 Turbo turns your prompts into musical masterpieces.",
+  "Completely for FREE for the Early Access",
+];
+
+export const chatAiTypewriterText = [
+  "Chat with AI: Your virtual friend, ready to assist.",
+  "Human-like conversations: Our AI chatbot is your friendly assistant.",
+  "Converse with AI: Your digital companion for chat and help.",
+  "Powerful with the Advanced GPT-4 Turbo Model Release!",
+  "Chatbot as a friend: Engage in conversations, get assistance.",
   "Completely for FREE for the Early Access",
 ];

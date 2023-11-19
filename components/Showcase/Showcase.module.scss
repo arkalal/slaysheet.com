@@ -9,6 +9,10 @@
     width: 80%;
     font-size: 70px;
 
+    @media (max-width: 1300px) {
+      font-size: 60px;
+    }
+
     span {
       @include gradientText;
     }
