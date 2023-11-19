@@ -10,8 +10,13 @@
   border-radius: 20px;
   padding: 40px 0 40px 0;
 
+  @media (max-width: 1300px) {
+    width: 450px;
+  }
+
   .lottieAnime {
     object-fit: contain;
-    width: 400px;
+    width: fit-content;
+    margin: auto;
   }
 }

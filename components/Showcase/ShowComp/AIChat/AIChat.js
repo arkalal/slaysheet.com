@@ -9,6 +9,7 @@ import { useChat } from "ai/react";
 import dynamic from "next/dynamic";
 import userAnime from "../../../../assets/icons/userAvatar.png";
 import Image from "next/image";
+import AiChatService from "./AiChatService/AiChatService";
 
 const SigninPopup = dynamic(
   () => import("../../../Reusable/popups/SigninPopup/SigninPopup"),
@@ -19,6 +20,7 @@ const SigninPopup = dynamic(
 
 const AIChat = () => {
   const [IsSigninPopup, setIsSigninPopup] = useState(false);
+  const [GetStarted, setGetStarted] = useState(false);
 
   const { input, handleSubmit, isLoading, handleInputChange, messages } =
     useChat();
@@ -27,70 +29,92 @@ const AIChat = () => {
 
   useEffect(() => {
     // Scroll to the bottom when messages change
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  }, [messages]);
+    if (GetStarted) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [GetStarted, messages]);
 
   return (
-    <div className={styles.AIChat}>
-      {IsSigninPopup && (
+    <>
+      {" "}
+      {!GetStarted ? (
         <>
-          {" "}
-          <SigninPopup setIsSigninPopup={setIsSigninPopup} />{" "}
+          <AiChatService setGetStarted={setGetStarted} />
         </>
-      )}
-      <div ref={chatContainerRef} className={styles.AiChats}>
-        {!isLoading && messages.length === 0 && (
-          <div className={styles.chatConverseAnime}>
-            <Image src={chattingAnime} alt="chattingAnime" width={180}></Image>
-            <p>No Conversation Found</p>
-          </div>
-        )}
+      ) : (
+        <>
+          <div className={styles.AIChat}>
+            {IsSigninPopup && (
+              <>
+                {" "}
+                <SigninPopup setIsSigninPopup={setIsSigninPopup} />{" "}
+              </>
+            )}
+            <div ref={chatContainerRef} className={styles.AiChats}>
+              {!isLoading && messages.length === 0 && (
+                <div className={styles.chatConverseAnime}>
+                  <Image
+                    src={chattingAnime}
+                    alt="chattingAnime"
+                    width={180}
+                  ></Image>
+                  <p>No Conversation Found</p>
+                </div>
+              )}
 
-        {messages &&
-          messages.map((item, index) => {
-            return (
-              <div key={index} className={styles.AiMessage}>
-                <div className={styles.AiAvatar}>
-                  {item.role === "user" ? (
-                    <>
-                      <div className={styles.aiAv}>
-                        <Image
-                          src={userAnime}
-                          alt="userAnime"
-                          width={40}
-                        ></Image>
+              {messages &&
+                messages.map((item, index) => {
+                  return (
+                    <div key={index} className={styles.AiMessage}>
+                      <div className={styles.AiAvatar}>
+                        {item.role === "user" ? (
+                          <>
+                            <div className={styles.aiAv}>
+                              <Image
+                                src={userAnime}
+                                alt="userAnime"
+                                width={40}
+                              ></Image>
+                            </div>
+                          </>
+                        ) : (
+                          <div className={styles.aiAv}>
+                            <Image
+                              src={aiAvatar}
+                              alt="aiAvatar"
+                              width={40}
+                            ></Image>
+                          </div>
+                        )}
                       </div>
-                    </>
-                  ) : (
-                    <div className={styles.aiAv}>
-                      <Image src={aiAvatar} alt="aiAvatar" width={40}></Image>
+                      <div
+                        className={
+                          item.role === "user"
+                            ? `${styles.AiConverseUser}`
+                            : `${styles.AiConverseMachine}`
+                        }
+                        key={index}
+                      >
+                        {item.content}
+                      </div>
                     </div>
-                  )}
-                </div>
-                <div
-                  className={
-                    item.role === "user"
-                      ? `${styles.AiConverseUser}`
-                      : `${styles.AiConverseMachine}`
-                  }
-                  key={index}
-                >
-                  {item.content}
-                </div>
-              </div>
-            );
-          })}
-      </div>
+                  );
+                })}
+            </div>
 
-      <div className={styles.chatBox}>
-        <AiChatbox
-          input={input}
-          handleSubmit={handleSubmit}
-          handleInputChange={handleInputChange}
-          setIsSigninPopup={setIsSigninPopup}
-        />
-      </div>
-    </div>
+            <div className={styles.chatBox}>
+              <AiChatbox
+                input={input}
+                handleSubmit={handleSubmit}
+                handleInputChange={handleInputChange}
+                setIsSigninPopup={setIsSigninPopup}
+              />
+            </div>
+          </div>
+        </>
+      )}{" "}
+    </>
   );
 };
 

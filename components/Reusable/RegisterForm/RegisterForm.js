@@ -87,7 +87,7 @@ const RegisterForm = ({ isLogin }) => {
 
   return (
     <div className={styles.RegisterForm}>
-      <h2>Development in Progress... Users can register/login. 😇</h2>
+      <h3>Development in Progress... Users can still register/login. 😇</h3>
       <form onSubmit={handleSubmit} action="">
         {!isLogin && (
           <>

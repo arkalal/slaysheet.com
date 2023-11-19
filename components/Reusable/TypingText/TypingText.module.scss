@@ -5,6 +5,10 @@
     font-size: 80px;
     text-align: center;
 
+    @media (max-width: 1300px) {
+      font-size: 70px;
+    }
+
     span {
       @include gradientText;
     }
