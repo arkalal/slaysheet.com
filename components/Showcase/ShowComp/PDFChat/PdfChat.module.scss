@@ -1,8 +1,5 @@
+@import "../../../../styleReuse/mixins.module.scss";
+
 .PDFChat {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding-top: 10%;
-  gap: 20px;
+  @include showScreenCenter();
 }

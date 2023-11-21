@@ -14,3 +14,12 @@
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 4;
 }
+
+@mixin showScreenCenter() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 10%;
+  gap: 20px;
+}
