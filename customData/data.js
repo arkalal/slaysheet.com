@@ -14,12 +14,12 @@ export const serviceTopicsData = [
   {
     animeIcon: scanPdfAnime,
     title: "Chat with PDF",
-    desc: "Improve your productivity on your research by the AI ability of chatting with your own pdf. Upload your own pdf on our platformand ask any questions. Our AI tool will do the research and answer all your questions regarding your document within a second!",
+    desc: "Simplify document interaction with ChatwithPDF. Chat effortlessly with AI for instant insights, making your PDF experience intuitive, engaging, and efficient.",
   },
   {
     animeIcon: AIEmailsAnime,
     title: "Help AI write your Emails",
-    desc: "Just say what kind of emails you need your AI to write for you and get your advnaced personal or professional email exactly the way you want within a second.",
+    desc: "Transform email writing with Writing Emails with AI. Effortlessly instruct the AI assistant, watch as it crafts personalized emails.",
   },
   {
     animeIcon: generateImageAnime,
