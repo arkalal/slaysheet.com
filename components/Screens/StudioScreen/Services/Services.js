@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "../../../../axios/openAiApi";
-import { UserButton } from "@clerk/nextjs";
 import normalAxios from "../../../../axios/getApi";
 
 const Services = ({ isSubscribed }) => {
@@ -85,7 +84,6 @@ const Services = ({ isSubscribed }) => {
           <button onClick={manageSubscription}>Manage Subscription</button>
         </>
       )}
-      <UserButton afterSignOutUrl="/" />
     </div>
   );
 };
