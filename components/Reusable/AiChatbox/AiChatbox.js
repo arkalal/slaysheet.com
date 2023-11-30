@@ -7,6 +7,7 @@ import chatBoxAnime from "../../../assets/icons/chatboxIco.png";
 import { Typewriter } from "react-simple-typewriter";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import axios from "../../../axios/getApi";
 
 const AiChatbox = ({
   input,
@@ -18,24 +19,67 @@ const AiChatbox = ({
 
   const { data: session } = useSession();
 
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
+  const handleAiChat = async (event) => {
+    try {
       if (!session) {
         setIsSigninPopup(true);
       } else {
         setIsSigninPopup(false);
-        handleSubmit(event);
+
+        const res = await axios.get("aiToken");
+        const aiCountData = res.data;
+
+        const isUserToken = aiCountData.some(
+          (ai) => ai.user === session.user.email
+        );
+        const filteredUserToken = aiCountData.filter(
+          (user) => user.user === session.user.email
+        );
+
+        if (!filteredUserToken[0]?.lock) {
+          handleSubmit(event);
+        } else {
+          return;
+        }
+
+        if (isUserToken) {
+          const data = {
+            user: session.user.email,
+            count: filteredUserToken[0]?.count + 1,
+            lock: false,
+          };
+          await axios.put(`aiToken/${filteredUserToken[0]?._id}`, data);
+        } else {
+          const data = {
+            user: session.user.email,
+            count: 1,
+            lock: false,
+          };
+          await axios.post("aiToken", data);
+        }
+
+        if (filteredUserToken[0]?.count === 5) {
+          const data = {
+            user: session.user.email,
+            count: filteredUserToken[0]?.count + 1,
+            lock: true,
+          };
+          await axios.put(`aiToken/${filteredUserToken[0]?._id}`, data);
+        }
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleAiChat(event);
     }
   };
 
   const handleClick = (event) => {
-    if (!session) {
-      setIsSigninPopup(true);
-    } else {
-      setIsSigninPopup(false);
-      handleSubmit(event);
-    }
+    handleAiChat(event);
   };
 
   return (

@@ -19,7 +19,7 @@ const Navbar = async () => {
 
         <div className={styles.signIn}>
           <BlueButton signInLink={true} />
-          {session && (
+          {session?.user && (
             <>
               {" "}
               <LogoutButton />{" "}
