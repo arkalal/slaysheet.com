@@ -5,15 +5,17 @@ import styles from "./RegisterForm.module.scss";
 import bcrypt from "bcryptjs";
 import axios from "../../../axios/getApi";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 const RegisterForm = ({ isLogin }) => {
   const [FullName, setFullName] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [Error, setError] = useState("");
+  const [IsLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
+  const { data: session } = useSession();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ const RegisterForm = ({ isLogin }) => {
 
     try {
       if (isLogin) {
+        setIsLoading(true);
         const res = await signIn("credentials", {
           name: FullName,
           email: Email,
@@ -44,6 +47,7 @@ const RegisterForm = ({ isLogin }) => {
           return;
         }
 
+        setIsLoading(false);
         router.push("/");
       } else {
         const user = await axios.get("register");
@@ -131,7 +135,10 @@ const RegisterForm = ({ isLogin }) => {
           </>
         )}
 
-        <button type="submit"> {isLogin ? "Login" : "Register"} </button>
+        <button type="submit">
+          {" "}
+          {IsLoading ? "Loading..." : isLogin ? "Login" : "Register"}{" "}
+        </button>
       </form>
     </div>
   );

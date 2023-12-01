@@ -36,7 +36,7 @@ const AiChatbox = ({
           (user) => user.user === session.user.email
         );
 
-        if (!filteredUserToken[0]?.lock) {
+        if (!isUserToken || !filteredUserToken[0]?.lock) {
           handleSubmit(event);
         } else {
           return;
@@ -45,23 +45,23 @@ const AiChatbox = ({
         if (isUserToken) {
           const data = {
             user: session.user.email,
-            count: filteredUserToken[0]?.count + 1,
+            count: filteredUserToken[0]?.count - 1,
             lock: false,
           };
           await axios.put(`aiToken/${filteredUserToken[0]?._id}`, data);
         } else {
-          const data = {
+          const aiTokenData = {
             user: session.user.email,
-            count: 1,
+            count: 4,
             lock: false,
           };
-          await axios.post("aiToken", data);
+          await axios.post("aiToken", aiTokenData);
         }
 
-        if (filteredUserToken[0]?.count === 5) {
+        if (filteredUserToken[0]?.count === 1) {
           const data = {
             user: session.user.email,
-            count: filteredUserToken[0]?.count + 1,
+            count: filteredUserToken[0]?.count - 1,
             lock: true,
           };
           await axios.put(`aiToken/${filteredUserToken[0]?._id}`, data);
