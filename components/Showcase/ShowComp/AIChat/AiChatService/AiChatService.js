@@ -13,20 +13,22 @@ const AiChatService = ({ setGetStarted }) => {
 
   const aiChatStarted = async () => {
     try {
-      const res = await axios.get("aiToken");
-      const aiCountData = res.data;
+      if (session?.user) {
+        const res = await axios.get("aiToken");
+        const aiCountData = res.data;
 
-      const isUserToken = aiCountData.some(
-        (ai) => ai.user === session.user.email
-      );
+        const isUserToken = aiCountData.some(
+          (ai) => ai.user === session.user.email
+        );
 
-      if (!isUserToken) {
-        const aiTokenData = {
-          user: session.user.email,
-          count: 5,
-          lock: false,
-        };
-        await axios.post("aiToken", aiTokenData);
+        if (!isUserToken) {
+          const aiTokenData = {
+            user: session.user.email,
+            count: 5,
+            lock: false,
+          };
+          await axios.post("aiToken", aiTokenData);
+        }
       }
 
       setGetStarted(true);

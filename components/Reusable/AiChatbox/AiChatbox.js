@@ -15,6 +15,7 @@ const AiChatbox = ({
   handleInputChange,
   setIsSigninPopup,
   setAiToken,
+  setIsTokenPopup,
 }) => {
   const [IsTypeWriter, setIsTypeWriter] = useState(true);
 
@@ -44,6 +45,7 @@ const AiChatbox = ({
         if (!isUserToken || !filteredUserToken[0]?.lock) {
           handleSubmit(event);
         } else {
+          setIsTokenPopup(true);
           return;
         }
 

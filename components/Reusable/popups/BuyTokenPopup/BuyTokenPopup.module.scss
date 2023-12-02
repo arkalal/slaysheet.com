@@ -1,0 +1,9 @@
+@import "../../../../styleReuse/mixins.module.scss";
+
+.BuyTokenPopup {
+  @include popupCenter();
+
+  .BuyTokenPopupContent {
+    @include popupContent();
+  }
+}

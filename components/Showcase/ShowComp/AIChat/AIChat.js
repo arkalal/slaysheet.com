@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import userAnime from "../../../../assets/icons/userAvatar.png";
 import Image from "next/image";
 import AiChatService from "./AiChatService/AiChatService";
+import BuyTokenPopup from "../../../Reusable/popups/BuyTokenPopup/BuyTokenPopup";
 
 const SigninPopup = dynamic(
   () => import("../../../Reusable/popups/SigninPopup/SigninPopup"),
@@ -22,6 +23,7 @@ const AIChat = () => {
   const [IsSigninPopup, setIsSigninPopup] = useState(false);
   const [GetStarted, setGetStarted] = useState(false);
   const [AiToken, setAiToken] = useState(null);
+  const [IsTokenPopup, setIsTokenPopup] = useState(false);
 
   const { input, handleSubmit, isLoading, handleInputChange, messages } =
     useChat();
@@ -50,6 +52,12 @@ const AIChat = () => {
               <>
                 {" "}
                 <SigninPopup setIsSigninPopup={setIsSigninPopup} />{" "}
+              </>
+            )}
+
+            {IsTokenPopup && (
+              <>
+                <BuyTokenPopup />
               </>
             )}
 
@@ -126,6 +134,7 @@ const AIChat = () => {
                 handleInputChange={handleInputChange}
                 setIsSigninPopup={setIsSigninPopup}
                 setAiToken={setAiToken}
+                setIsTokenPopup={setIsTokenPopup}
               />
             </div>
           </div>
