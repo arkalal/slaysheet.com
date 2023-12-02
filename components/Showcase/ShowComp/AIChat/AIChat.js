@@ -21,11 +21,12 @@ const SigninPopup = dynamic(
 const AIChat = () => {
   const [IsSigninPopup, setIsSigninPopup] = useState(false);
   const [GetStarted, setGetStarted] = useState(false);
+  const [AiToken, setAiToken] = useState(null);
 
   const { input, handleSubmit, isLoading, handleInputChange, messages } =
     useChat();
 
-  const chatContainerRef = useRef(null);
+  const chatContainerRef = useRef("");
 
   useEffect(() => {
     // Scroll to the bottom when messages change
@@ -51,6 +52,21 @@ const AIChat = () => {
                 <SigninPopup setIsSigninPopup={setIsSigninPopup} />{" "}
               </>
             )}
+
+            {AiToken ? (
+              <>
+                <div className={styles.AiTokenCounter}>
+                  {AiToken} Tokens Left
+                </div>
+              </>
+            ) : (
+              AiToken === 0 && (
+                <>
+                  <div className={styles.AiTokenCounter}>0 Tokens Left</div>
+                </>
+              )
+            )}
+
             <div ref={chatContainerRef} className={styles.AiChats}>
               {!isLoading && messages.length === 0 && (
                 <div className={styles.chatConverseAnime}>
@@ -109,6 +125,7 @@ const AIChat = () => {
                 handleSubmit={handleSubmit}
                 handleInputChange={handleInputChange}
                 setIsSigninPopup={setIsSigninPopup}
+                setAiToken={setAiToken}
               />
             </div>
           </div>

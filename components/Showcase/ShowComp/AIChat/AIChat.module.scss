@@ -1,8 +1,17 @@
 .AIChat {
+  position: relative;
   padding-top: 10px;
   .chatBox {
     width: 60%;
     margin: 20px auto 0 auto;
+  }
+
+  .AiTokenCounter {
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
   }
 
   .AiChats {

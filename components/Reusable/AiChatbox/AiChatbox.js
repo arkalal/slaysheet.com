@@ -14,6 +14,7 @@ const AiChatbox = ({
   handleSubmit,
   handleInputChange,
   setIsSigninPopup,
+  setAiToken,
 }) => {
   const [IsTypeWriter, setIsTypeWriter] = useState(true);
 
@@ -35,6 +36,10 @@ const AiChatbox = ({
         const filteredUserToken = aiCountData.filter(
           (user) => user.user === session.user.email
         );
+
+        if (filteredUserToken && filteredUserToken[0]?.count) {
+          setAiToken(filteredUserToken[0]?.count - 1);
+        }
 
         if (!isUserToken || !filteredUserToken[0]?.lock) {
           handleSubmit(event);
