@@ -54,13 +54,6 @@ const AiChatbox = ({
             lock: false,
           };
           await axios.put(`aiToken/${filteredUserToken[0]?._id}`, data);
-        } else {
-          const aiTokenData = {
-            user: session.user.email,
-            count: 4,
-            lock: false,
-          };
-          await axios.post("aiToken", aiTokenData);
         }
 
         if (filteredUserToken[0]?.count === 1) {
