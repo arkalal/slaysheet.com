@@ -6,6 +6,10 @@ const userSubscriptionSchema = new Schema({
     required: true,
     ref: "User",
   },
+  productId: {
+    type: String,
+    required: true,
+  },
   stripeCustomerId: {
     type: String,
   },

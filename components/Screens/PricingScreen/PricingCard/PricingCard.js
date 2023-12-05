@@ -24,6 +24,8 @@ const PricingCard = ({ data }) => {
 
     const postData = {
       priceId: data.id,
+      mode: data.type,
+      productId: data.product,
     };
 
     try {

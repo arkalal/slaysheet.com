@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 const Subscription = ({ priceData }) => {
   const router = useRouter();
+  console.log("priceData", priceData);
 
   return (
     <div>

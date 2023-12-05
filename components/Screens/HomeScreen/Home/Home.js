@@ -7,7 +7,8 @@ const Banner = lazy(() => import("../Banner/Banner"));
 const Showcase = lazy(() => import("../../../Showcase/Showcase"));
 const ShowBox = lazy(() => import("../../../Showcase/ShowBox/ShowBox"));
 
-const Home = () => {
+const Home = ({ isToken }) => {
+  console.log("isToken", isToken);
   return (
     <div className={styles.home}>
       <Navbar />
@@ -19,6 +20,13 @@ const Home = () => {
         <ReduxProvider>
           <ShowBox />
         </ReduxProvider>
+
+        {isToken && (
+          <>
+            {" "}
+            <h2>Purchased Tokens</h2>{" "}
+          </>
+        )}
       </Suspense>
     </div>
   );
