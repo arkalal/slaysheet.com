@@ -12,7 +12,7 @@ const checkSubscription = async () => {
   const userSession = await getServerSession(authOptions);
 
   const isSubscribed = Array.from(webhook.subscription).some(
-    (item) => item.user === userSession.user.email
+    (item) => item.user === userSession?.user.email
   );
 
   if (isSubscribed) {
