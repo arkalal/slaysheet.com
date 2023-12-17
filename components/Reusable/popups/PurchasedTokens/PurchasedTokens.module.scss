@@ -1,0 +1,13 @@
+@import "../../../../styleReuse/mixins.module.scss";
+
+.PurchasedTokens {
+  @include popupCenter();
+
+  .PurchasedTokensContent {
+    @include popupContent();
+
+    .PurchasedTokensInteract {
+      text-align: center;
+    }
+  }
+}

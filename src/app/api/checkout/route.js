@@ -19,7 +19,7 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  const { priceId, mode, productId } = await req.json();
+  const { priceId, mode, productId, userId } = await req.json();
   const userSession = await getServerSession(authOptions);
 
   if (!userSession) {
@@ -42,7 +42,7 @@ export async function POST(req) {
       cancel_url: `${baseUrlTest}/studio`,
       billing_address_collection: "auto",
       metadata: {
-        userId: userSession.user.email,
+        userId,
         subscription: "recurring",
         productId,
       },
@@ -61,7 +61,7 @@ export async function POST(req) {
       cancel_url: `${baseUrlTest}`,
       billing_address_collection: "auto",
       metadata: {
-        userId: userSession.user.email,
+        userId,
         subscription: "one_time",
         productId,
       },

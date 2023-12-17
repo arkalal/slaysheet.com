@@ -4,8 +4,13 @@ import React from "react";
 import styles from "./PricingCard.module.scss";
 import axios from "../../../../axios/getApi";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const PricingCard = ({ data }) => {
+  const { data: session } = useSession();
+
+  console.log("session", session);
+
   const dynamicPricingCardData = (name) => {
     if (name === "Basic Individual - AI") {
       return (
@@ -26,6 +31,7 @@ const PricingCard = ({ data }) => {
       priceId: data.id,
       mode: data.type,
       productId: data.product,
+      userId: session.user.email,
     };
 
     try {
