@@ -95,6 +95,7 @@ export async function POST(req) {
           productId: session.metadata.productId,
           paymentInfo,
           productItem,
+          tokenPurchased: true,
         };
 
         const priceData = await PriceData();
@@ -111,6 +112,15 @@ export async function POST(req) {
         if (!userSubscription) {
           await UserSubscription.create(orderData);
         } else {
+          await UserSubscription.findOneAndUpdate(
+            {
+              productId: filteredPriceData[0].product,
+            },
+            {
+              tokenPurchased: true,
+            }
+          );
+
           return;
         }
       }

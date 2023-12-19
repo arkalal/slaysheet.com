@@ -40,11 +40,13 @@ const checkTokenPurchase = async () => {
     (item) => item.nickname === "AI Tokens Plan"
   );
 
-  const isPurchased = Array.from(webhook.subscription).some(
+  const webhookTokenData = webhook.subscription.filter(
     (item) =>
       item.productId === filteredPriceData[0].product &&
       item.user === userSession?.user.email
   );
+
+  const isPurchased = webhookTokenData[0]?.tokenPurchased;
 
   return isPurchased;
 };

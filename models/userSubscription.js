@@ -13,6 +13,9 @@ const userSubscriptionSchema = new Schema({
   stripeCustomerId: {
     type: String,
   },
+  tokenPurchased: {
+    type: Boolean,
+  },
   stripeSubscriptionId: {
     type: String,
   },

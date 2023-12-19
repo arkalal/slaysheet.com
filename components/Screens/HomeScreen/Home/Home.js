@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from "react";
 import styles from "./Home.module.scss";
 import Navbar from "../Navbar/Navbar";
 import ReduxProvider from "../../../../redux/ReduxProvider";
-import PopupShell from "../../../Reusable/popups/PopupShell/PopupShell";
+import PurchasedTokens from "../../../Reusable/popups/PurchasedTokens/PurchasedTokens";
 
 const Banner = lazy(() => import("../Banner/Banner"));
 const Showcase = lazy(() => import("../../../Showcase/Showcase"));
@@ -21,7 +21,12 @@ const Home = async ({ isToken }) => {
           <ShowBox />
         </ReduxProvider>
 
-        <PopupShell isToken={isToken} />
+        {isToken && (
+          <>
+            {" "}
+            <PurchasedTokens />{" "}
+          </>
+        )}
       </Suspense>
     </div>
   );
