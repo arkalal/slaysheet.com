@@ -5,5 +5,16 @@
 
   .BuyTokenPopupContent {
     @include popupContent();
+
+    .BuyTokenPopupInteract {
+      h2,
+      .tokenImg {
+        margin-bottom: 20px;
+      }
+
+      button {
+        @include popupButton();
+      }
+    }
   }
 }

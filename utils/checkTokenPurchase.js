@@ -12,25 +12,6 @@ const tokenPriceData = async () => {
   return res.data;
 };
 
-const AddTokens = async () => {
-  const res = await axios.get("aiToken");
-  const aiCountData = res.data;
-
-  const isUserToken = aiCountData.some((ai) => ai.user === session.user.email);
-  const filteredUserToken = aiCountData.filter(
-    (user) => user.user === session.user.email
-  );
-
-  if (isUserToken) {
-    const data = {
-      user: session.user.email,
-      count: filteredUserToken[0]?.count + 5,
-      lock: false,
-    };
-    await axios.put(`aiToken/${filteredUserToken[0]?._id}`, data);
-  }
-};
-
 const checkTokenPurchase = async () => {
   const webhook = await getWebhook();
   const priceData = await tokenPriceData();

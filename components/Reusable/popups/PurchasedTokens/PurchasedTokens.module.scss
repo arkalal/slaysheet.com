@@ -8,6 +8,44 @@
 
     .PurchasedTokensInteract {
       text-align: center;
+
+      h2,
+      .tokenImg,
+      p {
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 17px;
+        font-weight: 600;
+      }
+
+      button {
+        @include popupButton();
+
+        .loader {
+          border: 1px solid #f3f3f3;
+          border-top: 1px solid #000000;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          animation: spin 2s linear infinite;
+        }
+
+        .successMark {
+          color: green;
+          font-size: 1.5em;
+        }
+      }
     }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

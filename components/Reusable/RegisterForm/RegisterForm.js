@@ -72,6 +72,7 @@ const RegisterForm = ({ isLogin }) => {
           fullName: FullName,
           email: Email,
           password: hashedPassword,
+          freeTokens: true,
         };
 
         const res = await axios.post("register", data);

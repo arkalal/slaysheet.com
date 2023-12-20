@@ -28,22 +28,7 @@
         margin-top: 10px;
 
         button {
-          border-radius: 10px;
-          outline: none;
-          border: none;
-          box-shadow: 0px 0px 5px 0px rgba(189, 185, 185, 0.75);
-          transition: all 0.3s ease-in-out;
-          padding: 15px 40px;
-          font-size: 15px;
-          font-weight: bold;
-          cursor: pointer;
-          background-color: black;
-          color: #fff;
-
-          &:hover {
-            background-color: #fff;
-            color: black;
-          }
+          @include popupButton();
 
           .SignInButtonText {
             display: flex;

@@ -14,6 +14,10 @@ const newUserAuthSchema = new Schema(
       type: String,
       required: true,
     },
+    freeTokens: {
+      type: Boolean,
+      required: true,
+    },
   },
   {
     timestamps: true,
