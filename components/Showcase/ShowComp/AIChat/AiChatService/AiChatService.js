@@ -5,37 +5,12 @@ import Image from "next/image";
 import aiChatImg from "../../../../../assets/icons/aiChat.png";
 import BlueButton from "../../../../Reusable/BlueButton/BlueButton";
 import { chatAiTypewriterText } from "../../../../../customData/data";
-import axios from "../../../../../axios/getApi";
-import { useSession } from "next-auth/react";
 
 const AiChatService = ({ setGetStarted }) => {
-  const { data: session } = useSession();
-
-  const aiChatStarted = async () => {
-    try {
-      if (session?.user) {
-        const res = await axios.get("aiToken");
-        const aiCountData = res.data;
-
-        const isUserToken = aiCountData.some(
-          (ai) => ai.user === session.user.email
-        );
-
-        if (!isUserToken) {
-          const aiTokenData = {
-            user: session.user.email,
-            count: 5,
-            lock: false,
-          };
-          await axios.post("aiToken", aiTokenData);
-        }
-      }
-
-      setGetStarted(true);
-    } catch (error) {
-      console.log(error);
-    }
+  const aiChatStarted = () => {
+    setGetStarted(true);
   };
+
   return (
     <div className={styles.AiChatService}>
       <Image src={aiChatImg} alt="aiChatImg" width={150}></Image>

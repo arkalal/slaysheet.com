@@ -6,29 +6,14 @@ import PurchasedTokens from "../../../Reusable/popups/PurchasedTokens/PurchasedT
 import axios from "../../../../axios/getApi";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import checkFreeTokens from "../../../../utils/checkFreeTokens";
 
 const Banner = lazy(() => import("../Banner/Banner"));
 const Showcase = lazy(() => import("../../../Showcase/Showcase"));
 const ShowBox = lazy(() => import("../../../Showcase/ShowBox/ShowBox"));
 
-const getRegisteredUser = async () => {
-  try {
-    const userSession = await getServerSession(authOptions);
-    const res = axios.get("register");
-    const userData = res.data.user;
-
-    const currentUser = userData.filter(
-      (item) => item.email === userSession.user.email
-    );
-
-    return currentUser[0];
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const Home = async ({ isToken }) => {
-  const currentUser = await getRegisteredUser();
+  const userFreeTokens = await checkFreeTokens();
 
   return (
     <div className={styles.home}>
@@ -46,6 +31,13 @@ const Home = async ({ isToken }) => {
           <>
             {" "}
             <PurchasedTokens />{" "}
+          </>
+        )}
+
+        {userFreeTokens && (
+          <>
+            {" "}
+            <PurchasedTokens isFree={true} />{" "}
           </>
         )}
       </Suspense>

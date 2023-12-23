@@ -107,6 +107,7 @@ export async function POST(req) {
         await connectMongoDB();
         const userSubscription = await UserSubscription.findOne({
           productId: filteredPriceData[0].product,
+          user: userId,
         });
 
         if (!userSubscription) {
@@ -115,6 +116,7 @@ export async function POST(req) {
           await UserSubscription.findOneAndUpdate(
             {
               productId: filteredPriceData[0].product,
+              user: userId,
             },
             {
               tokenPurchased: true,

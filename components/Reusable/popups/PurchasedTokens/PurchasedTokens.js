@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import tokenImage from "../../../../assets/icons/tokens.png";
 
-const PurchasedTokens = () => {
+const PurchasedTokens = ({ isFree }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -43,27 +43,57 @@ const PurchasedTokens = () => {
   const handleClose = async () => {
     try {
       setIsLoading(true);
-      await AddTokens();
 
-      const checkout = await axios.get("checkout");
-      const priceData = checkout.data;
+      if (!isFree) {
+        await AddTokens();
 
-      const filteredPriceData = priceData.filter(
-        (item) => item.nickname === "AI Tokens Plan"
-      );
+        const checkout = await axios.get("checkout");
+        const priceData = checkout.data;
 
-      const res = await axios.get("webhook");
-      const webhook = res.data;
+        const filteredPriceData = priceData.filter(
+          (item) => item.nickname === "AI Tokens Plan"
+        );
 
-      const webhookTokenData = webhook.subscription.filter(
-        (item) =>
-          item.productId === filteredPriceData[0].product &&
-          item.user === session?.user.email
-      );
+        const res = await axios.get("webhook");
+        const webhook = res.data;
 
-      await axios.put(`webhook/${webhookTokenData[0]._id}`, {
-        tokenPurchased: false,
-      });
+        const webhookTokenData = webhook.subscription.filter(
+          (item) =>
+            item.productId === filteredPriceData[0].product &&
+            item.user === session?.user.email
+        );
+
+        await axios.put(`webhook/${webhookTokenData[0]._id}`, {
+          tokenPurchased: false,
+        });
+      } else {
+        const res = await axios.get("aiToken");
+        const aiCountData = res.data;
+
+        const isUserToken = aiCountData.some(
+          (ai) => ai.user === session.user.email
+        );
+
+        if (!isUserToken) {
+          const aiTokenData = {
+            user: session.user.email,
+            count: 5,
+            lock: false,
+          };
+          await axios.post("aiToken", aiTokenData);
+        }
+
+        const register = await axios.get("register");
+        const registerData = register.data.user;
+
+        const currentRegisteredUser = registerData.filter(
+          (item) => item.email === session.user.email
+        );
+
+        await axios.put(`register/${currentRegisteredUser[0]._id}`, {
+          freeTokens: false,
+        });
+      }
 
       setIsSuccess(true);
       setTimeout(() => {
@@ -80,7 +110,16 @@ const PurchasedTokens = () => {
     <div className={styles.PurchasedTokens}>
       <div className={styles.PurchasedTokensContent}>
         <div className={styles.PurchasedTokensInteract}>
-          <h2>Thank you for Purchasing!</h2>
+          {isFree ? (
+            <>
+              {" "}
+              <h2>Claim your Free AI Tokens!</h2>
+            </>
+          ) : (
+            <>
+              <h2>Thank you for Purchasing!</h2>
+            </>
+          )}
 
           <div className={styles.tokenImg}>
             <Image
@@ -91,7 +130,11 @@ const PurchasedTokens = () => {
             ></Image>
           </div>
 
-          <p>Claim your 10 Tokens!</p>
+          {!isFree && (
+            <>
+              <p>Claim your 10 Tokens!</p>
+            </>
+          )}
 
           <button onClick={handleClose} disabled={isLoading}>
             {isLoading ? (
