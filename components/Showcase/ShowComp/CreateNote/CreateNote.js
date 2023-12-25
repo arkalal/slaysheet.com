@@ -9,12 +9,22 @@ import { createNoteTypewriterText } from "../../../../customData/data";
 const CreateNote = () => {
   return (
     <div className={styles.CreateNote}>
-      <Image src={createNoteImg} alt="PDFChatImage" width={150}></Image>
+      <Image
+        className={styles.createNoteImg}
+        src={createNoteImg}
+        alt="PDFChatImage"
+        width={150}
+      ></Image>
       <h2>
         <TypingText typingData={createNoteTypewriterText} />
       </h2>
       <h3>Powered By GPT-4 Turbo Latest Release</h3>
-      <Image src={comingSoon} alt="comingSoon" width={280}></Image>
+      <Image
+        className={styles.createNoteImg}
+        src={comingSoon}
+        alt="comingSoon"
+        width={280}
+      ></Image>
     </div>
   );
 };

@@ -3,4 +3,22 @@
 .PDFChat {
   @include showScreenCenter();
   padding: 10%;
+
+  @media (max-width: 500px) {
+    h2,
+    h3 {
+      font-size: 15px;
+    }
+  }
+
+  .pdfChatImg {
+    object-fit: contain;
+    width: 20%;
+    height: 20%;
+
+    @media (max-width: 500px) {
+      width: 40%;
+      height: 40%;
+    }
+  }
 }

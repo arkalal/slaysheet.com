@@ -3,9 +3,6 @@ import styles from "./Home.module.scss";
 import Navbar from "../Navbar/Navbar";
 import ReduxProvider from "../../../../redux/ReduxProvider";
 import PurchasedTokens from "../../../Reusable/popups/PurchasedTokens/PurchasedTokens";
-import axios from "../../../../axios/getApi";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import checkFreeTokens from "../../../../utils/checkFreeTokens";
 
 const Banner = lazy(() => import("../Banner/Banner"));

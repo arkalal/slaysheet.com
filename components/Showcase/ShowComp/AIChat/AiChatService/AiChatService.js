@@ -13,7 +13,12 @@ const AiChatService = ({ setGetStarted }) => {
 
   return (
     <div className={styles.AiChatService}>
-      <Image src={aiChatImg} alt="aiChatImg" width={150}></Image>
+      <Image
+        className={styles.aiChatImg}
+        src={aiChatImg}
+        alt="aiChatImg"
+        width={150}
+      ></Image>
       <h2>
         <TypingText typingData={chatAiTypewriterText} />
       </h2>
