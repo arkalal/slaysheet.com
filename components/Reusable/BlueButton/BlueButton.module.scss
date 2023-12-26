@@ -4,6 +4,10 @@
   button {
     @include blueButton();
 
+    @media (max-width: 500px) {
+      font-size: 15px;
+    }
+
     .navSignInButtonText {
       .signInLink {
         text-decoration: none;
@@ -27,5 +31,9 @@
   button {
     color: white;
     font-weight: bold;
+
+    @media (max-width: 500px) {
+      font-size: 15px;
+    }
   }
 }

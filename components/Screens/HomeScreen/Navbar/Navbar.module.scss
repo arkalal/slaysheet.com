@@ -27,6 +27,10 @@
       cursor: pointer;
       border-radius: 6px;
 
+      @media (max-width: 500px) {
+        font-size: 15px;
+      }
+
       .slayWord {
         color: #000;
       }
