@@ -7,7 +7,11 @@ import Image from "next/image";
 const SmallAnime = ({ data }) => {
   return (
     <div className={styles.SmallAnime}>
-      <Image src={data} alt="serviceTopic" width={100}></Image>
+      <Image
+        className={styles.SmallAnimeImg}
+        src={data}
+        alt="serviceTopic"
+      ></Image>
     </div>
   );
 };

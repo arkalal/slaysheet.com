@@ -65,9 +65,10 @@
       width: 80%;
       gap: 180px;
 
-      // @media (max-width: 1030px) {
-      //   width: 90%;
-      // }
+      @media (min-width: 600px) and (max-width: 1030px) {
+        width: 90%;
+        gap: 120px;
+      }
 
       @media (max-width: 500px) {
         flex-direction: column;
@@ -88,11 +89,6 @@
           align-items: center;
         }
 
-        // @media (max-width: 1030px) {
-        //   width: 40%;
-        //   align-items: center;
-        // }
-
         .smallBannerCards {
           margin-bottom: 100px;
         }
@@ -108,10 +104,6 @@
           width: 100%;
         }
 
-        // @media (max-width: 1030px) {
-        //   width: 40%;
-        // }
-
         .serviceTopics {
           display: flex;
           flex-direction: column;
@@ -119,16 +111,16 @@
           gap: 10px;
           margin-bottom: 60px;
 
-          @media (max-width: 500px) {
-            align-items: center;
-          }
-
           h1 {
             @include gradientText;
             text-align: left;
 
             @media (max-width: 1300px) {
               font-size: 27px;
+            }
+
+            @media (min-width: 600px) and (max-width: 1030px) {
+              font-size: 20px;
             }
           }
 
@@ -139,6 +131,10 @@
 
             @media (max-width: 1300px) {
               font-size: 18px;
+            }
+
+            @media (min-width: 600px) and (max-width: 1030px) {
+              font-size: 15px;
             }
           }
         }

@@ -13,6 +13,10 @@
     overflow-x: scroll;
     width: 90%;
   }
+  @media (min-width: 600px) and (max-width: 1030px) {
+    width: 90%;
+    overflow-x: scroll;
+  }
 
   .buttonActive {
     background-color: white;
@@ -31,13 +35,10 @@
     font-weight: bold;
     transition: all 0.2s ease-in-out;
     font-size: 12px;
+    width: max-content;
 
     @media (max-width: 1300px) {
       font-size: 10px;
-    }
-
-    @media (max-width: 500px) {
-      width: max-content;
     }
 
     &:hover {

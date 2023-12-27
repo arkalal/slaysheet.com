@@ -15,6 +15,12 @@
       margin: auto;
     }
 
+    @media (min-width: 600px) and (max-width: 1030px) {
+      font-size: 55px;
+      text-align: center;
+      margin: auto;
+    }
+
     span {
       @include gradientText;
     }
