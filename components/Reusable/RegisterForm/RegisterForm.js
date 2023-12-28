@@ -5,7 +5,8 @@ import styles from "./RegisterForm.module.scss";
 import bcrypt from "bcryptjs";
 import axios from "../../../axios/getApi";
 import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import Logo from "../Logo/Logo";
 
 const RegisterForm = ({ isLogin }) => {
   const [FullName, setFullName] = useState("");
@@ -15,7 +16,6 @@ const RegisterForm = ({ isLogin }) => {
   const [IsLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
-  const { data: session } = useSession();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,55 +92,74 @@ const RegisterForm = ({ isLogin }) => {
 
   return (
     <div className={styles.RegisterForm}>
-      <h3>Development in Progress... Users can still register/login. 😇</h3>
-      <form onSubmit={handleSubmit} action="">
-        {!isLogin && (
-          <>
-            <input
-              onChange={(e) => setFullName(e.target.value)}
-              type="text"
-              placeholder="Full Name"
-            />
-          </>
-        )}
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          type="text"
-          placeholder="Email"
-        />
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          type="text"
-          placeholder="Password..."
-        />
+      <div className={styles.logoWrapper}>
+        <Logo />
+      </div>
 
-        {Error && (
-          <>
-            <div> {Error} </div>
-          </>
-        )}
+      <div className={styles.regForm}>
+        <form onSubmit={handleSubmit} action="">
+          {!isLogin && (
+            <>
+              <input
+                onChange={(e) => setFullName(e.target.value)}
+                type="text"
+                placeholder="Full Name"
+              />
+            </>
+          )}
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            placeholder="Email"
+          />
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            type="text"
+            placeholder="Password..."
+          />
 
-        {isLogin ? (
-          <>
-            <p>
-              Not have an account ?{" "}
-              <button onClick={() => router.push("/register")}>Register</button>{" "}
-            </p>
-          </>
-        ) : (
-          <>
-            <p>
-              Already have an account ?{" "}
-              <button onClick={() => router.push("/login")}>Login</button>{" "}
-            </p>
-          </>
-        )}
+          {Error && (
+            <>
+              <div> {Error} </div>
+            </>
+          )}
 
-        <button type="submit">
-          {" "}
-          {IsLoading ? "Loading..." : isLogin ? "Login" : "Register"}{" "}
-        </button>
-      </form>
+          {isLogin ? (
+            <>
+              <p>
+                Not have an account ?{" "}
+                <button
+                  onClick={() => {
+                    router.push("/register");
+                    setError("");
+                  }}
+                >
+                  Register
+                </button>{" "}
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                Already have an account ?{" "}
+                <button
+                  onClick={() => {
+                    router.push("/login");
+                    setError("");
+                  }}
+                >
+                  Login
+                </button>{" "}
+              </p>
+            </>
+          )}
+
+          <button className={styles.registerSubmit} type="submit">
+            {" "}
+            {IsLoading ? "Loading..." : isLogin ? "Login" : "Register"}{" "}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

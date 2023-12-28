@@ -1,0 +1,23 @@
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  border: 1px dotted #019eff;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+
+  @media (max-width: 500px) {
+    font-size: 15px;
+  }
+
+  .slayWord {
+    color: #000;
+  }
+
+  .dot {
+    background-image: linear-gradient(to right, #0287d9, #02bfff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
