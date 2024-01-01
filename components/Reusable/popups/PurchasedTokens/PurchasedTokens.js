@@ -7,8 +7,10 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import tokenImage from "../../../../assets/icons/tokens.png";
+import * as dispatcher from "../../../../redux/store/dispatchers";
+import { connect } from "react-redux";
 
-const PurchasedTokens = ({ isFree }) => {
+const PurchasedTokens = ({ isFree, dispatchTokenValue }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -34,6 +36,8 @@ const PurchasedTokens = ({ isFree }) => {
           lock: false,
         };
         await axios.put(`aiToken/${filteredUserToken[0]?._id}`, data);
+        localStorage.setItem("AITokens", filteredUserToken[0]?.count + 5);
+        dispatchTokenValue(filteredUserToken[0]?.count + 5);
       }
     } catch (error) {
       console.log(error);
@@ -81,6 +85,8 @@ const PurchasedTokens = ({ isFree }) => {
             lock: false,
           };
           await axios.post("aiToken", aiTokenData);
+          localStorage.setItem("AITokens", 5);
+          dispatchTokenValue(5);
         }
 
         const register = await axios.get("register");
@@ -151,4 +157,4 @@ const PurchasedTokens = ({ isFree }) => {
   );
 };
 
-export default PurchasedTokens;
+export default connect(null, dispatcher)(PurchasedTokens);

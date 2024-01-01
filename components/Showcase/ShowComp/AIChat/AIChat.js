@@ -11,6 +11,7 @@ import userAnime from "../../../../assets/icons/userAvatar.png";
 import Image from "next/image";
 import AiChatService from "./AiChatService/AiChatService";
 import BuyTokenPopup from "../../../Reusable/popups/BuyTokenPopup/BuyTokenPopup";
+import ReduxProvider from "../../../../redux/ReduxProvider";
 
 const SigninPopup = dynamic(
   () => import("../../../Reusable/popups/SigninPopup/SigninPopup"),
@@ -22,7 +23,6 @@ const SigninPopup = dynamic(
 const AIChat = () => {
   const [IsSigninPopup, setIsSigninPopup] = useState(false);
   const [GetStarted, setGetStarted] = useState(false);
-  const [AiToken, setAiToken] = useState(null);
   const [IsTokenPopup, setIsTokenPopup] = useState(false);
 
   const { input, handleSubmit, isLoading, handleInputChange, messages } =
@@ -59,20 +59,6 @@ const AIChat = () => {
               <>
                 <BuyTokenPopup />
               </>
-            )}
-
-            {AiToken ? (
-              <>
-                <div className={styles.AiTokenCounter}>
-                  {AiToken} Tokens Left
-                </div>
-              </>
-            ) : (
-              AiToken === 0 && (
-                <>
-                  <div className={styles.AiTokenCounter}>0 Tokens Left</div>
-                </>
-              )
             )}
 
             <div ref={chatContainerRef} className={styles.AiChats}>
@@ -128,14 +114,15 @@ const AIChat = () => {
             </div>
 
             <div className={styles.chatBox}>
-              <AiChatbox
-                input={input}
-                handleSubmit={handleSubmit}
-                handleInputChange={handleInputChange}
-                setIsSigninPopup={setIsSigninPopup}
-                setAiToken={setAiToken}
-                setIsTokenPopup={setIsTokenPopup}
-              />
+              <ReduxProvider>
+                <AiChatbox
+                  input={input}
+                  handleSubmit={handleSubmit}
+                  handleInputChange={handleInputChange}
+                  setIsSigninPopup={setIsSigninPopup}
+                  setIsTokenPopup={setIsTokenPopup}
+                />
+              </ReduxProvider>
             </div>
           </div>
         </>

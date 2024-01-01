@@ -8,14 +8,16 @@ import { Typewriter } from "react-simple-typewriter";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import axios from "../../../axios/getApi";
+import * as dispatcher from "../../../redux/store/dispatchers";
+import { connect } from "react-redux";
 
 const AiChatbox = ({
   input,
   handleSubmit,
   handleInputChange,
   setIsSigninPopup,
-  setAiToken,
   setIsTokenPopup,
+  dispatchTokenValue,
 }) => {
   const [IsTypeWriter, setIsTypeWriter] = useState(true);
 
@@ -39,7 +41,8 @@ const AiChatbox = ({
         );
 
         if (filteredUserToken && filteredUserToken[0]?.count) {
-          setAiToken(filteredUserToken[0]?.count - 1);
+          localStorage.setItem("AITokens", filteredUserToken[0]?.count - 1);
+          dispatchTokenValue(filteredUserToken[0]?.count - 1);
         }
 
         if (!isUserToken || !filteredUserToken[0]?.lock) {
@@ -137,4 +140,4 @@ const AiChatbox = ({
   );
 };
 
-export default AiChatbox;
+export default connect(null, dispatcher)(AiChatbox);
