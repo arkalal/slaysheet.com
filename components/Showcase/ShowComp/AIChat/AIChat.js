@@ -73,7 +73,7 @@ const AIChat = () => {
                     <Image
                       src={chattingAnime}
                       alt="chattingAnime"
-                      width={180}
+                      className={styles.chatConverseImg}
                     ></Image>
                     <p>No Conversation Found</p>
                   </div>

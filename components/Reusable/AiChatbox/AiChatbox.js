@@ -182,7 +182,11 @@ const AiChatbox = ({
       <div className={styles.chatFeatures}>
         <div className={styles.aiChatboxInterior}>
           <div className={styles.chatBoxIcon}>
-            <Image src={chatBoxAnime} alt="chatBoxAnime" width={40}></Image>
+            <Image
+              className={styles.chatBoxIconImg}
+              src={chatBoxAnime}
+              alt="chatBoxAnime"
+            ></Image>
           </div>
 
           <div className={styles.chatboxInput}>
@@ -222,11 +226,7 @@ const AiChatbox = ({
           </div>
 
           <div className={styles.chatboxButton}>
-            <BlueButton
-              onClick={handleClick}
-              color={"white"}
-              text={"Chat With AI"}
-            />
+            <button onClick={handleClick}>Chat With AI</button>
           </div>
         </div>
       </div>
