@@ -5,7 +5,6 @@ import AiChatbox from "../../../Reusable/AiChatbox/AiChatbox";
 import styles from "./AIChat.module.scss";
 import chattingAnime from "../../../../assets/icons/converseAI.png";
 import aiAvatar from "../../../../assets/icons/chatboxIco.png";
-import { useChat } from "ai/react";
 import dynamic from "next/dynamic";
 import userAnime from "../../../../assets/icons/userAvatar.png";
 import Image from "next/image";
@@ -25,8 +24,14 @@ const AIChat = () => {
   const [GetStarted, setGetStarted] = useState(false);
   const [IsTokenPopup, setIsTokenPopup] = useState(false);
 
-  const { input, handleSubmit, isLoading, handleInputChange, messages } =
-    useChat();
+  const [conversationHistory, setConversationHistory] = useState([]);
+  const [Prompt, setPrompt] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+  const [isAITyping, setIsAITyping] = useState(false);
+  const [images, setImages] = useState([]);
+  const [IsVision, setIsVision] = useState(false);
+
+  console.log("conversationHistory", conversationHistory);
 
   const chatContainerRef = useRef("");
 
@@ -36,7 +41,7 @@ const AIChat = () => {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
-  }, [GetStarted, messages]);
+  }, [GetStarted, chatHistory]);
 
   return (
     <>
@@ -61,66 +66,50 @@ const AIChat = () => {
               </>
             )}
 
-            <div ref={chatContainerRef} className={styles.AiChats}>
-              {!isLoading && messages.length === 0 && (
-                <div className={styles.chatConverseAnime}>
-                  <Image
-                    src={chattingAnime}
-                    alt="chattingAnime"
-                    width={180}
-                  ></Image>
-                  <p>No Conversation Found</p>
-                </div>
-              )}
+            <div className={styles.AiChats}>
+              <div ref={chatContainerRef} className={styles.chatBox}>
+                {conversationHistory && conversationHistory.length === 0 && (
+                  <div className={styles.chatConverseAnime}>
+                    <Image
+                      src={chattingAnime}
+                      alt="chattingAnime"
+                      width={180}
+                    ></Image>
+                    <p>No Conversation Found</p>
+                  </div>
+                )}
 
-              {messages &&
-                messages.map((item, index) => {
-                  return (
-                    <div key={index} className={styles.AiMessage}>
-                      <div className={styles.AiAvatar}>
-                        {item.role === "user" ? (
-                          <>
-                            <div className={styles.aiAv}>
-                              <Image
-                                src={userAnime}
-                                alt="userAnime"
-                                width={40}
-                              ></Image>
-                            </div>
-                          </>
-                        ) : (
-                          <div className={styles.aiAv}>
-                            <Image
-                              src={aiAvatar}
-                              alt="aiAvatar"
-                              width={40}
-                            ></Image>
-                          </div>
-                        )}
-                      </div>
-                      <div
-                        className={
-                          item.role === "user"
-                            ? `${styles.AiConverseUser}`
-                            : `${styles.AiConverseMachine}`
-                        }
-                        key={index}
-                      >
-                        {item.content}
-                      </div>
+                {chatHistory.map((chat, index) => (
+                  <div className={styles.chatQuery} key={index}>
+                    <img src={chat.images} alt="" />
+                    <div className={styles.userText}>
+                      <p>{chat.prompt}</p>
                     </div>
-                  );
-                })}
+
+                    <div className={styles.aiText}>
+                      <p>{chat.response || (isAITyping && "typing...")}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className={styles.chatBox}>
+            <div className={styles.inputBox}>
               <ReduxProvider>
                 <AiChatbox
-                  input={input}
-                  handleSubmit={handleSubmit}
-                  handleInputChange={handleInputChange}
                   setIsSigninPopup={setIsSigninPopup}
                   setIsTokenPopup={setIsTokenPopup}
+                  setConversationHistory={setConversationHistory}
+                  setChatHistory={setChatHistory}
+                  setIsAITyping={setIsAITyping}
+                  IsVision={IsVision}
+                  setImages={setImages}
+                  setIsVision={setIsVision}
+                  setPrompt={setPrompt}
+                  Prompt={Prompt}
+                  images={images}
+                  conversationHistory={conversationHistory}
+                  chatHistory={chatHistory}
                 />
               </ReduxProvider>
             </div>

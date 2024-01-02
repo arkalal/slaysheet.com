@@ -1,45 +1,60 @@
 .aiChatbox {
-  border: 1px solid black;
-  border-radius: 30px;
-  -webkit-box-shadow: 5px 5px 18px #b2b8c9, -5px -5px 18px #f0f8ff;
-  box-shadow: 5px 5px 18px #b2b8c9, -5px -5px 18px #f0f8ff;
-  border: none;
-  outline: none;
-  background-color: #fff;
-  .aiChatboxInterior {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px;
-
-    .chatBoxIcon {
-      object-fit: contain;
-      width: 40px;
+  .imageUpload {
+    margin-bottom: 10px;
+    .imagePreviews {
+      position: absolute;
+      bottom: 10%;
+      left: 23%;
+      img {
+        object-fit: contain;
+        width: 100px;
+      }
     }
+  }
+  .chatFeatures {
+    border: 1px solid black;
+    border-radius: 30px;
+    -webkit-box-shadow: 5px 5px 18px #b2b8c9, -5px -5px 18px #f0f8ff;
+    box-shadow: 5px 5px 18px #b2b8c9, -5px -5px 18px #f0f8ff;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    .aiChatboxInterior {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 20px;
 
-    .chatboxInput {
-      flex: 0.9;
-
-      .typewritePlaceHolder {
-        width: 100%;
-        padding: 5px;
-        border: none;
-        outline: none;
-        font-size: 20px;
-        color: gray;
-        text-align: left;
+      .chatBoxIcon {
+        object-fit: contain;
+        width: 40px;
       }
 
-      input {
-        width: 100%;
-        padding: 5px;
-        border: none;
-        outline: none;
-        font-size: 20px;
-        caret-color: blue;
+      .chatboxInput {
+        flex: 0.9;
 
-        &::placeholder {
+        .typewritePlaceHolder {
+          width: 100%;
+          padding: 5px;
+          border: none;
+          outline: none;
+          font-size: 20px;
           color: gray;
+          text-align: left;
+        }
+
+        input {
+          width: 100%;
+          padding: 5px;
+          border: none;
+          outline: none;
+          font-size: 20px;
+          caret-color: blue;
+          margin-bottom: 0;
+
+          &::placeholder {
+            color: gray;
+          }
         }
       }
     }
