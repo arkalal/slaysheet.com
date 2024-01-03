@@ -1,0 +1,16 @@
+.Footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 40px 0;
+
+  .footerLink {
+    text-decoration: none;
+  }
+
+  p {
+    color: gray;
+    font-weight: 600;
+  }
+}
