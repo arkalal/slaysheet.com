@@ -6,3 +6,10 @@ export const dispatchButtonId = (data) => {
     data,
   };
 };
+
+export const dispatchTokenValue = (data) => {
+  return {
+    type: Actions.GET_TOKEN_VALUE,
+    data,
+  };
+};

@@ -13,8 +13,7 @@ const Banner = () => {
   return (
     <div className={styles.banner}>
       <div className={styles.bannerStatement}>
-        <span>Hello Users 🚀</span>
-        <span>Welcome to your new AI Platform!</span>
+        <span>Hello Users 🚀 Welcome to your new AI Platform!</span>
         <button>Early Access 🧑🏻‍💻</button>
       </div>
 

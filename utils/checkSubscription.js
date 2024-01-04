@@ -1,5 +1,6 @@
-import { auth } from "@clerk/nextjs";
+import { getServerSession } from "next-auth";
 import axios from "../axios/getApi";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const getWebhook = async () => {
   const res = await axios.get("webhook");
@@ -8,10 +9,10 @@ const getWebhook = async () => {
 
 const checkSubscription = async () => {
   const webhook = await getWebhook();
-  const { userId } = auth();
+  const userSession = await getServerSession(authOptions);
 
   const isSubscribed = Array.from(webhook.subscription).some(
-    (item) => item.user === userId
+    (item) => item.user === userSession?.user.email
   );
 
   if (isSubscribed) {

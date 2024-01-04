@@ -6,12 +6,16 @@ import bcrypt from "bcryptjs";
 import axios from "../../../axios/getApi";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Logo from "../Logo/Logo";
+import { connect } from "react-redux";
+import * as dispatcher from "../../../redux/store/dispatchers";
 
-const RegisterForm = ({ isLogin }) => {
+const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
   const [FullName, setFullName] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [Error, setError] = useState("");
+  const [IsLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -32,6 +36,7 @@ const RegisterForm = ({ isLogin }) => {
 
     try {
       if (isLogin) {
+        setIsLoading(true);
         const res = await signIn("credentials", {
           name: FullName,
           email: Email,
@@ -43,6 +48,20 @@ const RegisterForm = ({ isLogin }) => {
           setError("Invalid Credentials");
           return;
         }
+
+        const aiToken = await axios.get("aiToken");
+        const aiCountData = aiToken.data;
+
+        const isUserToken = aiCountData.some((ai) => ai.user === Email);
+        const filteredUserToken = aiCountData.filter(
+          (user) => user.user === Email
+        );
+
+        if (isUserToken) {
+          dispatchTokenValue(filteredUserToken[0]?.count);
+          localStorage.setItem("AITokens", filteredUserToken[0]?.count);
+        }
+        setIsLoading(false);
 
         router.push("/");
       } else {
@@ -68,6 +87,7 @@ const RegisterForm = ({ isLogin }) => {
           fullName: FullName,
           email: Email,
           password: hashedPassword,
+          freeTokens: true,
         };
 
         const res = await axios.post("register", data);
@@ -82,59 +102,85 @@ const RegisterForm = ({ isLogin }) => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      router.refresh();
     }
   };
 
   return (
     <div className={styles.RegisterForm}>
-      <h3>Development in Progress... Users can still register/login. 😇</h3>
-      <form onSubmit={handleSubmit} action="">
-        {!isLogin && (
-          <>
-            <input
-              onChange={(e) => setFullName(e.target.value)}
-              type="text"
-              placeholder="Full Name"
-            />
-          </>
-        )}
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          type="text"
-          placeholder="Email"
-        />
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          type="text"
-          placeholder="Password..."
-        />
+      <div className={styles.logoWrapper}>
+        <Logo />
+      </div>
 
-        {Error && (
-          <>
-            <div> {Error} </div>
-          </>
-        )}
+      <div className={styles.regForm}>
+        <form onSubmit={handleSubmit} action="">
+          {!isLogin && (
+            <>
+              <input
+                onChange={(e) => setFullName(e.target.value)}
+                type="text"
+                placeholder="Full Name"
+              />
+            </>
+          )}
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            placeholder="Email"
+          />
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            type="text"
+            placeholder="Password..."
+          />
 
-        {isLogin ? (
-          <>
-            <p>
-              Not have an account ?{" "}
-              <button onClick={() => router.push("/register")}>Register</button>{" "}
-            </p>
-          </>
-        ) : (
-          <>
-            <p>
-              Already have an account ?{" "}
-              <button onClick={() => router.push("/login")}>Login</button>{" "}
-            </p>
-          </>
-        )}
+          {Error && (
+            <>
+              <div> {Error} </div>
+            </>
+          )}
 
-        <button type="submit"> {isLogin ? "Login" : "Register"} </button>
-      </form>
+          {isLogin ? (
+            <>
+              <p>
+                Not have an account ?{" "}
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push("/register");
+                    setError("");
+                  }}
+                >
+                  Register
+                </button>{" "}
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                Already have an account ?{" "}
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push("/login");
+                    setError("");
+                  }}
+                >
+                  Login
+                </button>{" "}
+              </p>
+            </>
+          )}
+
+          <button className={styles.registerSubmit} type="submit">
+            {" "}
+            {IsLoading ? "Loading..." : isLogin ? "Login" : "Register"}{" "}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
 
-export default RegisterForm;
+export default connect(null, dispatcher)(RegisterForm);

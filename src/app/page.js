@@ -1,10 +1,13 @@
 import React from "react";
 import Home from "../../components/Screens/HomeScreen/Home/Home";
+import checkTokenPurchase from "../../utils/checkTokenPurchase";
 
-const Main = () => {
+const Main = async () => {
+  const isToken = await checkTokenPurchase();
+
   return (
     <div>
-      <Home />
+      <Home isToken={isToken} />
     </div>
   );
 };

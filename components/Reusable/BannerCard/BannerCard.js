@@ -8,7 +8,7 @@ const BannerCard = ({ data }) => {
   return (
     <div className={styles.bCard}>
       <div className={styles.lottieAnime}>
-        <Image src={data} alt="BannerImage" width={350}></Image>
+        <Image className={styles.lottImg} src={data} alt="BannerImage"></Image>
       </div>
     </div>
   );

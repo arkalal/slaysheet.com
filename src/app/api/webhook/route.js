@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { headers } from "next/headers";
 import UserSubscription from "../../../../models/userSubscription";
 import connectMongoDB from "../../../../utils/mongoDB";
+import axios from "../../../../axios/getApi";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
@@ -25,6 +26,11 @@ const getPriceItem = async (line_items) => {
   return productItem;
 };
 
+const PriceData = async () => {
+  const res = await axios.get("checkout");
+  return res.data;
+};
+
 export async function POST(req) {
   const body = await req.text();
   const signature = headers().get("Stripe-Signature");
@@ -41,9 +47,7 @@ export async function POST(req) {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
 
-      const subscription = await stripe.subscriptions.retrieve(
-        session.subscription
-      );
+      console.log("session", session);
 
       if (!session?.metadata?.userId) {
         return NextResponse.json(
@@ -65,41 +69,86 @@ export async function POST(req) {
         amountPaid,
       };
 
-      const orderData = {
-        user: userId,
-        stripeCustomerId: subscription.customer,
-        stripeSubscriptionId: subscription.id,
-        stripePriceId: subscription.items.data[0].price.id,
-        stripeCurrentPeriodEnd: new Date(
-          subscription.current_period_end * 1000
-        ),
-        paymentInfo,
-        productItem,
-      };
+      if (session.mode === "subscription") {
+        const subscription = await stripe.subscriptions.retrieve(
+          session.subscription
+        );
 
-      await connectMongoDB();
-      await UserSubscription.create(orderData);
+        const orderData = {
+          user: userId,
+          productId: session.metadata.productId,
+          stripeCustomerId: subscription.customer,
+          stripeSubscriptionId: subscription.id,
+          stripePriceId: subscription.items.data[0].price.id,
+          stripeCurrentPeriodEnd: new Date(
+            subscription.current_period_end * 1000
+          ),
+          paymentInfo,
+          productItem,
+        };
+
+        await connectMongoDB();
+        await UserSubscription.create(orderData);
+      } else if (session.mode === "payment") {
+        const orderData = {
+          user: userId,
+          productId: session.metadata.productId,
+          paymentInfo,
+          productItem,
+          tokenPurchased: true,
+        };
+
+        const priceData = await PriceData();
+
+        const filteredPriceData = priceData.filter(
+          (item) => item.nickname === "AI Tokens Plan"
+        );
+
+        await connectMongoDB();
+        const userSubscription = await UserSubscription.findOne({
+          productId: filteredPriceData[0].product,
+          user: userId,
+        });
+
+        if (!userSubscription) {
+          await UserSubscription.create(orderData);
+        } else {
+          await UserSubscription.findOneAndUpdate(
+            {
+              productId: filteredPriceData[0].product,
+              user: userId,
+            },
+            {
+              tokenPurchased: true,
+            }
+          );
+
+          return;
+        }
+      }
     }
 
     if (event.type === "invoice.payment_succeeded") {
       const session = event.data.object;
 
-      const subscription = await stripe.subscriptions.retrieve(
-        session.subscription
-      );
+      if (session.mode === "subscription") {
+        const subscription = await stripe.subscriptions.retrieve(
+          session.subscription
+        );
 
-      await connectMongoDB();
-      await UserSubscription.findOneAndUpdate(
-        {
-          stripeSubscriptionId: subscription.id,
-        },
-        {
-          stripePriceId: subscription.items.data[0].price.id,
-          stripeCurrentPeriodEnd: new Date(
-            subscription.current_period_end * 1000
-          ),
-        }
-      );
+        await connectMongoDB();
+        await UserSubscription.findOneAndUpdate(
+          {
+            stripeSubscriptionId: subscription.id,
+          },
+          {
+            stripePriceId: subscription.items.data[0].price.id,
+            stripeCurrentPeriodEnd: new Date(
+              subscription.current_period_end * 1000
+            ),
+          }
+        );
+      }
     }
 
     return NextResponse.json({ message: "processed webhook" }, { status: 200 });

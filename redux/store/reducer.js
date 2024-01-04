@@ -2,6 +2,7 @@ const { default: Actions } = require("./actions");
 
 const defaultState = {
   getButtonId: 1,
+  getTokenValue: null,
 };
 
 const slayReducer = (state = defaultState, action) => {
@@ -10,6 +11,11 @@ const slayReducer = (state = defaultState, action) => {
       return {
         ...state,
         getButtonId: action.data,
+      };
+    case Actions.GET_TOKEN_VALUE:
+      return {
+        ...state,
+        getTokenValue: action.data,
       };
 
     default:

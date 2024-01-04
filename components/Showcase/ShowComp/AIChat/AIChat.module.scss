@@ -1,19 +1,120 @@
 .AIChat {
+  position: relative;
   padding-top: 10px;
-  .chatBox {
+  width: 100%;
+  height: 100%;
+  .inputBox {
     width: 60%;
-    margin: 20px auto 0 auto;
+    margin: 30px auto 0 auto;
+
+    @media (max-width: 1030px) {
+      width: 85%;
+    }
   }
 
   .AiChats {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    width: 80%;
-    margin: 40px auto 0 auto;
-    height: 520px;
-    overflow-y: scroll;
-    padding: 20px;
+    .chatBox {
+      height: 500px;
+      overflow-y: auto;
+      margin: 20px 0;
+      position: relative;
+
+      .chatConverseAnime {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .chatConverseImg {
+          object-fit: contain;
+          width: 200px;
+          height: auto;
+
+          @media (max-width: 500px) {
+            width: 100px;
+          }
+        }
+
+        p {
+          margin-top: 20px;
+          text-align: center;
+          font-size: 20px;
+
+          @media (max-width: 500px) {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .chatQuery {
+        display: flex;
+        flex-direction: column; // Stack the user and AI text blocks vertically
+        gap: 8px; // Adjust gap to your preference
+
+        img {
+          object-fit: contain;
+          width: 400px;
+          align-self: flex-end;
+          margin-top: 30px;
+          margin-right: 20px;
+
+          @media (max-width: 500px) {
+            width: 200px;
+          }
+        }
+
+        &:not(:first-child) {
+          // This applies to every chatQuery except the first one
+          .aiText {
+            margin-top: 15px;
+          }
+        }
+
+        .userText,
+        .aiText {
+          max-width: 80%; // To prevent chat bubbles from stretching full width
+          word-wrap: break-word; // To prevent text overflow
+        }
+
+        .userText {
+          background-color: #0084ff;
+          color: white;
+          padding: 8px; // Adjust padding to match your design preference
+          border-radius: 18px; // Giving a larger border-radius for a more 'bubble' look
+          align-self: flex-end; // Align user text to the right
+          margin-bottom: 4px; // Space between user's message and AI response
+          margin-right: 10px;
+          margin-top: 30px;
+          width: fit-content;
+
+          p {
+            @media (max-width: 500px) {
+              font-size: 12px;
+            }
+
+            text-align: left;
+          }
+        }
+
+        .aiText {
+          background-color: #e5e5ea;
+          padding: 8px;
+          border-radius: 18px;
+          align-self: flex-start; // Align AI text to the left
+          margin-left: 10px;
+          margin-top: 30px;
+
+          p {
+            @media (max-width: 500px) {
+              font-size: 12px;
+              line-height: 22px;
+            }
+            line-height: 30px;
+            text-align: left;
+          }
+        }
+      }
+    }
 
     &::-webkit-scrollbar {
       display: none;
@@ -36,18 +137,6 @@
       object-fit: contain;
       width: 250px;
       margin: 0 auto;
-    }
-
-    .chatConverseAnime {
-      object-fit: contain;
-      width: 300px;
-      margin: auto;
-
-      p {
-        margin-top: 20px;
-        text-align: center;
-        font-size: 20px;
-      }
     }
 
     .AiConverseUser {

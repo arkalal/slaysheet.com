@@ -9,12 +9,23 @@ import { pdfChatTypewriterText } from "../../../../customData/data";
 const PDFChat = () => {
   return (
     <div className={styles.PDFChat}>
-      <Image src={PDFChatImage} alt="PDFChatImage" width={150}></Image>
+      <Image
+        className={styles.pdfChatImg}
+        src={PDFChatImage}
+        alt="PDFChatImage"
+      ></Image>
+
       <h2>
         <TypingText typingData={pdfChatTypewriterText} />
       </h2>
+
       <h3>Powered By GPT-4 Turbo Latest Release</h3>
-      <Image src={comingSoonImage} alt="comingSoonImage" width={280}></Image>
+
+      <Image
+        className={styles.pdfChatImg}
+        src={comingSoonImage}
+        alt="comingSoonImage"
+      ></Image>
     </div>
   );
 };

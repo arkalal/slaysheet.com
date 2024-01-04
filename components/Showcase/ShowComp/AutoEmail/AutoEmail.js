@@ -9,12 +9,22 @@ import { autoEmailTypewriterText } from "../../../../customData/data";
 const AutoEmail = () => {
   return (
     <div className={styles.AutoEmail}>
-      <Image src={emailsAuto} alt="emailsAuto" width={150}></Image>
+      <Image
+        className={styles.autoEmailImg}
+        src={emailsAuto}
+        alt="emailsAuto"
+        width={150}
+      ></Image>
       <h2>
         <TypingText typingData={autoEmailTypewriterText} />
       </h2>
       <h3>Powered By GPT-4 Turbo Latest Release</h3>
-      <Image src={comingSoonImage} alt="comingSoonImage" width={280}></Image>
+      <Image
+        className={styles.autoEmailImg}
+        src={comingSoonImage}
+        alt="comingSoonImage"
+        width={280}
+      ></Image>
     </div>
   );
 };
