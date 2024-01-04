@@ -7,8 +7,10 @@ import axios from "../../../axios/getApi";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Logo from "../Logo/Logo";
+import { connect } from "react-redux";
+import * as dispatcher from "../../../redux/store/dispatchers";
 
-const RegisterForm = ({ isLogin }) => {
+const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
   const [FullName, setFullName] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
@@ -47,7 +49,20 @@ const RegisterForm = ({ isLogin }) => {
           return;
         }
 
+        const aiToken = await axios.get("aiToken");
+        const aiCountData = aiToken.data;
+
+        const isUserToken = aiCountData.some((ai) => ai.user === Email);
+        const filteredUserToken = aiCountData.filter(
+          (user) => user.user === Email
+        );
+
+        if (isUserToken) {
+          dispatchTokenValue(filteredUserToken[0]?.count);
+          localStorage.setItem("AITokens", filteredUserToken[0]?.count);
+        }
         setIsLoading(false);
+
         router.push("/");
       } else {
         const user = await axios.get("register");
@@ -87,6 +102,8 @@ const RegisterForm = ({ isLogin }) => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      router.refresh();
     }
   };
 
@@ -129,7 +146,8 @@ const RegisterForm = ({ isLogin }) => {
               <p>
                 Not have an account ?{" "}
                 <button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     router.push("/register");
                     setError("");
                   }}
@@ -143,7 +161,8 @@ const RegisterForm = ({ isLogin }) => {
               <p>
                 Already have an account ?{" "}
                 <button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     router.push("/login");
                     setError("");
                   }}
@@ -164,4 +183,4 @@ const RegisterForm = ({ isLogin }) => {
   );
 };
 
-export default RegisterForm;
+export default connect(null, dispatcher)(RegisterForm);

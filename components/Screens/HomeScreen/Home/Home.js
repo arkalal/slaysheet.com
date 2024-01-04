@@ -39,8 +39,9 @@ const Home = async ({ isToken }) => {
 
         {isToken && (
           <>
-            {" "}
-            <PurchasedTokens />{" "}
+            <ReduxProvider>
+              <PurchasedTokens />
+            </ReduxProvider>
           </>
         )}
 
