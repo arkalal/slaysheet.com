@@ -9,12 +9,22 @@ import { genMusicTypewriterText } from "../../../../customData/data";
 const GenMusic = () => {
   return (
     <div className={styles.GenMusic}>
-      <Image src={genMusicImg} alt="genMusicImg" width={150}></Image>
+      <Image
+        className={styles.genMusicImg}
+        src={genMusicImg}
+        alt="genMusicImg"
+        width={150}
+      ></Image>
       <h2>
         <TypingText typingData={genMusicTypewriterText} />
       </h2>
       <h3>Powered By GPT-4 Turbo Latest Release</h3>
-      <Image src={comingSoon} alt="comingSoon" width={280}></Image>
+      <Image
+        className={styles.genMusicImg}
+        src={comingSoon}
+        alt="comingSoon"
+        width={280}
+      ></Image>
     </div>
   );
 };

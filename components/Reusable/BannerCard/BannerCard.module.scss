@@ -2,6 +2,7 @@
   text-align: center;
   width: 500px;
   border: none;
+  min-height: 400px;
   outline: none;
   display: flex;
   justify-content: center;
@@ -14,9 +15,28 @@
     width: 450px;
   }
 
+  @media (min-width: 600px) and (max-width: 1030px) {
+    width: 387px;
+  }
+
+  @media (max-width: 500px) {
+    width: 300px;
+    min-height: 300px;
+  }
+
   .lottieAnime {
-    object-fit: contain;
-    width: fit-content;
-    margin: auto;
+    .lottImg {
+      object-fit: contain;
+      width: 300px;
+      height: auto;
+
+      @media (max-width: 500px) {
+        width: 200px;
+      }
+
+      @media (min-width: 600px) and (max-width: 1030px) {
+        width: 260px;
+      }
+    }
   }
 }

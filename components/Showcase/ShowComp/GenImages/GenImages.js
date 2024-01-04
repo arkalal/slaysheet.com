@@ -9,12 +9,22 @@ import comingSoon from "../../../../assets/images/comingSoon.jpg";
 const GenImages = () => {
   return (
     <div className={styles.GenImages}>
-      <Image src={genImages} alt="PDFChatImage" width={150}></Image>
+      <Image
+        className={styles.genImg}
+        src={genImages}
+        alt="PDFChatImage"
+        width={150}
+      ></Image>
       <h2>
         <TypingText typingData={genImagesTypewriterText} />
       </h2>
       <h3>Powered By DALL-E 3 Latest Release</h3>
-      <Image src={comingSoon} alt="comingSoon" width={280}></Image>
+      <Image
+        className={styles.genImg}
+        src={comingSoon}
+        alt="comingSoon"
+        width={280}
+      ></Image>
     </div>
   );
 };

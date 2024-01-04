@@ -19,29 +19,53 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  const { priceId } = await req.json();
+  const { priceId, mode, productId, userId } = await req.json();
   const userSession = await getServerSession(authOptions);
 
   if (!userSession) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 400 });
   }
 
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        price: priceId,
-        quantity: 1,
-      },
-    ],
-    customer_email: userSession.user.email,
-    mode: "subscription",
-    success_url: `${baseUrlProd}/studio`,
-    cancel_url: `${baseUrlProd}/studio`,
-    billing_address_collection: "auto",
-    metadata: {
-      userId: userSession.user.email,
-    },
-  });
+  let session;
 
+  if (mode === "recurring") {
+    session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ],
+      customer_email: userSession.user.email,
+      mode: "subscription",
+      success_url: `${baseUrlProd}/studio`,
+      cancel_url: `${baseUrlProd}/studio`,
+      billing_address_collection: "auto",
+      metadata: {
+        userId,
+        subscription: "recurring",
+        productId,
+      },
+    });
+  } else if (mode === "one_time") {
+    session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ],
+      customer_email: userSession.user.email,
+      mode: "payment",
+      success_url: `${baseUrlProd}`,
+      cancel_url: `${baseUrlProd}`,
+      billing_address_collection: "auto",
+      metadata: {
+        userId,
+        subscription: "one_time",
+        productId,
+      },
+    });
+  }
   return NextResponse.json(session.url);
 }

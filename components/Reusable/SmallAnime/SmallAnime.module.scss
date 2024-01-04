@@ -1,4 +1,18 @@
 .SmallAnime {
-  object-fit: contain;
-  width: 150px;
+  .SmallAnimeImg {
+    width: 100px;
+    object-fit: contain;
+    height: auto;
+    @media (min-width: 600px) and (max-width: 1030px) {
+      width: 90px;
+      object-fit: contain;
+      height: auto;
+    }
+
+    @media (max-width: 500px) {
+      width: 70px;
+      object-fit: contain;
+      height: auto;
+    }
+  }
 }

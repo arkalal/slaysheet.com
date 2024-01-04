@@ -1,0 +1,35 @@
+.Footer {
+  .footerNav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 40px 0;
+
+    .footerLink {
+      text-decoration: none;
+    }
+
+    p {
+      color: gray;
+      font-weight: 600;
+
+      @media (max-width: 500px) {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .footerBase {
+    text-align: center;
+    margin-bottom: 20px;
+
+    p {
+      color: gray;
+
+      @media (max-width: 500px) {
+        font-size: 12px;
+      }
+    }
+  }
+}

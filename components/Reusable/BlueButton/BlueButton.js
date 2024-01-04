@@ -9,6 +9,8 @@ const BlueButton = ({ signInLink, text, color, onClick }) => {
   const { data: session } = useSession();
   const router = useRouter();
 
+  console.log(session);
+
   const signInPush = () => {
     if (session) {
       router.push("/studio");
@@ -28,7 +30,7 @@ const BlueButton = ({ signInLink, text, color, onClick }) => {
       <button onClick={signInLink ? signInPush : onClick}>
         {signInLink && (
           <div className={styles.navSignInButtonText}>
-            {session ? "Go Studio" : "Sign In"}
+            {session?.user ? "Go Studio" : "Sign In"}
           </div>
         )}
         {text && text}
