@@ -15,6 +15,12 @@
         margin-bottom: 20px;
       }
 
+      h2 {
+        @media (max-width: 500px) {
+          font-size: 17px;
+        }
+      }
+
       p {
         font-size: 17px;
         font-weight: 600;
