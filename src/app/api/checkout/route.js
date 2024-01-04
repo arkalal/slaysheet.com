@@ -38,8 +38,8 @@ export async function POST(req) {
       ],
       customer_email: userSession.user.email,
       mode: "subscription",
-      success_url: `${baseUrlProd}/studio`,
-      cancel_url: `${baseUrlProd}/studio`,
+      success_url: `${baseUrlTest}/studio`,
+      cancel_url: `${baseUrlTest}/studio`,
       billing_address_collection: "auto",
       metadata: {
         userId,
@@ -57,8 +57,8 @@ export async function POST(req) {
       ],
       customer_email: userSession.user.email,
       mode: "payment",
-      success_url: `${baseUrlProd}`,
-      cancel_url: `${baseUrlProd}`,
+      success_url: `${baseUrlTest}`,
+      cancel_url: `${baseUrlTest}`,
       billing_address_collection: "auto",
       metadata: {
         userId,
