@@ -4,9 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import AiChatbox from "../../../Reusable/AiChatbox/AiChatbox";
 import styles from "./AIChat.module.scss";
 import chattingAnime from "../../../../assets/icons/converseAI.png";
-import aiAvatar from "../../../../assets/icons/chatboxIco.png";
 import dynamic from "next/dynamic";
-import userAnime from "../../../../assets/icons/userAvatar.png";
 import Image from "next/image";
 import AiChatService from "./AiChatService/AiChatService";
 import BuyTokenPopup from "../../../Reusable/popups/BuyTokenPopup/BuyTokenPopup";
@@ -30,8 +28,6 @@ const AIChat = () => {
   const [isAITyping, setIsAITyping] = useState(false);
   const [images, setImages] = useState([]);
   const [IsVision, setIsVision] = useState(false);
-
-  console.log("conversationHistory", conversationHistory);
 
   const chatContainerRef = useRef("");
 

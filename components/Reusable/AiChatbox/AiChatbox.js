@@ -158,7 +158,6 @@ const AiChatbox = ({
 
     reader.onload = () => {
       if (typeof reader.result === "string") {
-        console.log(reader.result);
         setImages(reader.result);
         setIsVision(true);
       }
