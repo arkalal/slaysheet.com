@@ -10,6 +10,7 @@ import Image from "next/image";
 import axios from "../../../axios/getApi";
 import * as dispatcher from "../../../redux/store/dispatchers";
 import { connect } from "react-redux";
+import { chatLogic } from "../../../utils/serverApiLogics";
 
 const AiChatbox = ({
   setIsSigninPopup,
@@ -95,44 +96,19 @@ const AiChatbox = ({
       } else {
         setIsSigninPopup(false);
 
-        const res = await axios.get("aiToken");
-        const aiCountData = res.data;
+        const chatLog = await chatLogic();
+        console.log("chatLog", chatLog);
 
-        const isUserToken = aiCountData.some(
-          (ai) => ai.user === session.user.email
-        );
-        const filteredUserToken = aiCountData.filter(
-          (user) => user.user === session.user.email
-        );
-
-        if (filteredUserToken && filteredUserToken[0]?.count) {
-          localStorage.setItem("AITokens", filteredUserToken[0]?.count - 1);
-          dispatchTokenValue(filteredUserToken[0]?.count - 1);
+        if (chatLog.isUserToken && chatLog.isUserToken.count) {
+          localStorage.setItem("AITokens", chatLog.isUserToken.count - 1);
+          dispatchTokenValue(chatLog.isUserToken.count - 1);
         }
 
-        if (!isUserToken || !filteredUserToken[0]?.lock) {
+        if (!chatLog.isUserToken || !chatLog.isUserToken.lock) {
           handleSubmit(event);
         } else {
           setIsTokenPopup(true);
           return;
-        }
-
-        if (isUserToken) {
-          const data = {
-            user: session.user.email,
-            count: filteredUserToken[0]?.count - 1,
-            lock: false,
-          };
-          await axios.put(`aiToken/${filteredUserToken[0]?._id}`, data);
-        }
-
-        if (filteredUserToken[0]?.count === 1) {
-          const data = {
-            user: session.user.email,
-            count: filteredUserToken[0]?.count - 1,
-            lock: true,
-          };
-          await axios.put(`aiToken/${filteredUserToken[0]?._id}`, data);
         }
       }
     } catch (error) {

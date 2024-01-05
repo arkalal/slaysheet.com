@@ -35,8 +35,8 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
     }
 
     try {
+      setIsLoading(true);
       if (isLogin) {
-        setIsLoading(true);
         const res = await signIn("credentials", {
           name: FullName,
           email: Email,
@@ -61,7 +61,6 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
           dispatchTokenValue(filteredUserToken[0]?.count);
           localStorage.setItem("AITokens", filteredUserToken[0]?.count);
         }
-        setIsLoading(false);
 
         router.push("/");
       } else {
@@ -102,6 +101,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
       }
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     } finally {
       router.refresh();
     }
@@ -131,7 +131,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
           />
           <input
             onChange={(e) => setPassword(e.target.value)}
-            type="text"
+            type="password"
             placeholder="Password..."
           />
 
@@ -173,7 +173,11 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
             </>
           )}
 
-          <button className={styles.registerSubmit} type="submit">
+          <button
+            disabled={IsLoading}
+            className={styles.registerSubmit}
+            type="submit"
+          >
             {" "}
             {IsLoading ? "Loading..." : isLogin ? "Login" : "Register"}{" "}
           </button>
