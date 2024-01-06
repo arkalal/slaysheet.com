@@ -97,7 +97,6 @@ const AiChatbox = ({
         setIsSigninPopup(false);
 
         const chatLog = await chatLogic();
-        console.log("chatLog", chatLog);
 
         if (chatLog.isUserToken && chatLog.isUserToken.count) {
           localStorage.setItem("AITokens", chatLog.isUserToken.count - 1);

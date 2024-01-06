@@ -2,103 +2,34 @@
 
 import React, { useState } from "react";
 import styles from "./PurchasedTokens.module.scss";
-import axios from "../../../../axios/getApi";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import tokenImage from "../../../../assets/icons/tokens.png";
 import * as dispatcher from "../../../../redux/store/dispatchers";
 import { connect } from "react-redux";
+import { AddTokensLogic } from "../../../../utils/serverApiLogics";
 
 const PurchasedTokens = ({ isFree, dispatchTokenValue }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const { data: session } = useSession();
   const router = useRouter();
-
-  const AddTokens = async () => {
-    try {
-      const res = await axios.get("aiToken");
-      const aiCountData = res.data;
-
-      const isUserToken = aiCountData.some(
-        (ai) => ai.user === session.user.email
-      );
-      const filteredUserToken = aiCountData.filter(
-        (user) => user.user === session.user.email
-      );
-
-      if (isUserToken) {
-        const data = {
-          user: session.user.email,
-          count: filteredUserToken[0]?.count + 5,
-          lock: false,
-        };
-        await axios.put(`aiToken/${filteredUserToken[0]?._id}`, data);
-        localStorage.setItem("AITokens", filteredUserToken[0]?.count + 5);
-        dispatchTokenValue(filteredUserToken[0]?.count + 5);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleClose = async () => {
     try {
       setIsLoading(true);
+      const addTokenLog = await AddTokensLogic(isFree);
 
       if (!isFree) {
-        await AddTokens();
-
-        const checkout = await axios.get("checkout");
-        const priceData = checkout.data;
-
-        const filteredPriceData = priceData.filter(
-          (item) => item.nickname === "AI Tokens Plan"
-        );
-
-        const res = await axios.get("webhook");
-        const webhook = res.data;
-
-        const webhookTokenData = webhook.subscription.filter(
-          (item) =>
-            item.productId === filteredPriceData[0].product &&
-            item.user === session?.user.email
-        );
-
-        await axios.put(`webhook/${webhookTokenData[0]._id}`, {
-          tokenPurchased: false,
-        });
+        if (addTokenLog.isUserToken) {
+          localStorage.setItem("AITokens", addTokenLog.isUserToken.count + 5);
+          dispatchTokenValue(addTokenLog.isUserToken.count + 5);
+        }
       } else {
-        const res = await axios.get("aiToken");
-        const aiCountData = res.data;
-
-        const isUserToken = aiCountData.some(
-          (ai) => ai.user === session.user.email
-        );
-
-        if (!isUserToken) {
-          const aiTokenData = {
-            user: session.user.email,
-            count: 5,
-            lock: false,
-          };
-          await axios.post("aiToken", aiTokenData);
+        if (!addTokenLog.isUserToken) {
           localStorage.setItem("AITokens", 5);
           dispatchTokenValue(5);
         }
-
-        const register = await axios.get("register");
-        const registerData = register.data.user;
-
-        const currentRegisteredUser = registerData.filter(
-          (item) => item.email === session.user.email
-        );
-
-        await axios.put(`register/${currentRegisteredUser[0]._id}`, {
-          freeTokens: false,
-        });
       }
 
       setIsSuccess(true);
