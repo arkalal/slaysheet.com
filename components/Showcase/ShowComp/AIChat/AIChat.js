@@ -7,11 +7,17 @@ import chattingAnime from "../../../../assets/icons/converseAI.png";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import AiChatService from "./AiChatService/AiChatService";
-import BuyTokenPopup from "../../../Reusable/popups/BuyTokenPopup/BuyTokenPopup";
 import ReduxProvider from "../../../../redux/ReduxProvider";
 
 const SigninPopup = dynamic(
   () => import("../../../Reusable/popups/SigninPopup/SigninPopup"),
+  {
+    ssr: false,
+  }
+);
+
+const BuyTokenPopup = dynamic(
+  () => import("../../../Reusable/popups/BuyTokenPopup/BuyTokenPopup.js"),
   {
     ssr: false,
   }

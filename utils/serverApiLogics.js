@@ -7,6 +7,7 @@ import AiLimit from "../models/aiLimit";
 import { baseUrlTest } from "../axios/baseUrl";
 import UserSubscription from "../models/userSubscription";
 import NewUserAuth from "../models/newUserAuth";
+import { signIn } from "next-auth/react";
 
 export const chatLogic = async () => {
   const userSession = await getServerSession(authOptions);
@@ -136,6 +137,67 @@ export const AddTokensLogic = async (isFree) => {
     return {
       isUserToken: isUserToken
         ? { count: isUserToken.count, user: isUserToken.user }
+        : null,
+    };
+  }
+};
+
+export const userRegistrationLogic = async (isLogin, Email) => {
+  const userSession = await getServerSession(authOptions);
+
+  if (isLogin) {
+    const res = await signIn("credentials", {
+      name: FullName,
+      email: Email,
+      password: Password,
+      redirect: false,
+    });
+
+    await connectMongoDB();
+    const isUserToken = await AiLimit.findOne({
+      user: userSession.user.email,
+    }).lean();
+
+    return {
+      isUserToken: isUserToken
+        ? {
+            user: isUserToken.user,
+            count: isUserToken.count,
+            error: res.error,
+          }
+        : null,
+    };
+  } else {
+    await connectMongoDB();
+    const isUser = await NewUserAuth.findOne({
+      email: Email,
+    }).lean();
+
+    const hashedPassword = await bcrypt.hash(Password, 10);
+
+    const data = {
+      fullName: FullName,
+      email: Email,
+      password: hashedPassword,
+      freeTokens: true,
+    };
+
+    let createUser = false;
+
+    try {
+      await NewUserAuth.create(data);
+      createUser = true;
+    } catch (error) {
+      console.log(error);
+      createUser = false;
+    }
+
+    return {
+      isUser: isUser
+        ? {
+            user: isUser.email,
+            createUser,
+          }
         : null,
     };
   }
