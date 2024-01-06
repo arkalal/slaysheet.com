@@ -44,7 +44,13 @@ export const chatLogic = async () => {
   }
 
   return {
-    isUserToken: isUserToken,
+    isUserToken: isUserToken
+      ? {
+          count: isUserToken.count,
+          user: isUserToken.user,
+          lock: isUserToken.lock,
+        }
+      : null,
   };
 };
 
@@ -96,7 +102,9 @@ export const AddTokensLogic = async (isFree) => {
       );
 
       return {
-        isUserToken: isUserToken,
+        isUserToken: isUserToken
+          ? { count: isUserToken.count, user: isUserToken.user }
+          : null,
       };
     } catch (error) {
       console.log(error);
@@ -126,7 +134,9 @@ export const AddTokensLogic = async (isFree) => {
     );
 
     return {
-      isUserToken: isUserToken,
+      isUserToken: isUserToken
+        ? { count: isUserToken.count, user: isUserToken.user }
+        : null,
     };
   }
 };
