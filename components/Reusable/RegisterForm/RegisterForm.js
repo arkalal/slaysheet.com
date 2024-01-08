@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import styles from "./RegisterForm.module.scss";
-import bcrypt from "bcryptjs";
 import axios from "../../../axios/getApi";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Logo from "../Logo/Logo";
 import { connect } from "react-redux";
 import * as dispatcher from "../../../redux/store/dispatchers";
+import { userRegistrationLogic } from "../../../utils/serverApiLogics";
 
 const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
   const [FullName, setFullName] = useState("");
@@ -36,6 +36,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
 
     try {
       setIsLoading(true);
+
       if (isLogin) {
         const res = await signIn("credentials", {
           name: FullName,
@@ -64,34 +65,20 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
 
         router.push("/");
       } else {
-        const user = await axios.get("register");
+        const userRegisterLogic = await userRegistrationLogic(
+          Email,
+          FullName,
+          Password
+        );
 
-        const userExists = (email) => {
-          return user.data.user.some((user) => user.email === email);
-        };
-
-        const isUser = userExists(Email);
-        console.log(isUser);
-
-        if (isUser) {
+        if (userRegisterLogic.isUser) {
           setError("User already exists");
           return;
         } else {
           setError("");
         }
 
-        const hashedPassword = await bcrypt.hash(Password, 10);
-
-        const data = {
-          fullName: FullName,
-          email: Email,
-          password: hashedPassword,
-          freeTokens: true,
-        };
-
-        const res = await axios.post("register", data);
-
-        if (res.status === 200) {
+        if (userRegisterLogic.createUser) {
           const form = e.target;
           form.reset();
           router.push("/login");

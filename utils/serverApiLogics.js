@@ -7,7 +7,7 @@ import AiLimit from "../models/aiLimit";
 import { baseUrlTest } from "../axios/baseUrl";
 import UserSubscription from "../models/userSubscription";
 import NewUserAuth from "../models/newUserAuth";
-import { signIn } from "next-auth/react";
+import bcrypt from "bcryptjs";
 
 export const chatLogic = async () => {
   const userSession = await getServerSession(authOptions);
@@ -142,63 +142,37 @@ export const AddTokensLogic = async (isFree) => {
   }
 };
 
-export const userRegistrationLogic = async (isLogin, Email) => {
-  const userSession = await getServerSession(authOptions);
+export const userRegistrationLogic = async (Email, FullName, Password) => {
+  await connectMongoDB();
+  const isUser = await NewUserAuth.findOne({
+    email: Email,
+  }).lean();
 
-  if (isLogin) {
-    const res = await signIn("credentials", {
-      name: FullName,
-      email: Email,
-      password: Password,
-      redirect: false,
-    });
+  const hashedPassword = await bcrypt.hash(Password, 10);
 
-    await connectMongoDB();
-    const isUserToken = await AiLimit.findOne({
-      user: userSession.user.email,
-    }).lean();
+  const data = {
+    fullName: FullName,
+    email: Email,
+    password: hashedPassword,
+    freeTokens: true,
+  };
 
-    return {
-      isUserToken: isUserToken
-        ? {
-            user: isUserToken.user,
-            count: isUserToken.count,
-            error: res.error,
-          }
-        : null,
-    };
-  } else {
-    await connectMongoDB();
-    const isUser = await NewUserAuth.findOne({
-      email: Email,
-    }).lean();
+  let createUser = false;
 
-    const hashedPassword = await bcrypt.hash(Password, 10);
-
-    const data = {
-      fullName: FullName,
-      email: Email,
-      password: hashedPassword,
-      freeTokens: true,
-    };
-
-    let createUser = false;
-
-    try {
-      await NewUserAuth.create(data);
-      createUser = true;
-    } catch (error) {
-      console.log(error);
-      createUser = false;
-    }
-
-    return {
-      isUser: isUser
-        ? {
-            user: isUser.email,
-            createUser,
-          }
-        : null,
-    };
+  try {
+    await NewUserAuth.create(data);
+    createUser = true;
+  } catch (error) {
+    console.log(error);
+    createUser = false;
   }
+
+  return {
+    isUser: isUser
+      ? {
+          user: isUser.email,
+        }
+      : null,
+    createUser,
+  };
 };
