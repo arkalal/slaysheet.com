@@ -79,18 +79,6 @@ export const AddTokensLogic = async (isFree, filteredPriceData) => {
         );
       }
 
-      // const checkout = await fetch(`${baseUrlTest}/api/checkout`, {
-      //   method: "GET",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
-      // const priceData = await checkout.json();
-
-      // const filteredPriceData = priceData?.filter(
-      //   (item) => item.nickname === "AI Tokens Plan"
-      // );
-
       await connectMongoDB();
       await UserSubscription.findOneAndUpdate(
         {
