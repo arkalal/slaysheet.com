@@ -21,12 +21,12 @@ const PurchasedTokens = ({ isFree, dispatchTokenValue }) => {
       const addTokenLog = await AddTokensLogic(isFree);
 
       if (!isFree) {
-        if (addTokenLog.isUserToken) {
+        if (addTokenLog?.isUserToken) {
           localStorage.setItem("AITokens", addTokenLog.isUserToken.count + 5);
           dispatchTokenValue(addTokenLog.isUserToken.count + 5);
         }
       } else {
-        if (!addTokenLog.isUserToken) {
+        if (!addTokenLog?.isUserToken) {
           localStorage.setItem("AITokens", 5);
           dispatchTokenValue(5);
         }
