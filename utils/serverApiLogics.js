@@ -55,7 +55,7 @@ export const chatLogic = async () => {
   };
 };
 
-export const AddTokensLogic = async (isFree) => {
+export const AddTokensLogic = async (isFree, filteredPriceData) => {
   const userSession = await getServerSession(authOptions);
 
   if (!isFree) {
@@ -79,17 +79,17 @@ export const AddTokensLogic = async (isFree) => {
         );
       }
 
-      const checkout = await fetch(`${baseUrlTest}/api/checkout`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const priceData = await checkout.json();
+      // const checkout = await fetch(`${baseUrlTest}/api/checkout`, {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+      // const priceData = await checkout.json();
 
-      const filteredPriceData = priceData?.filter(
-        (item) => item.nickname === "AI Tokens Plan"
-      );
+      // const filteredPriceData = priceData?.filter(
+      //   (item) => item.nickname === "AI Tokens Plan"
+      // );
 
       await connectMongoDB();
       await UserSubscription.findOneAndUpdate(
