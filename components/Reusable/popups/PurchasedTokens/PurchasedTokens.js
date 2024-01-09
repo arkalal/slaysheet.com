@@ -8,6 +8,7 @@ import tokenImage from "../../../../assets/icons/tokens.png";
 import * as dispatcher from "../../../../redux/store/dispatchers";
 import { connect } from "react-redux";
 import { AddTokensLogic } from "../../../../utils/serverApiLogics";
+import axios from "../../../../axios/getApi";
 
 const PurchasedTokens = ({ isFree, dispatchTokenValue }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +19,15 @@ const PurchasedTokens = ({ isFree, dispatchTokenValue }) => {
   const handleClose = async () => {
     try {
       setIsLoading(true);
-      const addTokenLog = await AddTokensLogic(isFree);
+      const checkout = await axios.get("checkout");
+
+      const priceData = await checkout.data;
+
+      const filteredPriceData = priceData?.filter(
+        (item) => item.nickname === "AI Tokens Plan"
+      );
+
+      const addTokenLog = await AddTokensLogic(isFree, filteredPriceData);
 
       if (!isFree) {
         if (addTokenLog.isUserToken) {
