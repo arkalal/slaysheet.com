@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import * as dispatcher from "../../../redux/store/dispatchers";
 import { userRegistrationLogic } from "../../../utils/serverApiLogics";
 
-const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
+const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
   const [FullName, setFullName] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
@@ -102,7 +102,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
 
       <div className={styles.regForm}>
         <form onSubmit={handleSubmit} action="">
-          {!isLogin && (
+          {!isLogin && !isForgotPassword && (
             <>
               <input
                 onChange={(e) => setFullName(e.target.value)}
@@ -113,14 +113,18 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
           )}
           <input
             onChange={(e) => setEmail(e.target.value)}
-            type="text"
+            type="email"
             placeholder="Email"
           />
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Password..."
-          />
+          {!isForgotPassword && (
+            <>
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                placeholder="Password..."
+              />
+            </>
+          )}
 
           {Error && (
             <>
@@ -166,7 +170,13 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
             type="submit"
           >
             {" "}
-            {IsLoading ? "Loading..." : isLogin ? "Login" : "Register"}{" "}
+            {IsLoading
+              ? "Loading..."
+              : isLogin
+              ? "Login"
+              : isForgotPassword
+              ? "Submit"
+              : "Register"}{" "}
           </button>
         </form>
       </div>
