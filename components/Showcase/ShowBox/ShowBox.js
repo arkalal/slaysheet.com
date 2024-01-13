@@ -11,9 +11,12 @@ const AutoEmail = dynamic(() => import("../ShowComp/AutoEmail/AutoEmail"), {
   ssr: true,
 });
 
-const AIChat = dynamic(() => import("../ShowComp/AIChat/AIChat"), {
-  ssr: true,
-});
+const AiChatService = dynamic(
+  () => import("../ShowComp/AIChat/AiChatService/AiChatService.js"),
+  {
+    ssr: true,
+  }
+);
 
 const GenImages = dynamic(() => import("../ShowComp/GenImages/GenImages"), {
   ssr: true,
@@ -35,7 +38,7 @@ const ShowBox = () => {
   const showScreenComp = {
     1: <PDFChat />,
     2: <AutoEmail />,
-    3: <AIChat />,
+    3: <AiChatService />,
     4: <GenImages />,
     5: <CreateNote />,
     6: <GenMusic />,
