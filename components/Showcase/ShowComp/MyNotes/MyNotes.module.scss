@@ -4,7 +4,7 @@
   @include showScreenCenter();
   padding: 10%;
 
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
     h2,
     h3 {
       font-size: 15px;
@@ -16,7 +16,7 @@
     width: 20%;
     height: 20%;
 
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
       width: 40%;
       height: 40%;
     }

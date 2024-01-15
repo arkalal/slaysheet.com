@@ -7,6 +7,7 @@ import chattingAnime from "../../../../assets/icons/converseAI.png";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import ReduxProvider from "../../../../redux/ReduxProvider";
+import AITokenWallet from "../../../Reusable/AITokenWallet/AITokenWallet";
 
 const SigninPopup = dynamic(
   () => import("../../../Reusable/popups/SigninPopup/SigninPopup"),
@@ -56,6 +57,12 @@ const AIChat = () => {
               <BuyTokenPopup />
             </>
           )}
+
+          <div className={styles.tokenWallet}>
+            <ReduxProvider>
+              <AITokenWallet />
+            </ReduxProvider>
+          </div>
 
           <div className={styles.AiChats}>
             <div ref={chatContainerRef} className={styles.chatBox}>
