@@ -11,6 +11,27 @@
         width: 100px;
       }
     }
+
+    .hiddenFileInput {
+      display: none;
+    }
+
+    .customFileUpload {
+      display: flex;
+      gap: 3px;
+      cursor: pointer;
+      margin-left: 30px;
+      transition: all 0.3s ease-in-out;
+      width: 130px;
+
+      @media (max-width: 600px) {
+        font-size: 12px;
+      }
+
+      &:hover {
+        color: #019eff;
+      }
+    }
   }
   .chatFeatures {
     border: 1px solid black;

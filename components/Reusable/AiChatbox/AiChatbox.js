@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import styles from "./AiChatbox.module.scss";
-import BlueButton from "../BlueButton/BlueButton";
 import chatBoxAnime from "../../../assets/icons/chatboxIco.png";
 import { Typewriter } from "react-simple-typewriter";
 import { useSession } from "next-auth/react";
@@ -11,6 +10,7 @@ import axios from "../../../axios/getApi";
 import * as dispatcher from "../../../redux/store/dispatchers";
 import { connect } from "react-redux";
 import { chatLogic } from "../../../utils/serverApiLogics";
+import { MdOutlineFileUpload } from "react-icons/md";
 
 const AiChatbox = ({
   setIsSigninPopup,
@@ -150,7 +150,16 @@ const AiChatbox = ({
           <img src={images} alt="" />
         </div>
 
-        <input type="file" multiple={false} onChange={handleFilesChange} />
+        <label htmlFor="file-upload" className={styles.customFileUpload}>
+          <MdOutlineFileUpload /> Upload Image
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          multiple={false}
+          onChange={handleFilesChange}
+          className={styles.hiddenFileInput}
+        />
       </div>
 
       <div className={styles.chatFeatures}>

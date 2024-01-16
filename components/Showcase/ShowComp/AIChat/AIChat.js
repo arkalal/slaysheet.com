@@ -37,9 +37,16 @@ const AIChat = () => {
   const chatContainerRef = useRef("");
 
   useEffect(() => {
-    // Scroll to the bottom when messages change
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  }, [chatHistory]);
+    const chatBox = chatContainerRef.current;
+
+    // Function to scroll to the bottom
+    const scrollToBottom = () => {
+      chatBox.scrollTop = chatBox.scrollHeight - chatBox.clientHeight;
+    };
+
+    // Call scrollToBottom whenever the chatHistory updates
+    scrollToBottom();
+  }, [chatHistory, isAITyping]);
 
   return (
     <>
