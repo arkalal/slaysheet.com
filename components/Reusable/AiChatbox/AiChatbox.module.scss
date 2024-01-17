@@ -2,13 +2,15 @@
   margin-top: 30px;
   .imageUpload {
     margin-bottom: 10px;
+    position: relative;
+
     .imagePreviews {
       position: absolute;
-      bottom: 10%;
-      left: 23%;
+      bottom: 80%;
+      left: 8%;
       img {
         object-fit: contain;
-        width: 100px;
+        width: 60px;
       }
     }
 

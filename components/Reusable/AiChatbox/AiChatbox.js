@@ -146,13 +146,13 @@ const AiChatbox = ({
   return (
     <div className={styles.aiChatbox}>
       <div className={styles.imageUpload}>
-        <div className={styles.imagePreviews}>
-          <img src={images} alt="" />
-        </div>
-
         <label htmlFor="file-upload" className={styles.customFileUpload}>
           <MdOutlineFileUpload /> Upload Image
+          <div className={styles.imagePreviews}>
+            <img src={images} alt="" />
+          </div>
         </label>
+
         <input
           id="file-upload"
           type="file"
