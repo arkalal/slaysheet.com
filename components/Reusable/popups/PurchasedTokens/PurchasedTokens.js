@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./PurchasedTokens.module.scss";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -15,10 +15,23 @@ const PurchasedTokens = ({ isFree, dispatchTokenValue }) => {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const router = useRouter();
+  const buttonClickedRef = useRef(false);
+
+  useEffect(() => {
+    setIsLoading(false);
+    setIsSuccess(false);
+    buttonClickedRef.current = false;
+  }, []);
 
   const handleClose = async () => {
+    if (buttonClickedRef.current) {
+      return;
+    }
+
+    buttonClickedRef.current = true;
+    setIsLoading(true);
+
     try {
-      setIsLoading(true);
       const checkout = await axios.get("checkout");
 
       const priceData = await checkout.data;
@@ -40,15 +53,14 @@ const PurchasedTokens = ({ isFree, dispatchTokenValue }) => {
           dispatchTokenValue(5);
         }
       }
-
-      setIsSuccess(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        setIsSuccess(false);
-        router.refresh();
-      }, 2000);
     } catch (error) {
       console.log(error);
+    } finally {
+      setTimeout(() => {
+        setIsSuccess(true);
+        setIsLoading(false);
+        router.refresh();
+      }, 2000);
     }
   };
 
@@ -82,7 +94,7 @@ const PurchasedTokens = ({ isFree, dispatchTokenValue }) => {
             </>
           )}
 
-          <button onClick={handleClose} disabled={isLoading}>
+          <button onClick={handleClose} disabled={isLoading || isSuccess}>
             {isLoading ? (
               <div className={styles.loader}></div>
             ) : isSuccess ? (
