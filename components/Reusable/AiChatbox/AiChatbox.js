@@ -98,7 +98,11 @@ const AiChatbox = ({
 
         const chatLog = await chatLogic();
 
-        if (chatLog.isUserToken && chatLog.isUserToken.count) {
+        if (
+          chatLog.isUserToken &&
+          chatLog.isUserToken.count &&
+          !chatLog.isUserToken.lock
+        ) {
           localStorage.setItem("AITokens", chatLog.isUserToken.count - 1);
           dispatchTokenValue(chatLog.isUserToken.count - 1);
         }

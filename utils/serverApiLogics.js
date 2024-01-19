@@ -15,7 +15,7 @@ export const chatLogic = async () => {
   await connectMongoDB();
   const isUserToken = await AiLimit.findOne({ user: userSession.user.email });
 
-  if (isUserToken) {
+  if (isUserToken && !isUserToken.lock) {
     const data = {
       user: userSession.user.email,
       count: isUserToken.count - 1,

@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import ReduxProvider from "../../../../redux/ReduxProvider";
 import AITokenWallet from "../../../Reusable/AITokenWallet/AITokenWallet";
+import { useSession } from "next-auth/react";
 
 const SigninPopup = dynamic(
   () => import("../../../Reusable/popups/SigninPopup/SigninPopup"),
@@ -35,6 +36,7 @@ const AIChat = () => {
   const [IsVision, setIsVision] = useState(false);
 
   const chatContainerRef = useRef("");
+  const { data: session } = useSession();
 
   useEffect(() => {
     const chatBox = chatContainerRef.current;
@@ -65,11 +67,15 @@ const AIChat = () => {
             </>
           )}
 
-          <div className={styles.tokenWallet}>
-            <ReduxProvider>
-              <AITokenWallet />
-            </ReduxProvider>
-          </div>
+          {session && (
+            <>
+              <div className={styles.tokenWallet}>
+                <ReduxProvider>
+                  <AITokenWallet />
+                </ReduxProvider>
+              </div>
+            </>
+          )}
 
           <div className={styles.AiChats}>
             <div ref={chatContainerRef} className={styles.chatBox}>
