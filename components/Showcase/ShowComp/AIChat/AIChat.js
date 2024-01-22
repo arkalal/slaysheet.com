@@ -41,9 +41,12 @@ const AIChat = () => {
   useEffect(() => {
     const chatBox = chatContainerRef.current;
 
-    // Function to scroll to the bottom
+    // Function to smoothly scroll to the bottom
     const scrollToBottom = () => {
-      chatBox.scrollTop = chatBox.scrollHeight - chatBox.clientHeight;
+      chatBox.scrollTo({
+        top: chatBox.scrollHeight,
+        behavior: "smooth",
+      });
     };
 
     // Call scrollToBottom whenever the chatHistory updates

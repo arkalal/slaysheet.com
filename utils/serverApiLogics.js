@@ -4,7 +4,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import connectMongoDB from "./mongoDB";
 import AiLimit from "../models/aiLimit";
-import { baseUrlTest } from "../axios/baseUrl";
 import UserSubscription from "../models/userSubscription";
 import NewUserAuth from "../models/newUserAuth";
 import bcrypt from "bcryptjs";
