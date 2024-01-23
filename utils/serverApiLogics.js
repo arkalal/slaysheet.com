@@ -4,7 +4,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import connectMongoDB from "./mongoDB";
 import AiLimit from "../models/aiLimit";
-import { baseUrlTest } from "../axios/baseUrl";
 import UserSubscription from "../models/userSubscription";
 import NewUserAuth from "../models/newUserAuth";
 import bcrypt from "bcryptjs";
@@ -15,7 +14,7 @@ export const chatLogic = async () => {
   await connectMongoDB();
   const isUserToken = await AiLimit.findOne({ user: userSession.user.email });
 
-  if (isUserToken) {
+  if (isUserToken && !isUserToken.lock) {
     const data = {
       user: userSession.user.email,
       count: isUserToken.count - 1,

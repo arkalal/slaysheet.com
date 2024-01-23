@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import styles from "./AiChatbox.module.scss";
-import BlueButton from "../BlueButton/BlueButton";
 import chatBoxAnime from "../../../assets/icons/chatboxIco.png";
 import { Typewriter } from "react-simple-typewriter";
 import { useSession } from "next-auth/react";
@@ -11,6 +10,7 @@ import axios from "../../../axios/getApi";
 import * as dispatcher from "../../../redux/store/dispatchers";
 import { connect } from "react-redux";
 import { chatLogic } from "../../../utils/serverApiLogics";
+import { MdOutlineFileUpload } from "react-icons/md";
 
 const AiChatbox = ({
   setIsSigninPopup,
@@ -40,78 +40,90 @@ const AiChatbox = ({
       content:
         "If any user asks about you or what you can do or may be what type of services you can provide. If they asks anything like that about you then tell them that You are a very advanced bot highly and custom trained to help your user as a real human being and you have the potential to generate, and understand any images or document if the user uploads and also perform real time analysis that may involve mathametical logics. You can do all of this. Your tone of speaking must be very casual and informal like a friend. Also say that You can also solve any question papers if they upload in a form of image or document. And never repeat the  same chat that you have said them before. You should act like a real human being. Even if they ask the same thing answer them in a different way just like how a real person talks. Also say them that you are not chatGPT you are much more advanced than that. If they ask you are you gpt or something like that you will say no and will say you are a very highly advanced trained model and much more advanced than chatGPT. And if they ask about you then give your instruction in a small and precise manner so that it doesn't look too much talking. And speak in a very simple english language. Do not use complex words. Try to answer them maximum in 2 to three sentences unless they tell you something that needs long content. Tell them you are not build by openAI or chatGPT or been GPT/ You are build and trained by Arka Lal Chakravarty who is a AI Developer only tell them if they asks you about how you are built.",
     };
-    const userMessage = { role: "user", content: Prompt };
 
-    const updatedHistory = [...conversationHistory, systemMessage, userMessage];
-    setConversationHistory(updatedHistory);
+    if (Prompt) {
+      const userMessage = { role: "user", content: Prompt };
 
-    // Update chat history with user prompt immediately
-    const newChatHistory = [
-      ...chatHistory,
-      { prompt: Prompt, images: images, response: "" },
-    ];
-    setChatHistory(newChatHistory);
-    setIsAITyping(true);
+      const updatedHistory = [
+        ...conversationHistory,
+        systemMessage,
+        userMessage,
+      ];
+      setConversationHistory(updatedHistory);
 
-    try {
-      if (IsVision) {
-        const chatsData = {
-          prompt: Prompt,
-          images: images,
-        };
+      // Update chat history with user prompt immediately
+      const newChatHistory = [
+        ...chatHistory,
+        { prompt: Prompt, images: images, response: "" },
+      ];
+      setChatHistory(newChatHistory);
+      setIsAITyping(true);
+      setPrompt(""); // Clear the input after submitting
 
-        const res = await axios.post("vision", chatsData);
-        setImages([]);
-        setIsVision(false);
+      try {
+        if (IsVision) {
+          const chatsData = {
+            prompt: Prompt,
+            images: images,
+          };
 
-        // Update chat history with AI response
-        newChatHistory[newChatHistory.length - 1].response = res.data;
-        setChatHistory(newChatHistory);
-        setIsAITyping(false); // AI stops 'typing'
-      } else {
-        const chatsData = {
-          prompt: Prompt,
-          conversationHistory: conversationHistory,
-        };
+          const res = await axios.post("vision", chatsData);
+          setImages([]);
+          setIsVision(false);
 
-        const res = await axios.post("chats", chatsData);
+          // Update chat history with AI response
+          newChatHistory[newChatHistory.length - 1].response = res.data;
+          setChatHistory(newChatHistory);
+          setIsAITyping(false); // AI stops 'typing'
+        } else {
+          const chatsData = {
+            prompt: Prompt,
+            conversationHistory: conversationHistory,
+          };
 
-        // Update chat history with AI response
-        newChatHistory[newChatHistory.length - 1].response = res.data;
-        setChatHistory(newChatHistory);
-        setIsAITyping(false); // AI stops 'typing'
+          const res = await axios.post("chats", chatsData);
+
+          // Update chat history with AI response
+          newChatHistory[newChatHistory.length - 1].response = res.data;
+          setChatHistory(newChatHistory);
+          setIsAITyping(false); // AI stops 'typing'
+        }
+      } catch (error) {
+        console.log(error);
+        setIsAITyping(false); // In case of an error, AI stops 'typing'
       }
-    } catch (error) {
-      console.log(error);
-      setIsAITyping(false); // In case of an error, AI stops 'typing'
     }
-
-    setPrompt(""); // Clear the input after submitting
   };
 
   const handleAiChat = async (event) => {
-    try {
-      if (!session) {
-        setIsSigninPopup(true);
-      } else {
-        setIsSigninPopup(false);
-
-        const chatLog = await chatLogic();
-
-        if (chatLog.isUserToken && chatLog.isUserToken.count) {
-          localStorage.setItem("AITokens", chatLog.isUserToken.count - 1);
-          dispatchTokenValue(chatLog.isUserToken.count - 1);
-        }
-
-        if (!chatLog.isUserToken || !chatLog.isUserToken.lock) {
-          handleSubmit(event);
+    if (Prompt) {
+      try {
+        if (!session) {
+          setIsSigninPopup(true);
         } else {
-          setIsTokenPopup(true);
-          return;
+          setIsSigninPopup(false);
+
+          const chatLog = await chatLogic();
+
+          if (
+            chatLog.isUserToken &&
+            chatLog.isUserToken.count &&
+            !chatLog.isUserToken.lock
+          ) {
+            localStorage.setItem("AITokens", chatLog.isUserToken.count - 1);
+            dispatchTokenValue(chatLog.isUserToken.count - 1);
+          }
+
+          if (!chatLog.isUserToken || !chatLog.isUserToken.lock) {
+            handleSubmit(event);
+          } else {
+            setIsTokenPopup(true);
+            return;
+          }
         }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -146,11 +158,20 @@ const AiChatbox = ({
   return (
     <div className={styles.aiChatbox}>
       <div className={styles.imageUpload}>
-        <div className={styles.imagePreviews}>
-          <img src={images} alt="" />
-        </div>
+        <label htmlFor="file-upload" className={styles.customFileUpload}>
+          <MdOutlineFileUpload /> Upload Image
+          <div className={styles.imagePreviews}>
+            <img src={images} alt="" />
+          </div>
+        </label>
 
-        <input type="file" multiple={false} onChange={handleFilesChange} />
+        <input
+          id="file-upload"
+          type="file"
+          multiple={false}
+          onChange={handleFilesChange}
+          className={styles.hiddenFileInput}
+        />
       </div>
 
       <div className={styles.chatFeatures}>
