@@ -8,7 +8,7 @@
     width: 170px;
     margin: 0 auto 30px auto;
 
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
       width: 130px;
     }
   }
@@ -21,7 +21,7 @@
     border-radius: 10px;
     box-shadow: 9.91px 9.91px 22px #d9dade, -9.91px -9.91px 22px #ffffff;
 
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
       width: 320px;
     }
   }
@@ -82,7 +82,7 @@
         }
       }
 
-      @media (max-width: 500px) {
+      @media (max-width: 600px) {
         font-size: 12px;
       }
     }

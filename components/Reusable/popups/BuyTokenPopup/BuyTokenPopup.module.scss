@@ -7,13 +7,14 @@
     @include popupContent();
 
     .BuyTokenPopupInteract {
+      text-align: center;
       h2,
       .tokenImg {
         margin-bottom: 20px;
       }
 
       h2 {
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
           font-size: 17px;
         }
       }

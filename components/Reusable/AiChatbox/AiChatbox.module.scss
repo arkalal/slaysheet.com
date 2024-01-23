@@ -1,13 +1,37 @@
 .aiChatbox {
+  margin-top: 30px;
   .imageUpload {
     margin-bottom: 10px;
+    position: relative;
+
     .imagePreviews {
       position: absolute;
-      bottom: 10%;
-      left: 23%;
+      bottom: 80%;
+      left: 8%;
       img {
         object-fit: contain;
-        width: 100px;
+        width: 60px;
+      }
+    }
+
+    .hiddenFileInput {
+      display: none;
+    }
+
+    .customFileUpload {
+      display: flex;
+      gap: 3px;
+      cursor: pointer;
+      margin-left: 30px;
+      transition: all 0.3s ease-in-out;
+      width: 130px;
+
+      @media (max-width: 600px) {
+        font-size: 12px;
+      }
+
+      &:hover {
+        color: #019eff;
       }
     }
   }
@@ -24,14 +48,14 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 20px;
+      padding: 15px;
 
-      @media (max-width: 500px) {
-        padding: 17px;
+      @media (max-width: 600px) {
+        padding: 10px;
       }
 
       .chatboxButton {
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
           width: 80px;
         }
 
@@ -48,7 +72,7 @@
           transition: all 0.3s ease-in;
           color: #fff;
 
-          @media (max-width: 500px) {
+          @media (max-width: 600px) {
             font-size: 10px;
             padding: 9px;
           }
@@ -79,7 +103,7 @@
           color: gray;
           text-align: left;
 
-          @media (max-width: 500px) {
+          @media (max-width: 600px) {
             font-size: 12px;
           }
         }
@@ -93,14 +117,14 @@
           caret-color: blue;
           margin-bottom: 0;
 
-          @media (max-width: 500px) {
+          @media (max-width: 600px) {
             font-size: 12px;
           }
 
           &::placeholder {
             color: gray;
 
-            @media (max-width: 500px) {
+            @media (max-width: 600px) {
               font-size: 12px;
             }
           }
