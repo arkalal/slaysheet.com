@@ -1,0 +1,46 @@
+.GenImage {
+  margin-top: 30px;
+  margin-left: 100px;
+
+  .tokenWallet {
+    margin-top: 20px;
+  }
+
+  .AiImage {
+    margin: 20px;
+    height: 500px;
+  }
+
+  form {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+
+    input {
+      width: 90%;
+      padding: 10px;
+    }
+
+    button {
+      width: 30%;
+      margin: 10px auto;
+      border: none;
+      outline: none;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.75);
+      font-size: 15px;
+      cursor: pointer;
+      background: gray;
+      transition: all 0.2s ease-in-out;
+      color: black;
+      font-weight: bold;
+
+      &:hover {
+        background: black;
+        color: #fff;
+      }
+    }
+  }
+}

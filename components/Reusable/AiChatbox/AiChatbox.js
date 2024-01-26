@@ -100,6 +100,7 @@ const AiChatbox = ({
       try {
         if (!session) {
           setIsSigninPopup(true);
+          return;
         } else {
           setIsSigninPopup(false);
 
