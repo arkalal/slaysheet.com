@@ -2,45 +2,64 @@
   margin-top: 30px;
   margin-left: 100px;
 
+  .chatContainer {
+    display: flex;
+    flex-direction: column; // Messages appear in order from top to bottom
+    align-items: flex-end; // Align items to the end (right side for prompts)
+    margin: 20px;
+    height: 570px;
+    overflow-y: auto;
+    gap: 30px;
+  }
+
+  .messagePair {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    width: 100%;
+
+    .imageContainer {
+      flex-shrink: 0; // Prevents the image from shrinking
+      width: 500px; // Fixed width for the image container
+      height: 500px; // Fixed height for the image container
+      background-color: #ececec; // Placeholder background color
+      margin-top: 60px;
+    }
+
+    .userPrompt {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      margin-left: 10px; // Space between image and prompt
+      width: fit-content;
+      height: fit-content;
+      text-align: left;
+      max-width: 80%; // To prevent chat bubbles from stretching full width
+      word-wrap: break-word; // To prevent text overflow
+      margin-top: 10px;
+    }
+  }
+
   .tokenWallet {
     margin-top: 20px;
   }
 
   .AiImage {
     margin: 20px;
-    height: 500px;
+    height: 550px;
+    overflow-y: auto;
   }
 
   form {
     text-align: center;
     margin-top: 20px;
     display: flex;
-    flex-direction: column;
+    gap: 10px;
 
     input {
-      width: 90%;
+      width: 80%;
       padding: 10px;
-    }
-
-    button {
-      width: 30%;
-      margin: 10px auto;
-      border: none;
-      outline: none;
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.75);
-      font-size: 15px;
-      cursor: pointer;
-      background: gray;
-      transition: all 0.2s ease-in-out;
-      color: black;
-      font-weight: bold;
-
-      &:hover {
-        background: black;
-        color: #fff;
-      }
     }
   }
 }

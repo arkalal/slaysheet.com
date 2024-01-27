@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "../../axios/openAiApi";
 import styles from "./GenImage.module.scss";
 import { useSession } from "next-auth/react";
@@ -11,6 +11,7 @@ import ReduxProvider from "../../redux/ReduxProvider";
 import AITokenWallet from "../Reusable/AITokenWallet/AITokenWallet";
 import { connect } from "react-redux";
 import * as dispatcher from "../../redux/store/dispatchers";
+import BlueButton from "../Reusable/BlueButton/BlueButton";
 
 const GenImage = ({ dispatchTokenValue }) => {
   const [prompt, setPrompt] = useState("");
@@ -18,12 +19,18 @@ const GenImage = ({ dispatchTokenValue }) => {
   const [Loading, setLoading] = useState(false);
   const [SignInPop, setSignInPop] = useState(false);
   const [IsTokenPopup, setIsTokenPopup] = useState(false);
+  const [messageHistory, setMessageHistory] = useState([]);
 
   const { data: session } = useSession();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      setMessageHistory((messageHistory) => [
+        ...messageHistory,
+        { text: prompt, imageUrl: "", loading: true },
+      ]);
+
       setLoading(true);
       setPrompt("");
 
@@ -33,10 +40,28 @@ const GenImage = ({ dispatchTokenValue }) => {
       const response = await axios.post("imageGen", postPrompt);
 
       const data = await response.data;
-      setImageUrl(data.imageUrl);
+      console.log("data", data);
+
+      // Update the last entry of messageHistory with the new image URL
+      setMessageHistory((currentHistory) =>
+        currentHistory.map((message, index) =>
+          index === currentHistory.length - 1 // Correct the index check here
+            ? { ...message, imageUrl: data.imageUrl, loading: false }
+            : message
+        )
+      );
       setLoading(false);
     } catch (error) {
       console.error("Error generating image:", error);
+
+      // If there's an error, update the loading state to false
+      setMessageHistory((currentHistory) =>
+        currentHistory.map((message, index) =>
+          index === currentHistory.length - 1
+            ? { ...message, loading: false }
+            : message
+        )
+      );
     }
   };
 
@@ -75,6 +100,23 @@ const GenImage = ({ dispatchTokenValue }) => {
     }
   };
 
+  const chatContainerRef = useRef("");
+
+  useEffect(() => {
+    const chatBox = chatContainerRef.current;
+
+    // Function to smoothly scroll to the bottom
+    const scrollToBottom = () => {
+      chatBox.scrollTo({
+        top: chatBox.scrollHeight,
+        behavior: "smooth",
+      });
+    };
+
+    // Call scrollToBottom whenever the chatHistory updates
+    scrollToBottom();
+  }, [messageHistory]);
+
   return (
     <div className={styles.GenImage}>
       {SignInPop && (
@@ -99,7 +141,7 @@ const GenImage = ({ dispatchTokenValue }) => {
         </>
       )}
 
-      <div className={styles.AiImage}>
+      {/* <div className={styles.AiImage}>
         {imageUrl && !Loading ? (
           <img height={500} width={500} src={imageUrl} alt="" />
         ) : !imageUrl && !Loading ? (
@@ -113,6 +155,26 @@ const GenImage = ({ dispatchTokenValue }) => {
             </>
           )
         )}
+      </div> */}
+
+      <div ref={chatContainerRef} className={styles.chatContainer}>
+        {messageHistory.map((message, index) => (
+          <div key={index} className={styles.messagePair}>
+            <div className={styles.imageContainer}>
+              {message.loading ? (
+                <p>Generating image...</p>
+              ) : (
+                <img
+                  height={500}
+                  width={500}
+                  src={message.imageUrl}
+                  alt="Generated"
+                />
+              )}
+            </div>
+            <p className={styles.userPrompt}>{message.text}</p>
+          </div>
+        ))}
       </div>
 
       <form onSubmit={handleGenImage}>
@@ -120,9 +182,9 @@ const GenImage = ({ dispatchTokenValue }) => {
           type="text"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Enter an image description"
+          placeholder="Type and Generate your image"
         />
-        <button type="submit">Generate Image</button>
+        <BlueButton type="submit" text="Generate Image" />
       </form>
     </div>
   );
