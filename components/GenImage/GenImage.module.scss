@@ -46,8 +46,8 @@
       box-shadow: -1px -1px 10px 0px rgba(0, 0, 0, 0.75);
 
       @media (max-width: 600px) {
-        width: 200px;
-        height: 200px;
+        width: 300px; // Maintain the width
+        height: 300px; // Maintain the height
       }
 
       img {
@@ -73,7 +73,7 @@
           @include gradientText();
 
           @media (max-width: 600px) {
-            font-size: 12px;
+            font-size: 15px;
             text-align: center;
           }
         }
@@ -84,7 +84,7 @@
           height: auto;
 
           @media (max-width: 600px) {
-            width: 150px;
+            width: 250px;
           }
         }
       }
@@ -130,5 +130,31 @@
         width: 80%;
       }
     }
+  }
+}
+
+@media (max-width: 950px) {
+  .GenImage .chatContainer .messagePair {
+    flex-direction: column-reverse; // Keep elements in a row for a side-by-side layout
+    justify-content: space-between; // Space between the elements
+    align-items: flex-start; // Align to the top
+  }
+
+  .GenImage .chatContainer .messagePair .userPrompt {
+    margin-right: 0; // Reset any right margin
+    margin-left: auto; // Auto margin for right alignment
+    width: auto; // Adjust width automatically
+    max-width: 70%; // Limit width to prevent overstretch
+  }
+
+  .GenImage .chatContainer .messagePair .imageContainer {
+    margin-right: auto; // Auto margin for left alignment
+    margin-top: 30px; // Add a little space at the top
+    order: -1; // Ensure image is left-aligned
+  }
+
+  .GenImage .chatContainer .messagePair .imageContainer img {
+    width: 100%; // Ensure the image is fully responsive within its container
+    height: 100%; // Maintain the aspect ratio
   }
 }
