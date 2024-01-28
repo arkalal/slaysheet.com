@@ -27,11 +27,19 @@
         height: 72vh;
       }
       @media (min-width: 800px) and (max-width: 1030px) {
-        height: 75vh;
+        height: 77vh;
       }
 
       @media (min-width: 376px) and (max-width: 399px) {
         height: 70vh;
+      }
+
+      @media (width: 540px) {
+        height: 67vh;
+      }
+
+      @media (width: 1024px) {
+        height: 78vh;
       }
 
       .chatConverseAnime {

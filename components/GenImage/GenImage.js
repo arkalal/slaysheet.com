@@ -12,11 +12,12 @@ import AITokenWallet from "../Reusable/AITokenWallet/AITokenWallet";
 import { connect } from "react-redux";
 import * as dispatcher from "../../redux/store/dispatchers";
 import BlueButton from "../Reusable/BlueButton/BlueButton";
+import Image from "next/image";
+import genImgIcon from "../../assets/images/genImg.jpg";
+import { Typewriter } from "react-simple-typewriter";
 
 const GenImage = ({ dispatchTokenValue }) => {
   const [prompt, setPrompt] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [Loading, setLoading] = useState(false);
   const [SignInPop, setSignInPop] = useState(false);
   const [IsTokenPopup, setIsTokenPopup] = useState(false);
   const [messageHistory, setMessageHistory] = useState([]);
@@ -31,7 +32,6 @@ const GenImage = ({ dispatchTokenValue }) => {
         { text: prompt, imageUrl: "", loading: true },
       ]);
 
-      setLoading(true);
       setPrompt("");
 
       const postPrompt = {
@@ -50,7 +50,6 @@ const GenImage = ({ dispatchTokenValue }) => {
             : message
         )
       );
-      setLoading(false);
     } catch (error) {
       console.error("Error generating image:", error);
 
@@ -141,37 +140,41 @@ const GenImage = ({ dispatchTokenValue }) => {
         </>
       )}
 
-      {/* <div className={styles.AiImage}>
-        {imageUrl && !Loading ? (
-          <img height={500} width={500} src={imageUrl} alt="" />
-        ) : !imageUrl && !Loading ? (
-          <>
-            <h2>No Images rendered</h2>
-          </>
-        ) : (
-          Loading && (
-            <>
-              <h1>Loading...</h1>
-            </>
-          )
-        )}
-      </div> */}
-
       <div ref={chatContainerRef} className={styles.chatContainer}>
         {messageHistory.map((message, index) => (
           <div key={index} className={styles.messagePair}>
             <div className={styles.imageContainer}>
               {message.loading ? (
-                <p>Generating image...</p>
+                <div className={styles.generatingImg}>
+                  <Image
+                    src={genImgIcon}
+                    alt="genImgIcon"
+                    className={styles.generatingImgIcon}
+                  ></Image>
+
+                  <p>
+                    <Typewriter
+                      words={[
+                        "Generating Image...",
+                        "Creating the Magic for You!",
+                      ]}
+                      loop={10}
+                      cursor
+                      cursorStyle="|"
+                      typeSpeed={70}
+                      deleteSpeed={50}
+                      delaySpeed={1000}
+                    />
+                  </p>
+                </div>
               ) : (
                 <img
-                  height={500}
-                  width={500}
                   src={message.imageUrl}
-                  alt="Generated"
+                  alt="Error Generating Image. Please try again.."
                 />
               )}
             </div>
+
             <p className={styles.userPrompt}>{message.text}</p>
           </div>
         ))}
@@ -182,7 +185,7 @@ const GenImage = ({ dispatchTokenValue }) => {
           type="text"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Type and Generate your image"
+          placeholder="Type and Generate your image..."
         />
         <BlueButton type="submit" text="Generate Image" />
       </form>
