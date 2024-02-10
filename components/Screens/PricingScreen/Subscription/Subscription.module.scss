@@ -36,5 +36,11 @@
     justify-content: center;
     align-items: center;
     margin-top: 40px;
+    gap: 20px;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      margin-bottom: 30px;
+    }
   }
 }
