@@ -21,6 +21,18 @@ const PricingCard = ({ data }) => {
         </>
       );
     }
+
+    if (name === "Free") {
+      return (
+        <>
+          <p> ✓ 20 AI Tokens</p>
+          <p> ✓ Full Access for All AI tools</p>
+          <p> ✓ Join Discord Community</p>
+          <p> ✓ Early Access Perks</p>
+          <p> ✓ What Feature You Want? We Will Build It</p>
+        </>
+      );
+    }
   };
 
   const router = useRouter();
@@ -40,7 +52,11 @@ const PricingCard = ({ data }) => {
     };
 
     try {
-      if (session) {
+      if (session && data.unit_amount === 0) {
+        router.push("/");
+      }
+
+      if (session && data.unit_amount !== 0) {
         const res = await axios.post("checkout", postData);
         router.push(res.data);
       }
@@ -68,7 +84,9 @@ const PricingCard = ({ data }) => {
         </h2>
         <p>One Time Pay</p>
 
-        <button onClick={handleSubscription}>Buy Now</button>
+        <button onClick={handleSubscription}>
+          {data.unit_amount === 0 ? "Get Started" : "Buy Now"}
+        </button>
       </div>
     </>
   );

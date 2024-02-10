@@ -23,15 +23,24 @@
       margin: 20px 0;
       position: relative;
 
-      @media (min-width: 400px) and (max-width: 800px) {
-        height: 72vh;
-      }
-      @media (min-width: 800px) and (max-width: 1030px) {
-        height: 75vh;
+      @media (width: 540px) {
+        height: 65vh;
       }
 
-      @media (min-width: 376px) and (max-width: 399px) {
+      @media (max-width: 375px) {
+        height: 62vh;
+      }
+
+      @media (min-width: 376px) and (max-width: 500px) {
         height: 70vh;
+      }
+
+      @media (min-width: 700px) and (max-width: 850px) {
+        height: 74vh;
+      }
+
+      @media (min-width: 900px) and (max-width: 1030px) {
+        height: 78vh;
       }
 
       .chatConverseAnime {
