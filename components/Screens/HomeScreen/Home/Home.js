@@ -25,13 +25,9 @@ const Home = async ({ isToken }) => {
         <Banner />
         <Showcase />
 
-        {userSession && (
-          <>
-            <ReduxProvider>
-              <AITokenWallet />
-            </ReduxProvider>
-          </>
-        )}
+        <ReduxProvider>
+          <AITokenWallet />
+        </ReduxProvider>
 
         <ReduxProvider>
           <ShowBox />

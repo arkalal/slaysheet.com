@@ -70,15 +70,11 @@ const AIChat = () => {
             </>
           )}
 
-          {session && (
-            <>
-              <div className={styles.tokenWallet}>
-                <ReduxProvider>
-                  <AITokenWallet />
-                </ReduxProvider>
-              </div>
-            </>
-          )}
+          <div className={styles.tokenWallet}>
+            <ReduxProvider>
+              <AITokenWallet />
+            </ReduxProvider>
+          </div>
 
           <div className={styles.AiChats}>
             <div ref={chatContainerRef} className={styles.chatBox}>

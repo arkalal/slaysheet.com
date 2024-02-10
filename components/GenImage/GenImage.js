@@ -130,15 +130,11 @@ const GenImage = ({ dispatchTokenValue }) => {
         </>
       )}
 
-      {session && (
-        <>
-          <div className={styles.tokenWallet}>
-            <ReduxProvider>
-              <AITokenWallet />
-            </ReduxProvider>
-          </div>
-        </>
-      )}
+      <div className={styles.tokenWallet}>
+        <ReduxProvider>
+          <AITokenWallet />
+        </ReduxProvider>
+      </div>
 
       <div ref={chatContainerRef} className={styles.chatContainer}>
         {messageHistory.map((message, index) => (

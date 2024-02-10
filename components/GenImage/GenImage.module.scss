@@ -1,7 +1,7 @@
 @import "../../styleReuse/mixins.module.scss";
 
 .GenImage {
-  margin-top: 30px;
+  margin-bottom: 25px;
 
   .chatContainer {
     display: flex;
@@ -13,19 +13,19 @@
     gap: 30px;
 
     @media (width: 540px) {
-      height: 65vh;
+      height: 52vh;
     }
 
     @media (max-width: 375px) {
-      height: 62vh;
+      height: 50vh;
     }
 
     @media (min-width: 700px) and (max-width: 850px) {
-      height: 78vh;
+      height: 65vh;
     }
 
     @media (min-width: 900px) and (max-width: 1030px) {
-      height: 82vh;
+      height: 70vh;
     }
   }
 
@@ -106,7 +106,7 @@
   }
 
   .tokenWallet {
-    margin-top: 20px;
+    margin-top: 25px;
   }
 
   form {
@@ -125,9 +125,11 @@
     input {
       padding: 10px;
       width: 50%;
+      font-size: 20px;
 
       @media (max-width: 600px) {
         width: 80%;
+        font-size: 17px;
       }
     }
   }
