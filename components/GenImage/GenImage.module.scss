@@ -4,14 +4,13 @@
   margin-bottom: 25px;
 
   .chatImageContainer {
-    display: flex;
-    flex-direction: column; // Messages appear in order from top to bottom
-    align-items: flex-end; // Align items to the end (right side for prompts)
     margin: 20px 0;
     height: 70vh;
     overflow-y: auto;
-    gap: 30px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 52px;
 
     .noImage {
       position: absolute;
@@ -65,20 +64,22 @@
   }
 
   .messagePair {
-    display: flex;
-    margin-bottom: 20px;
-    justify-content: space-between;
     width: 100%;
     padding: 0 20px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
 
     .imageContainer {
       flex-shrink: 0; // Prevents the image from shrinking
       width: 400px;
       height: 400px;
       background-color: #fff;
-      margin-top: 60px;
+      margin-top: 20px;
+      margin-bottom: 20px;
       border-radius: 5px;
       box-shadow: -1px -1px 10px 0px rgba(0, 0, 0, 0.75);
+      align-self: flex-start;
 
       .downloadImage {
         @include blueButton();
@@ -146,7 +147,7 @@
       text-align: left;
       max-width: 80%; // To prevent chat bubbles from stretching full width
       word-wrap: break-word; // To prevent text overflow
-      margin-top: 20px;
+      align-self: flex-end;
     }
   }
 
@@ -177,31 +178,5 @@
         font-size: 17px;
       }
     }
-  }
-}
-
-@media (max-width: 950px) {
-  .GenImage .chatContainer .messagePair {
-    flex-direction: column-reverse; // Keep elements in a row for a side-by-side layout
-    justify-content: space-between; // Space between the elements
-    align-items: flex-start; // Align to the top
-  }
-
-  .GenImage .chatContainer .messagePair .userPrompt {
-    margin-right: 0; // Reset any right margin
-    margin-left: auto; // Auto margin for right alignment
-    width: auto; // Adjust width automatically
-    max-width: 70%; // Limit width to prevent overstretch
-  }
-
-  .GenImage .chatContainer .messagePair .imageContainer {
-    margin-right: auto; // Auto margin for left alignment
-    margin-top: 30px; // Add a little space at the top
-    order: -1; // Ensure image is left-aligned
-  }
-
-  .GenImage .chatContainer .messagePair .imageContainer img {
-    width: 100%; // Ensure the image is fully responsive within its container
-    height: 100%; // Maintain the aspect ratio
   }
 }
