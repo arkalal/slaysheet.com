@@ -15,6 +15,7 @@ import BlueButton from "../Reusable/BlueButton/BlueButton";
 import Image from "next/image";
 import genImgIcon from "../../assets/images/genImg.jpg";
 import { Typewriter } from "react-simple-typewriter";
+import noImage from "../../assets/images/noImage.jpg";
 
 const GenImage = ({ dispatchTokenValue }) => {
   const [prompt, setPrompt] = useState("");
@@ -116,6 +117,18 @@ const GenImage = ({ dispatchTokenValue }) => {
     scrollToBottom();
   }, [messageHistory]);
 
+  const handleDownloadImage = (imageUrl) => {
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    // Set the target to '_blank' to open in a new tab
+    link.target = "_blank";
+    // Optionally, set the download attribute to suggest a filename
+    link.setAttribute("download", `GeneratedImage-${new Date().getTime()}.jpg`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className={styles.GenImage}>
       {SignInPop && (
@@ -136,7 +149,7 @@ const GenImage = ({ dispatchTokenValue }) => {
         </ReduxProvider>
       </div>
 
-      <div ref={chatContainerRef} className={styles.chatContainer}>
+      <div ref={chatContainerRef} className={styles.chatImageContainer}>
         {messageHistory.map((message, index) => (
           <div key={index} className={styles.messagePair}>
             <div className={styles.imageContainer}>
@@ -164,16 +177,38 @@ const GenImage = ({ dispatchTokenValue }) => {
                   </p>
                 </div>
               ) : (
-                <img
-                  src={message.imageUrl}
-                  alt="Error Generating Image. Please try again.."
-                />
+                <>
+                  <img
+                    src={message.imageUrl}
+                    alt="Please follow proper standards to generate image and should not be abusive 😇 "
+                  />
+                  <button
+                    className={styles.downloadImage}
+                    onClick={() => handleDownloadImage(message.imageUrl)}
+                  >
+                    View & Download
+                  </button>
+                </>
               )}
             </div>
 
             <p className={styles.userPrompt}>{message.text}</p>
           </div>
         ))}
+
+        {messageHistory && messageHistory.length === 0 && (
+          <>
+            <div className={styles.noImage}>
+              <Image src={noImage} alt="image" className={styles.noImg}></Image>
+              <p>Generate Your Images...</p>
+              <p>
+                After generating the images ➡️ Click - View and Download and
+                open it on new tab. Right click to save the image in your device
+                just like google. 🚀
+              </p>
+            </div>
+          </>
+        )}
       </div>
 
       <form onSubmit={handleGenImage}>
