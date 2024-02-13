@@ -21,27 +21,11 @@
     .chatBox {
       height: 65vh;
       overflow-y: auto;
-      margin: 20px 0;
+      margin-top: 10px;
       position: relative;
 
-      @media (width: 540px) {
-        height: 55vh;
-      }
-
-      @media (max-width: 375px) {
-        height: 50vh;
-      }
-
-      @media (min-width: 376px) and (max-width: 500px) {
-        height: 60vh;
-      }
-
-      @media (min-width: 700px) and (max-width: 850px) {
-        height: 62vh;
-      }
-
-      @media (min-width: 900px) and (max-width: 1030px) {
-        height: 65vh;
+      @media (max-width: 1030px) {
+        height: calc(100vh - 350px);
       }
 
       .chatConverseAnime {

@@ -4,13 +4,17 @@
   margin-bottom: 25px;
 
   .chatImageContainer {
-    margin: 20px 0;
     height: 70vh;
     overflow-y: auto;
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 52px;
+    margin-top: 12px;
+
+    @media (max-width: 1030px) {
+      height: calc(100vh - 350px);
+    }
 
     .noImage {
       position: absolute;
@@ -44,22 +48,6 @@
           font-size: 12px;
         }
       }
-    }
-
-    @media (width: 540px) {
-      height: 52vh;
-    }
-
-    @media (max-width: 375px) {
-      height: 50vh;
-    }
-
-    @media (min-width: 700px) and (max-width: 850px) {
-      height: 65vh;
-    }
-
-    @media (min-width: 900px) and (max-width: 1030px) {
-      height: 70vh;
     }
   }
 
