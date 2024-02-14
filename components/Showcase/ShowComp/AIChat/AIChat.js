@@ -76,32 +76,30 @@ const AIChat = () => {
             </ReduxProvider>
           </div>
 
-          <div className={styles.AiChats}>
-            <div ref={chatContainerRef} className={styles.chatBox}>
-              {conversationHistory && conversationHistory.length === 0 && (
-                <div className={styles.chatConverseAnime}>
-                  <Image
-                    src={chattingAnime}
-                    alt="chattingAnime"
-                    className={styles.chatConverseImg}
-                  ></Image>
-                  <p>No Conversation Found</p>
-                </div>
-              )}
+          <div ref={chatContainerRef} className={styles.AiChats}>
+            {conversationHistory && conversationHistory.length === 0 && (
+              <div className={styles.chatConverseAnime}>
+                <Image
+                  src={chattingAnime}
+                  alt="chattingAnime"
+                  className={styles.chatConverseImg}
+                ></Image>
+                <p>No Conversation Found</p>
+              </div>
+            )}
 
-              {chatHistory.map((chat, index) => (
-                <div className={styles.chatQuery} key={index}>
-                  <img src={chat.images} alt="" />
-                  <div className={styles.userText}>
-                    <p>{chat.prompt}</p>
-                  </div>
-
-                  <div className={styles.aiText}>
-                    <p>{chat.response || (isAITyping && "typing...")}</p>
-                  </div>
+            {chatHistory.map((chat, index) => (
+              <div className={styles.chatQuery} key={index}>
+                <img src={chat.images} alt="" />
+                <div className={styles.userText}>
+                  <p>{chat.prompt}</p>
                 </div>
-              ))}
-            </div>
+
+                <div className={styles.aiText}>
+                  <p>{chat.response || (isAITyping && "typing...")}</p>
+                </div>
+              </div>
+            ))}
           </div>
 
           <div className={styles.inputBox}>

@@ -2,23 +2,22 @@
 
 .GenImage {
   margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 95vh;
+
+  @media (max-width: 1030px) {
+    height: 85vh;
+  }
 
   .chatImageContainer {
-    height: 70vh;
+    flex: 1;
     overflow-y: auto;
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 52px;
     margin-top: 12px;
-
-    @media (max-width: 570px) {
-      height: calc(100vh - 320px);
-    }
-
-    @media (min-width: 600px) and (max-width: 1030px) {
-      height: calc(100vh - 400px);
-    }
 
     .noImage {
       position: absolute;
@@ -148,13 +147,9 @@
   }
 
   .genImgInput {
-    position: fixed;
-    bottom: 20px;
-    left: 0;
-    right: 0;
     form {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 25px;
       display: flex;
       gap: 10px;
       justify-content: center;

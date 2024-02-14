@@ -136,16 +136,19 @@ const GenImage = ({ dispatchTokenValue }) => {
           <SigninPopup setIsSigninPopup={setSignInPop} />
         </>
       )}
+
       {IsTokenPopup && (
         <>
           <BuyTokenPopup />
         </>
       )}
+
       <div className={styles.tokenWallet}>
         <ReduxProvider>
           <AITokenWallet />
         </ReduxProvider>
       </div>
+
       <div ref={chatContainerRef} className={styles.chatImageContainer}>
         {messageHistory.map((message, index) => (
           <div key={index} className={styles.messagePair}>
