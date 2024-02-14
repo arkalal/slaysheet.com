@@ -59,6 +59,7 @@ const AiChatbox = ({
       setChatHistory(newChatHistory);
       setIsAITyping(true);
       setPrompt(""); // Clear the input after submitting
+      setImages("");
 
       try {
         if (IsVision) {

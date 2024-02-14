@@ -11,6 +11,11 @@
   .inputBox {
     width: 60%;
     margin: 0 auto 0 auto;
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    z-index: 10;
 
     @media (max-width: 1030px) {
       width: 85%;
@@ -24,8 +29,12 @@
       margin-top: 10px;
       position: relative;
 
-      @media (max-width: 1030px) {
-        height: calc(100vh - 280px);
+      @media (max-width: 570px) {
+        height: calc(100vh - 320px);
+      }
+
+      @media (min-width: 600px) and (max-width: 1030px) {
+        height: calc(100vh - 420px);
       }
 
       .chatConverseAnime {
@@ -93,7 +102,6 @@
           align-self: flex-end; // Align user text to the right
           margin-bottom: 4px; // Space between user's message and AI response
           margin-right: 10px;
-          margin-top: 30px;
           width: fit-content;
 
           p {

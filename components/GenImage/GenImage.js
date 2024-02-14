@@ -136,19 +136,16 @@ const GenImage = ({ dispatchTokenValue }) => {
           <SigninPopup setIsSigninPopup={setSignInPop} />
         </>
       )}
-
       {IsTokenPopup && (
         <>
           <BuyTokenPopup />
         </>
       )}
-
       <div className={styles.tokenWallet}>
         <ReduxProvider>
           <AITokenWallet />
         </ReduxProvider>
       </div>
-
       <div ref={chatContainerRef} className={styles.chatImageContainer}>
         {messageHistory.map((message, index) => (
           <div key={index} className={styles.messagePair}>
@@ -211,15 +208,17 @@ const GenImage = ({ dispatchTokenValue }) => {
         )}
       </div>
 
-      <form onSubmit={handleGenImage}>
-        <input
-          type="text"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Type and Generate your image..."
-        />
-        <BlueButton type="submit" text="Generate Image" />
-      </form>
+      <div className={styles.genImgInput}>
+        <form onSubmit={handleGenImage}>
+          <input
+            type="text"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Type and Generate your image..."
+          />
+          <BlueButton type="submit" text="Generate Image" />
+        </form>
+      </div>
     </div>
   );
 };
