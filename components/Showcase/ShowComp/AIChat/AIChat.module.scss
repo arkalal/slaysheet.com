@@ -4,6 +4,10 @@
   flex-direction: column;
   height: 100vh;
 
+  @media (max-width: 600px) {
+    height: 90vh;
+  }
+
   .tokenWallet {
     margin-top: 25px;
   }
