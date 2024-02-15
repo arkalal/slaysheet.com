@@ -1,14 +1,10 @@
 @import "../../styleReuse/mixins.module.scss";
 
 .GenImage {
-  margin-bottom: 25px;
+  padding-bottom: 25px;
   display: flex;
   flex-direction: column;
-  height: 95vh;
-
-  @media (max-width: 1030px) {
-    height: 85vh;
-  }
+  height: 100vh;
 
   .chatImageContainer {
     flex: 1;
