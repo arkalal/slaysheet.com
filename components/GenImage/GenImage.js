@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import axios from "../../axios/openAiApi";
+import axios from "../../axios/getApi";
 import styles from "./GenImage.module.scss";
 import { useSession } from "next-auth/react";
 import SigninPopup from "../Reusable/popups/SigninPopup/SigninPopup";
