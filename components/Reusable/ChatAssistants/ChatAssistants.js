@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./ChatAssistants.module.scss";
 import axios from "../../../axios/getApi";
+import { BsChat } from "react-icons/bs";
+import { IoIosArrowDropdown } from "react-icons/io";
 
 const ChatAssistants = () => {
   const [prompt, setPrompt] = useState("");
@@ -37,10 +39,10 @@ const ChatAssistants = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsAITyping(true);
     setPrompt(""); // Clear the input field
 
     if (prompt) {
+      setIsAITyping(true);
       // Add user message to chat history
       const newUserMessage = { role: "user", content: prompt };
       setChatHistory((chatHistory) => [...chatHistory, newUserMessage]);
@@ -107,14 +109,18 @@ const ChatAssistants = () => {
             placeholder="Ask something..."
           />
           {/* <input type="file" name="file" onChange={(e) => setFile(e.target.files[0])} />  */}
-          <button type="submit">Send</button>
+          <button disabled={isAITyping} type="submit">
+            Send
+          </button>
         </form>
       </div>
 
       <div
         onClick={() => setOpenChatBot(!OpenChatBot)}
         className={styles.chatBubble}
-      ></div>
+      >
+        {OpenChatBot ? <IoIosArrowDropdown /> : <BsChat />}
+      </div>
     </div>
   );
 };
