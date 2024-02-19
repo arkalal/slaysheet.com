@@ -5,7 +5,7 @@ import styles from "./BlueButton.module.scss";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-const BlueButton = ({ signInLink, text, color, onClick }) => {
+const BlueButton = ({ signInLink, text, color, onClick, type }) => {
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -27,7 +27,7 @@ const BlueButton = ({ signInLink, text, color, onClick }) => {
           : `${styles.blueButton}`
       }
     >
-      <button onClick={signInLink ? signInPush : onClick}>
+      <button type={type} onClick={signInLink ? signInPush : onClick}>
         {signInLink && (
           <div className={styles.navSignInButtonText}>
             {session?.user ? "Go Studio" : "Sign In"}

@@ -21,7 +21,7 @@ const Subscription = ({ priceData }) => {
           priceData.map((item, index) => {
             return (
               <div key={index}>
-                {item.type === "one_time" && item.unit_amount === 14900 && (
+                {item.type === "one_time" && (
                   <>
                     <PricingCard data={item}></PricingCard>
                   </>

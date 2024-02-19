@@ -8,6 +8,7 @@ import AITokenWallet from "../../../Reusable/AITokenWallet/AITokenWallet";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Footer from "../../../Footer/Footer";
+import ChatAssistants from "../../../Reusable/ChatAssistants/ChatAssistants";
 
 const Banner = lazy(() => import("../Banner/Banner"));
 const Showcase = lazy(() => import("../../../Showcase/Showcase"));
@@ -25,13 +26,9 @@ const Home = async ({ isToken }) => {
         <Banner />
         <Showcase />
 
-        {userSession && (
-          <>
-            <ReduxProvider>
-              <AITokenWallet />
-            </ReduxProvider>
-          </>
-        )}
+        <ReduxProvider>
+          <AITokenWallet />
+        </ReduxProvider>
 
         <ReduxProvider>
           <ShowBox />
@@ -53,6 +50,8 @@ const Home = async ({ isToken }) => {
           </>
         )}
       </Suspense>
+
+      <ChatAssistants />
 
       <Footer />
     </div>
