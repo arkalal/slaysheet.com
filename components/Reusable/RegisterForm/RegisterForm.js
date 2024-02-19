@@ -9,6 +9,7 @@ import Logo from "../Logo/Logo";
 import { connect } from "react-redux";
 import * as dispatcher from "../../../redux/store/dispatchers";
 import { userRegistrationLogic } from "../../../utils/serverApiLogics";
+import Link from "next/link";
 
 const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
   const [FullName, setFullName] = useState("");
@@ -24,6 +25,11 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
 
     if (isLogin) {
       if (!Email || !Password) {
+        setError("All fields are required");
+        return;
+      }
+    } else if (isForgotPassword) {
+      if (!Email) {
         setError("All fields are required");
         return;
       }
@@ -64,6 +70,9 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
         }
 
         router.push("/");
+      } else if (isForgotPassword) {
+        const forgotRes = await axios.post("forgotPassword", { email: Email });
+        console.log(forgotRes);
       } else {
         const userRegisterLogic = await userRegistrationLogic(
           Email,
@@ -133,7 +142,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
           )}
 
           {isLogin ? (
-            <>
+            <div className={styles.loginInfo}>
               <p>
                 Not have an account ?{" "}
                 <button
@@ -146,9 +155,13 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
                   Register
                 </button>{" "}
               </p>
-            </>
+
+              <p>
+                Forgot Password? <Link href="/forgotPassword">Change Here</Link>
+              </p>
+            </div>
           ) : (
-            <>
+            <div className={styles.registerInfo}>
               <p>
                 Already have an account ?{" "}
                 <button
@@ -161,7 +174,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
                   Login
                 </button>{" "}
               </p>
-            </>
+            </div>
           )}
 
           <button
