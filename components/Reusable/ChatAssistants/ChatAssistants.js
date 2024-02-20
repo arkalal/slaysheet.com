@@ -7,72 +7,71 @@ import { BsChat } from "react-icons/bs";
 import { IoIosArrowDropdown } from "react-icons/io";
 
 const ChatAssistants = () => {
-  const [prompt, setPrompt] = useState("");
+  const [Prompt, setPrompt] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isAITyping, setIsAITyping] = useState(false);
   const [OpenChatBot, setOpenChatBot] = useState(false);
   const messagesEndRef = useRef(null);
-  // const [File, setFile] = useState(null)
+
+  // Training the chat model with custom instructions to interact with the user in a specific way based on the use case.
+
+  const systemMessage = {
+    role: "system",
+    content: `You are a customer interaction bot and your job is to talk with the customer on behalf of an AI business and ask there name and email. If they enter wrong email, tell them it is invalid and tell them to enter the email again. Once they successfully enter their email, now ask them how you can assist them. On the other side, I am the admin. Whenever I will admin you will know that I am talking to you. Now if I ask about the name and email of the users who interacted with you list all those names and emails to me.`,
+  };
+
+  const [conversationHistory, setConversationHistory] = useState([
+    systemMessage,
+  ]);
+
+  // Training the chat model with custom instructions to interact with the user in a specific way based on the use case.
 
   const scrollToBottom = () => {
-    if (OpenChatBot) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [chatHistory, isAITyping]);
+    if (OpenChatBot) {
+      scrollToBottom();
+    }
+  }, [OpenChatBot, chatHistory, isAITyping]);
 
   useEffect(() => {
-    // Simulate the initial message from the assistant when the component mounts
-    const initialMessage = {
-      role: "assistant",
-      content: "Hey, welcome to slaysheet.com. Need help? 🙋‍♂️",
-    };
-    setChatHistory([initialMessage]);
-
     setTimeout(() => {
       setOpenChatBot(true);
     }, 4000);
-  }, []); // Empty dependency array to ensure the effect runs only once when the component mounts
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setPrompt(""); // Clear the input field
+    const userMessage = { role: "user", content: Prompt };
 
-    if (prompt) {
-      setIsAITyping(true);
-      // Add user message to chat history
-      const newUserMessage = { role: "user", content: prompt };
-      setChatHistory((chatHistory) => [...chatHistory, newUserMessage]);
+    const updatedHistory = [...conversationHistory, systemMessage, userMessage];
+    setConversationHistory(updatedHistory);
 
-      // const data = new FormData()
-      // data.set('prompt', prompt)
-      // data.set('file', File)
+    // Update chat history with user prompt immediately
+    const newChatHistory = [...chatHistory, { prompt: Prompt, response: "" }];
+    setChatHistory(newChatHistory);
+    setIsAITyping(true);
 
-      try {
-        const res = await axios.post("assistant", { prompt });
+    try {
+      const chatsData = {
+        prompt: Prompt,
+        conversationHistory: conversationHistory,
+      };
 
-        // Extract only the assistant's response messages
-        const assistantMessages = res.data.data
-          .filter((msg) => msg.role === "assistant")
-          .map((msg) => ({
-            role: "assistant",
-            content: msg.content[0].text.value,
-          }));
+      const res = await axios.post("chats", chatsData);
 
-        // Update chat history with the new messages, keeping the old ones
-        setChatHistory((currentChatHistory) => [
-          ...currentChatHistory,
-          ...assistantMessages,
-        ]);
-      } catch (error) {
-        console.error(error);
-      }
-
-      setIsAITyping(false); // Stop showing 'typing...' once the response is received
+      // Update chat history with AI response
+      newChatHistory[newChatHistory.length - 1].response = res.data;
+      setChatHistory(newChatHistory);
+      setIsAITyping(false); // AI stops 'typing'
+    } catch (error) {
+      console.log(error);
+      setIsAITyping(false); // In case of an error, AI stops 'typing'
     }
+
+    setPrompt(""); // Clear the input after submitting
   };
 
   return (
@@ -85,25 +84,23 @@ const ChatAssistants = () => {
         }`}
       >
         <div className={styles.chatHistory}>
-          {chatHistory.map((msg, index) => (
-            <div
-              key={index}
-              className={
-                msg.role === "user"
-                  ? styles.userMessage
-                  : styles.assistantMessage
-              }
-            >
-              <p>{msg.content}</p>
+          {chatHistory.map((chat, index) => (
+            <div className={styles.chatQuery} key={index}>
+              <div className={styles.userText}>
+                <p>{chat.prompt}</p>
+              </div>
+
+              <div className={styles.aiText}>
+                <p>{chat.response || (isAITyping && "typing...")}</p>
+              </div>
             </div>
           ))}
-          {isAITyping && <p className={styles.typing}>typing...</p>}
           <div ref={messagesEndRef} />
         </div>
 
         <form onSubmit={handleSubmit} className={styles.chatForm}>
           <input
-            value={prompt}
+            value={Prompt}
             onChange={(e) => setPrompt(e.target.value)}
             type="text"
             placeholder="Ask something..."

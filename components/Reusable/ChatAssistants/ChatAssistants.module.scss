@@ -64,26 +64,46 @@
       gap: 10px;
       overflow-x: hidden;
 
-      .userMessage {
-        align-self: flex-end;
-        background-color: #007bff; // Or your preferred color for user message
-        color: white;
-        border-radius: 16px;
-        padding: 8px 12px;
-        margin-bottom: 4px;
-        width: fit-content;
-        margin-top: 15px;
-        margin-left: 60px;
-      }
+      .chatQuery {
+        display: flex;
+        flex-direction: column; // Stack the user and AI text blocks vertically
+        gap: 8px; // Adjust gap to your preference
 
-      .assistantMessage {
-        align-self: flex-start;
-        background-color: #f1f0f0; // Or your preferred color for assistant message
-        border-radius: 16px;
-        padding: 8px 12px;
-        margin-top: 15px;
-        width: fit-content;
-        margin-right: 60px;
+        .userText,
+        .aiText {
+          max-width: 80%; // To prevent chat bubbles from stretching full width
+          word-wrap: break-word; // To prevent text overflow
+        }
+
+        .userText {
+          align-self: flex-end;
+          background-color: #007bff; // Or your preferred color for user message
+          color: white;
+          border-radius: 16px;
+          padding: 8px 12px;
+          margin-bottom: 4px;
+          width: fit-content;
+          margin-top: 15px;
+          margin-left: 60px;
+
+          p {
+            line-height: 25px;
+          }
+        }
+
+        .aiText {
+          align-self: flex-start;
+          background-color: #f1f0f0; // Or your preferred color for assistant message
+          border-radius: 16px;
+          padding: 8px 12px;
+          margin-top: 15px;
+          width: fit-content;
+          margin-right: 60px;
+
+          p {
+            line-height: 25px;
+          }
+        }
       }
 
       .typing {
