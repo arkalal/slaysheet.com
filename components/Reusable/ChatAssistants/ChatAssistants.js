@@ -17,7 +17,9 @@ const ChatAssistants = () => {
 
   const systemMessage = {
     role: "system",
-    content: `You are a customer interaction bot and your job is to talk with the customer on behalf of an AI business and ask there name and email. If they enter wrong email, tell them it is invalid and tell them to enter the email again. Once they successfully enter their email, now ask them how you can assist them. On the other side, I am the admin. Whenever I will admin you will know that I am talking to you. Now if I ask about the name and email of the users who interacted with you list all those names and emails to me.`,
+    content: `You are a customer support bot for slaysheet.com which is a generative AI based web app that helps users to increase their productivity with the power of generative ai. You are responsible to talk with our users and solve their issues with whatever they say but that should be related to our app. If they ask anything else about some outside topics which is not related to out slaysheet.com AI web app then you will say, I am here only to support you about slaysheet.com and nothing else. Please talk about that. This is what you will say if the users talk about something which is not regarding to our web app. You will talk just like a real human customer support assistant. 
+    Let me say what is our web app is about. There are many generative ai based AI tools in our web app like chat with pdf, image generation, emails automation, ai note creations, chat with ai. Users can use this platform to increase their day to day productivity whether they are individuals or business persons. This platform can be used for both individual and business purposes.
+    If they ask anything which is not related to slaysheet.com and its use cases, Dont respond and tell them - 'I am here only to support you about slaysheet.com and nothing else. Please talk about that'`,
   };
 
   const [conversationHistory, setConversationHistory] = useState([
@@ -37,6 +39,12 @@ const ChatAssistants = () => {
   }, [OpenChatBot, chatHistory, isAITyping]);
 
   useEffect(() => {
+    // Simulate the initial message from the assistant when the component mounts
+    const initialMessage = {
+      response: "Hey, welcome to slaysheet.com. Need help? 🙋‍♂️",
+    };
+    setChatHistory([initialMessage]);
+
     setTimeout(() => {
       setOpenChatBot(true);
     }, 4000);
@@ -44,34 +52,42 @@ const ChatAssistants = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userMessage = { role: "user", content: Prompt };
 
-    const updatedHistory = [...conversationHistory, systemMessage, userMessage];
-    setConversationHistory(updatedHistory);
+    if (Prompt) {
+      const userMessage = { role: "user", content: Prompt };
 
-    // Update chat history with user prompt immediately
-    const newChatHistory = [...chatHistory, { prompt: Prompt, response: "" }];
-    setChatHistory(newChatHistory);
-    setIsAITyping(true);
+      const updatedHistory = [
+        ...conversationHistory,
+        systemMessage,
+        userMessage,
+      ];
+      setConversationHistory(updatedHistory);
 
-    try {
-      const chatsData = {
-        prompt: Prompt,
-        conversationHistory: conversationHistory,
-      };
-
-      const res = await axios.post("chats", chatsData);
-
-      // Update chat history with AI response
-      newChatHistory[newChatHistory.length - 1].response = res.data;
+      // Update chat history with user prompt immediately
+      const newChatHistory = [...chatHistory, { prompt: Prompt, response: "" }];
       setChatHistory(newChatHistory);
-      setIsAITyping(false); // AI stops 'typing'
-    } catch (error) {
-      console.log(error);
-      setIsAITyping(false); // In case of an error, AI stops 'typing'
-    }
+      setIsAITyping(true);
+      setPrompt("");
 
-    setPrompt(""); // Clear the input after submitting
+      try {
+        const chatsData = {
+          prompt: Prompt,
+          conversationHistory: conversationHistory,
+        };
+
+        const res = await axios.post("chats", chatsData);
+
+        // Update chat history with AI response
+        newChatHistory[newChatHistory.length - 1].response = res.data;
+        setChatHistory(newChatHistory);
+        setIsAITyping(false); // AI stops 'typing'
+      } catch (error) {
+        console.log(error);
+        setIsAITyping(false); // In case of an error, AI stops 'typing'
+      }
+
+      setPrompt(""); // Clear the input after submitting
+    }
   };
 
   return (
@@ -86,9 +102,11 @@ const ChatAssistants = () => {
         <div className={styles.chatHistory}>
           {chatHistory.map((chat, index) => (
             <div className={styles.chatQuery} key={index}>
-              <div className={styles.userText}>
-                <p>{chat.prompt}</p>
-              </div>
+              {chat.prompt ? (
+                <div className={styles.userText}>
+                  <p>{chat.prompt}</p>
+                </div>
+              ) : null}
 
               <div className={styles.aiText}>
                 <p>{chat.response || (isAITyping && "typing...")}</p>
