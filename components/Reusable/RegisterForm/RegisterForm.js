@@ -11,7 +11,13 @@ import * as dispatcher from "../../../redux/store/dispatchers";
 import { userRegistrationLogic } from "../../../utils/serverApiLogics";
 import Link from "next/link";
 
-const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
+const RegisterForm = ({
+  isLogin,
+  dispatchTokenValue,
+  isForgotPassword,
+  isResetPassword,
+  verifyResetToken,
+}) => {
   const [FullName, setFullName] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
@@ -19,6 +25,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
   const [IsLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
+  console.log(verifyResetToken);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +37,12 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
       }
     } else if (isForgotPassword) {
       if (!Email) {
-        setError("All fields are required");
+        setError("Email is required");
+        return;
+      }
+    } else if (isResetPassword) {
+      if (!Password) {
+        setError("Password is required");
         return;
       }
     } else {
@@ -111,7 +123,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
 
       <div className={styles.regForm}>
         <form onSubmit={handleSubmit} action="">
-          {!isLogin && !isForgotPassword && (
+          {!isLogin && !isForgotPassword && !isResetPassword && (
             <>
               <input
                 onChange={(e) => setFullName(e.target.value)}
@@ -120,11 +132,17 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
               />
             </>
           )}
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder="Email"
-          />
+
+          {!isResetPassword && (
+            <>
+              <input
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                placeholder="Email"
+              />
+            </>
+          )}
+
           {!isForgotPassword && (
             <>
               <input
@@ -134,13 +152,11 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
               />
             </>
           )}
-
           {Error && (
             <>
               <div> {Error} </div>
             </>
           )}
-
           {isLogin ? (
             <div className={styles.loginInfo}>
               <p>
@@ -176,9 +192,8 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
               </p>
             </div>
           )}
-
           <button
-            disabled={IsLoading}
+            disabled={IsLoading || Error}
             className={styles.registerSubmit}
             type="submit"
           >
@@ -187,7 +202,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue, isForgotPassword }) => {
               ? "Loading..."
               : isLogin
               ? "Login"
-              : isForgotPassword
+              : isForgotPassword || isResetPassword
               ? "Submit"
               : "Register"}{" "}
           </button>
