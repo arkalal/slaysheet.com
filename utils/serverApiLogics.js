@@ -129,37 +129,37 @@ export const AddTokensLogic = async (isFree, filteredPriceData) => {
   }
 };
 
-export const userRegistrationLogic = async (Email, FullName, Password) => {
-  await connectMongoDB();
-  const isUser = await NewUserAuth.findOne({
-    email: Email,
-  }).lean();
+// export const userRegistrationLogic = async (Email, FullName, Password) => {
+//   await connectMongoDB();
+//   const isUser = await NewUserAuth.findOne({
+//     email: Email,
+//   }).lean();
 
-  const hashedPassword = await bcrypt.hash(Password, 10);
+//   const hashedPassword = await bcrypt.hash(Password, 10);
 
-  const data = {
-    fullName: FullName,
-    email: Email,
-    password: hashedPassword,
-    freeTokens: true,
-  };
+//   const data = {
+//     fullName: FullName,
+//     email: Email,
+//     password: hashedPassword,
+//     freeTokens: true,
+//   };
 
-  let createUser = false;
+//   let createUser = false;
 
-  try {
-    await NewUserAuth.create(data);
-    createUser = true;
-  } catch (error) {
-    console.log(error);
-    createUser = false;
-  }
+//   try {
+//     await NewUserAuth.create(data);
+//     createUser = true;
+//   } catch (error) {
+//     console.log(error);
+//     createUser = false;
+//   }
 
-  return {
-    isUser: isUser
-      ? {
-          user: isUser.email,
-        }
-      : null,
-    createUser,
-  };
-};
+//   return {
+//     isUser: isUser
+//       ? {
+//           user: isUser.email,
+//         }
+//       : null,
+//     createUser,
+//   };
+// };
