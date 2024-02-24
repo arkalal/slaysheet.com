@@ -18,6 +18,8 @@ const Home = async ({ isToken }) => {
   const userFreeTokens = await checkFreeTokens();
   const userSession = await getServerSession(authOptions);
 
+  console.log(userFreeTokens);
+
   return (
     <div className={styles.home}>
       <Navbar />

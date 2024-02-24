@@ -83,6 +83,7 @@ const RegisterForm = ({
 
         setIsLoading(false);
         router.push("/");
+        router.refresh();
       } else if (isForgotPassword) {
         const forgotRes = await axios.post("forgotPassword", { email: Email });
         console.log(forgotRes);
