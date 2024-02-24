@@ -8,51 +8,51 @@ import UserSubscription from "../models/userSubscription";
 import NewUserAuth from "../models/newUserAuth";
 import bcrypt from "bcryptjs";
 
-export const chatLogic = async () => {
-  const userSession = await getServerSession(authOptions);
+// export const chatLogic = async () => {
+//   const userSession = await getServerSession(authOptions);
 
-  await connectMongoDB();
-  const isUserToken = await AiLimit.findOne({ user: userSession.user.email });
+//   await connectMongoDB();
+//   const isUserToken = await AiLimit.findOne({ user: userSession.user.email });
 
-  if (isUserToken && !isUserToken.lock) {
-    const data = {
-      user: userSession.user.email,
-      count: isUserToken.count - 1,
-      lock: false,
-    };
-    await AiLimit.findOneAndUpdate(
-      {
-        user: userSession.user.email,
-      },
-      data
-    ).lean();
-  }
+//   if (isUserToken && !isUserToken.lock) {
+//     const data = {
+//       user: userSession.user.email,
+//       count: isUserToken.count - 1,
+//       lock: false,
+//     };
+//     await AiLimit.findOneAndUpdate(
+//       {
+//         user: userSession.user.email,
+//       },
+//       data
+//     ).lean();
+//   }
 
-  if (isUserToken.count === 1) {
-    const data = {
-      user: userSession.user.email,
-      count: isUserToken.count - 1,
-      lock: true,
-    };
+//   if (isUserToken.count === 1) {
+//     const data = {
+//       user: userSession.user.email,
+//       count: isUserToken.count - 1,
+//       lock: true,
+//     };
 
-    await AiLimit.findOneAndUpdate(
-      {
-        user: userSession.user.email,
-      },
-      data
-    );
-  }
+//     await AiLimit.findOneAndUpdate(
+//       {
+//         user: userSession.user.email,
+//       },
+//       data
+//     );
+//   }
 
-  return {
-    isUserToken: isUserToken
-      ? {
-          count: isUserToken.count,
-          user: isUserToken.user,
-          lock: isUserToken.lock,
-        }
-      : null,
-  };
-};
+//   return {
+//     isUserToken: isUserToken
+//       ? {
+//           count: isUserToken.count,
+//           user: isUserToken.user,
+//           lock: isUserToken.lock,
+//         }
+//       : null,
+//   };
+// };
 
 export const AddTokensLogic = async (isFree, filteredPriceData) => {
   const userSession = await getServerSession(authOptions);
