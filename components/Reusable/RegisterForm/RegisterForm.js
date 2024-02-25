@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./RegisterForm.module.scss";
 import axios from "../../../axios/getApi";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Logo from "../Logo/Logo";
 import { connect } from "react-redux";
 import * as dispatcher from "../../../redux/store/dispatchers";
@@ -15,16 +15,23 @@ const RegisterForm = ({
   dispatchTokenValue,
   isForgotPassword,
   isResetPassword,
-  verifyResetToken,
+  resetToken,
 }) => {
   const [FullName, setFullName] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [Error, setError] = useState("");
   const [IsLoading, setIsLoading] = useState(false);
+  const [EmailReset, setEmailReset] = useState(false);
 
   const router = useRouter();
-  console.log(verifyResetToken);
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session && isForgotPassword) {
+      router.push("/");
+    }
+  }, [isForgotPassword, router, session]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,12 +88,52 @@ const RegisterForm = ({
           localStorage.setItem("AITokens", filteredUserToken[0]?.count);
         }
 
-        setIsLoading(false);
         router.push("/");
         router.refresh();
       } else if (isForgotPassword) {
-        const forgotRes = await axios.post("forgotPassword", { email: Email });
-        console.log(forgotRes);
+        const res = await axios.post("forgotPassword", { email: Email });
+
+        if (res.status === 200) {
+          setIsLoading(false);
+          setEmailReset(true);
+        }
+
+        if (res.status === 400) {
+          setIsLoading(false);
+          setError("Failed to send reset email. Please try again");
+        }
+
+        if (res.status === 401) {
+          setIsLoading(false);
+          setError("User does not exist");
+        }
+      } else if (isResetPassword) {
+        const res = await axios.post("verifyToken", { token: resetToken });
+
+        if (res.status === 200) {
+          setError("");
+
+          const userData = res.data;
+          const reset = await axios.post("resetPassword", {
+            email: userData.email,
+            password: Password,
+          });
+
+          if (reset.status === 400) {
+            setIsLoading(false);
+            setError("Password reset failed. Please try again");
+          }
+
+          if (reset.status === 200) {
+            router.push("/login");
+            setError("");
+          }
+        }
+
+        if (res.status === 400) {
+          setIsLoading(false);
+          setError("Invalid token or has expired");
+        }
       } else {
         const users = await axios.get("register");
         const currentUser =
@@ -110,13 +157,11 @@ const RegisterForm = ({
           if (res.status === 200) {
             const form = e.target;
             form.reset();
-            setIsLoading(false);
             router.push("/login");
             setError("");
           } else {
-            console.log("User Registration failed");
-            setError("User Registration failed");
             setIsLoading(false);
+            setError("User Registration failed");
           }
         }
       }
@@ -128,6 +173,15 @@ const RegisterForm = ({
 
   return (
     <div className={styles.RegisterForm}>
+      {EmailReset && (
+        <div className={styles.emailReset}>
+          <h5>
+            We have sent a reset link in your registered email. Please check
+            your inbox/spam folder.
+          </h5>
+        </div>
+      )}
+
       <div className={styles.logoWrapper}>
         <Logo />
       </div>
@@ -174,7 +228,7 @@ const RegisterForm = ({
           )}
           {Error && (
             <>
-              <div> {Error} </div>
+              <div className={styles.regFormError}> {Error} </div>
             </>
           )}
           {isLogin ? (
