@@ -1,5 +1,8 @@
+import React from "react";
 import Spinner from "../../../components/Reusable/Spinner/Spinner";
 
-export default function Loading() {
+const Loading = () => {
   return <Spinner />;
-}
+};
+
+export default Loading;
