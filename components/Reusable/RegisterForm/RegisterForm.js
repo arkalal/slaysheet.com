@@ -8,9 +8,15 @@ import { signIn } from "next-auth/react";
 import Logo from "../Logo/Logo";
 import { connect } from "react-redux";
 import * as dispatcher from "../../../redux/store/dispatchers";
-import { userRegistrationLogic } from "../../../utils/serverApiLogics";
+import Link from "next/link";
 
-const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
+const RegisterForm = ({
+  isLogin,
+  dispatchTokenValue,
+  isForgotPassword,
+  isResetPassword,
+  verifyResetToken,
+}) => {
   const [FullName, setFullName] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
@@ -18,6 +24,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
   const [IsLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
+  console.log(verifyResetToken);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +32,16 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
     if (isLogin) {
       if (!Email || !Password) {
         setError("All fields are required");
+        return;
+      }
+    } else if (isForgotPassword) {
+      if (!Email) {
+        setError("Email is required");
+        return;
+      }
+    } else if (isResetPassword) {
+      if (!Password) {
+        setError("Password is required");
         return;
       }
     } else {
@@ -47,6 +64,7 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
 
         if (res.error) {
           setError("Invalid Credentials");
+          setIsLoading(false);
           return;
         }
 
@@ -63,34 +81,48 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
           localStorage.setItem("AITokens", filteredUserToken[0]?.count);
         }
 
+        setIsLoading(false);
         router.push("/");
+        router.refresh();
+      } else if (isForgotPassword) {
+        const forgotRes = await axios.post("forgotPassword", { email: Email });
+        console.log(forgotRes);
       } else {
-        const userRegisterLogic = await userRegistrationLogic(
-          Email,
-          FullName,
-          Password
-        );
+        const users = await axios.get("register");
+        const currentUser =
+          users.data.user.length > 0
+            ? users.data.user.find((item) => item.email === Email)
+            : null;
 
-        if (userRegisterLogic.isUser) {
+        if (currentUser) {
           setError("User already exists");
+          setIsLoading(false);
           return;
         } else {
-          setError("");
-        }
+          const data = {
+            fullName: FullName,
+            email: Email,
+            password: Password,
+            freeTokens: true,
+          };
+          const res = await axios.post("register", data);
 
-        if (userRegisterLogic.createUser) {
-          const form = e.target;
-          form.reset();
-          router.push("/login");
-        } else {
-          console.log("User Registration failed");
+          if (res.status === 200) {
+            const form = e.target;
+            form.reset();
+            setIsLoading(false);
+            router.push("/login");
+            setError("");
+          } else {
+            console.log("User Registration failed");
+            setError("User Registration failed");
+            setIsLoading(false);
+          }
         }
       }
     } catch (error) {
       console.log(error);
       setIsLoading(false);
-    } finally {
-      router.refresh();
     }
   };
 
@@ -102,34 +134,51 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
 
       <div className={styles.regForm}>
         <form onSubmit={handleSubmit} action="">
-          {!isLogin && (
+          {!isLogin && !isForgotPassword && !isResetPassword && (
             <>
               <input
-                onChange={(e) => setFullName(e.target.value)}
+                onChange={(e) => {
+                  setError("");
+                  setFullName(e.target.value);
+                }}
                 type="text"
                 placeholder="Full Name"
               />
             </>
           )}
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            type="text"
-            placeholder="Email"
-          />
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Password..."
-          />
 
+          {!isResetPassword && (
+            <>
+              <input
+                onChange={(e) => {
+                  setError("");
+                  setEmail(e.target.value);
+                }}
+                type="email"
+                placeholder="Email"
+              />
+            </>
+          )}
+
+          {!isForgotPassword && (
+            <>
+              <input
+                onChange={(e) => {
+                  setError("");
+                  setPassword(e.target.value);
+                }}
+                type="password"
+                placeholder="Password..."
+              />
+            </>
+          )}
           {Error && (
             <>
               <div> {Error} </div>
             </>
           )}
-
           {isLogin ? (
-            <>
+            <div className={styles.loginInfo}>
               <p>
                 Not have an account ?{" "}
                 <button
@@ -142,9 +191,13 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
                   Register
                 </button>{" "}
               </p>
-            </>
+
+              <p>
+                Forgot Password? <Link href="/forgotPassword">Change Here</Link>
+              </p>
+            </div>
           ) : (
-            <>
+            <div className={styles.registerInfo}>
               <p>
                 Already have an account ?{" "}
                 <button
@@ -157,16 +210,21 @@ const RegisterForm = ({ isLogin, dispatchTokenValue }) => {
                   Login
                 </button>{" "}
               </p>
-            </>
+            </div>
           )}
-
           <button
-            disabled={IsLoading}
+            disabled={IsLoading || Error}
             className={styles.registerSubmit}
             type="submit"
           >
             {" "}
-            {IsLoading ? "Loading..." : isLogin ? "Login" : "Register"}{" "}
+            {IsLoading
+              ? "Loading..."
+              : isLogin
+              ? "Login"
+              : isForgotPassword || isResetPassword
+              ? "Submit"
+              : "Register"}{" "}
           </button>
         </form>
       </div>

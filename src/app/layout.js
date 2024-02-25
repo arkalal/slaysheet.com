@@ -3,7 +3,7 @@ import "./globals.scss";
 import { Roboto } from "next/font/google";
 
 const inter = Roboto({
-  subsets: ["latin"],
+  subsets: ["latin-ext"],
   weight: ["300", "400", "700", "100", "900", "500"],
 });
 
