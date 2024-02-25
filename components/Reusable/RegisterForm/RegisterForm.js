@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./RegisterForm.module.scss";
 import axios from "../../../axios/getApi";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Logo from "../Logo/Logo";
 import { connect } from "react-redux";
 import * as dispatcher from "../../../redux/store/dispatchers";
@@ -22,8 +22,16 @@ const RegisterForm = ({
   const [Password, setPassword] = useState("");
   const [Error, setError] = useState("");
   const [IsLoading, setIsLoading] = useState(false);
+  const [EmailReset, setEmailReset] = useState(false);
 
   const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session && isForgotPassword) {
+      router.push("/");
+    }
+  }, [isForgotPassword, router, session]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -87,6 +95,7 @@ const RegisterForm = ({
 
         if (res.status === 200) {
           setIsLoading(false);
+          setEmailReset(true);
         }
 
         if (res.status === 400) {
@@ -164,6 +173,15 @@ const RegisterForm = ({
 
   return (
     <div className={styles.RegisterForm}>
+      {EmailReset && (
+        <div className={styles.emailReset}>
+          <h5>
+            We have sent a reset link in your registered email. Please check
+            your inbox/spam folder.
+          </h5>
+        </div>
+      )}
+
       <div className={styles.logoWrapper}>
         <Logo />
       </div>
