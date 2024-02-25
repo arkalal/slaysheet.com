@@ -5,7 +5,6 @@ import axios from "../../axios/getApi";
 import styles from "./GenImage.module.scss";
 import { useSession } from "next-auth/react";
 import SigninPopup from "../Reusable/popups/SigninPopup/SigninPopup";
-import { chatLogic } from "../../utils/serverApiLogics";
 import BuyTokenPopup from "../Reusable/popups/BuyTokenPopup/BuyTokenPopup";
 import ReduxProvider from "../../redux/ReduxProvider";
 import AITokenWallet from "../Reusable/AITokenWallet/AITokenWallet";
@@ -76,18 +75,28 @@ const GenImage = ({ dispatchTokenValue }) => {
         } else {
           setSignInPop(false);
 
-          const chatLog = await chatLogic();
+          const getUserToken = await axios.get("aiToken");
+          const userToken = getUserToken.data.find(
+            (item) => item.user === session.user.email
+          );
+          const isLocked = userToken.lock;
+          const count = userToken.count;
+          const userId = userToken._id;
 
-          if (
-            chatLog.isUserToken &&
-            chatLog.isUserToken.count &&
-            !chatLog.isUserToken.lock
-          ) {
-            localStorage.setItem("AITokens", chatLog.isUserToken.count - 1);
-            dispatchTokenValue(chatLog.isUserToken.count - 1);
+          const data = {
+            user: session.user.email,
+            count: Math.max(count - 1, 0), // Prevent negative count
+            lock: count <= 1, // Automatically lock if count goes to 0
+          };
+
+          await axios.put(`aiToken/${userId}`, data);
+
+          if (userToken && count && !isLocked) {
+            localStorage.setItem("AITokens", count - 1);
+            dispatchTokenValue(count - 1);
           }
 
-          if (!chatLog.isUserToken || !chatLog.isUserToken.lock) {
+          if (!userToken || !isLocked) {
             handleSubmit(event);
           } else {
             setIsTokenPopup(true);

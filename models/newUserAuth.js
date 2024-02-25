@@ -18,6 +18,12 @@ const newUserAuthSchema = new Schema(
       type: Boolean,
       required: true,
     },
+    resetToken: {
+      type: String,
+    },
+    resetTokenExpiry: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

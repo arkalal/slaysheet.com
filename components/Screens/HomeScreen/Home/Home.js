@@ -8,6 +8,7 @@ import AITokenWallet from "../../../Reusable/AITokenWallet/AITokenWallet";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Footer from "../../../Footer/Footer";
+import ChatAssistants from "../../../Reusable/ChatAssistants/ChatAssistants";
 
 const Banner = lazy(() => import("../Banner/Banner"));
 const Showcase = lazy(() => import("../../../Showcase/Showcase"));
@@ -16,6 +17,8 @@ const ShowBox = lazy(() => import("../../../Showcase/ShowBox/ShowBox"));
 const Home = async ({ isToken }) => {
   const userFreeTokens = await checkFreeTokens();
   const userSession = await getServerSession(authOptions);
+
+  console.log(userFreeTokens);
 
   return (
     <div className={styles.home}>
@@ -49,6 +52,8 @@ const Home = async ({ isToken }) => {
           </>
         )}
       </Suspense>
+
+      <ChatAssistants />
 
       <Footer />
     </div>
