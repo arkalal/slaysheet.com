@@ -42,6 +42,11 @@
       gap: 20px;
       margin-top: 30px;
 
+      .regFormError {
+        color: red;
+        font-weight: bold;
+      }
+
       input {
         font-size: 18px;
         padding: 15px 10px;

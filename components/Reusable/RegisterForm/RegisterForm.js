@@ -228,7 +228,7 @@ const RegisterForm = ({
           )}
           {Error && (
             <>
-              <div> {Error} </div>
+              <div className={styles.regFormError}> {Error} </div>
             </>
           )}
           {isLogin ? (
