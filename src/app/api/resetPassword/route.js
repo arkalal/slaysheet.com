@@ -19,7 +19,7 @@ export async function POST(req) {
 
   if (!user) {
     return NextResponse.json(
-      { message: "User reser password failed" },
+      { message: "User reset password failed" },
       { status: 400 }
     );
   }
@@ -32,5 +32,9 @@ export async function POST(req) {
     );
   } catch (error) {
     console.log(error);
+    return NextResponse.json(
+      { message: "User reset password failed" },
+      { status: 400 }
+    );
   }
 }

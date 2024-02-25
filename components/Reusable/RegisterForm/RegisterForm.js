@@ -15,7 +15,7 @@ const RegisterForm = ({
   dispatchTokenValue,
   isForgotPassword,
   isResetPassword,
-  verifyResetToken,
+  resetToken,
 }) => {
   const [FullName, setFullName] = useState("");
   const [Email, setEmail] = useState("");
@@ -24,7 +24,6 @@ const RegisterForm = ({
   const [IsLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
-  console.log(verifyResetToken);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,12 +80,51 @@ const RegisterForm = ({
           localStorage.setItem("AITokens", filteredUserToken[0]?.count);
         }
 
-        setIsLoading(false);
         router.push("/");
         router.refresh();
       } else if (isForgotPassword) {
-        const forgotRes = await axios.post("forgotPassword", { email: Email });
-        console.log(forgotRes);
+        const res = await axios.post("forgotPassword", { email: Email });
+
+        if (res.status === 200) {
+          setIsLoading(false);
+        }
+
+        if (res.status === 400) {
+          setIsLoading(false);
+          setError("Failed to send reset email. Please try again");
+        }
+
+        if (res.status === 401) {
+          setIsLoading(false);
+          setError("User does not exist");
+        }
+      } else if (isResetPassword) {
+        const res = await axios.post("verifyToken", { token: resetToken });
+
+        if (res.status === 200) {
+          setError("");
+
+          const userData = res.data;
+          const reset = await axios.post("resetPassword", {
+            email: userData.email,
+            password: Password,
+          });
+
+          if (reset.status === 400) {
+            setIsLoading(false);
+            setError("Password reset failed. Please try again");
+          }
+
+          if (reset.status === 200) {
+            router.push("/login");
+            setError("");
+          }
+        }
+
+        if (res.status === 400) {
+          setIsLoading(false);
+          setError("Invalid token or has expired");
+        }
       } else {
         const users = await axios.get("register");
         const currentUser =
@@ -110,13 +148,11 @@ const RegisterForm = ({
           if (res.status === 200) {
             const form = e.target;
             form.reset();
-            setIsLoading(false);
             router.push("/login");
             setError("");
           } else {
-            console.log("User Registration failed");
-            setError("User Registration failed");
             setIsLoading(false);
+            setError("User Registration failed");
           }
         }
       }

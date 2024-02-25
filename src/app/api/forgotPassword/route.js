@@ -18,7 +18,7 @@ export async function POST(req) {
   if (!user) {
     return NextResponse.json(
       { message: "email is not there" },
-      { status: 400 }
+      { status: 401 }
     );
   }
 
@@ -75,5 +75,10 @@ export async function POST(req) {
     );
   } catch (error) {
     console.log(error);
+
+    return NextResponse.json(
+      { message: "Failed sending email" },
+      { status: 400 }
+    );
   }
 }

@@ -4,22 +4,31 @@ import crypto from "crypto";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  const { token } = await req.json();
+  try {
+    const { token } = await req.json();
 
-  await connectMongoDB();
-  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+    await connectMongoDB();
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
-  const user = await NewUserAuth.findOne({
-    resetToken: hashedToken,
-    resetTokenExpiry: { $gt: Date.now() },
-  });
+    const user = await NewUserAuth.findOne({
+      resetToken: hashedToken,
+      resetTokenExpiry: { $gt: Date.now() },
+    });
 
-  if (!user) {
+    if (!user) {
+      return NextResponse.json(
+        { message: "Invalid token or has expired" },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json(user, { status: 200 });
+  } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
       { message: "Invalid token or has expired" },
       { status: 400 }
     );
   }
-
-  return NextResponse.json(JSON.stringify(user), { status: 200 });
 }
