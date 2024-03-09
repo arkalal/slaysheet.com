@@ -22,10 +22,6 @@ const GenImages = dynamic(() => import("../ShowComp/GenImages/GenImages"), {
   ssr: true,
 });
 
-const CreateNote = dynamic(() => import("../ShowComp/CreateNote/CreateNote"), {
-  ssr: true,
-});
-
 const GenMusic = dynamic(() => import("../ShowComp/GenMusic/GenMusic"), {
   ssr: true,
 });
@@ -40,9 +36,8 @@ const ShowBox = () => {
     2: <AutoEmail />,
     3: <AiChatService />,
     4: <GenImages />,
-    5: <CreateNote />,
-    6: <GenMusic />,
-    7: <MyNotes />,
+    5: <GenMusic />,
+    6: <MyNotes />,
   };
 
   return (
