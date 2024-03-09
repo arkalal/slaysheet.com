@@ -10,9 +10,8 @@ const Showcase = () => {
     { id: 2, label: "Emails Automation" },
     { id: 3, label: "Chat with AI" },
     { id: 4, label: "Generate Images" },
-    { id: 5, label: "Create Notes" },
-    { id: 6, label: "Generate Music" },
-    { id: 7, label: "My Notes" },
+    { id: 5, label: "Generate Music" },
+    { id: 6, label: "My Notes" },
   ];
 
   return (
